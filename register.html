@@ -9,17 +9,399 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- FITGENIUS GLASS V2.2 REGISTRATION DESIGN -->
+    <style>
+
+        body.auth-page {
+            min-height: 100vh;
+            margin: 0;
+            color: #f4f7ff;
+            background:
+                radial-gradient(ellipse at 15% 20%, rgba(0,255,153,.15), transparent 38%),
+                radial-gradient(ellipse at 85% 25%, rgba(0,195,255,.16), transparent 40%),
+                radial-gradient(ellipse at 50% 100%, rgba(91,75,255,.13), transparent 45%),
+                #070c18 !important;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body.auth-page::before {
+            content: "";
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            top: 20%;
+            left: -150px;
+            background: rgba(0,255,153,.12);
+            filter: blur(110px);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body.auth-page::after {
+            content: "";
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            right: -180px;
+            bottom: 5%;
+            background: rgba(0,195,255,.13);
+            filter: blur(120px);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .auth-page .header,
+        .auth-page .auth-main,
+        .auth-page .footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-page .header {
+            background: rgba(7,12,24,.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,.07);
+        }
+
+        .auth-page .auth-main {
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            padding: 65px 20px;
+        }
+
+        .auth-page .auth-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 65px;
+        }
+
+        .auth-page .auth-information h1 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(2.2rem,5vw,3.6rem);
+            line-height: 1.15;
+            color: #fff;
+            margin: 22px 0;
+        }
+
+        .auth-page .auth-information h1 span,
+        .auth-page .text-highlight {
+            color: #9cff57;
+        }
+
+        .auth-page .auth-information > p {
+            color: #aab6ca;
+            line-height: 1.8;
+            max-width: 480px;
+        }
+
+        .auth-page .section-tag {
+            color: #9cff57;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .auth-page .auth-benefits {
+            margin-top: 30px;
+        }
+
+        .auth-page .auth-benefit {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin: 22px 0;
+        }
+
+        .auth-page .benefit-icon {
+            min-width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9cff57;
+            background: rgba(156,255,87,.10);
+            border: 1px solid rgba(156,255,87,.2);
+            border-radius: 13px;
+        }
+
+        .auth-page .auth-benefit h3 {
+            color: #fff;
+            margin: 0 0 5px;
+            font-size: 16px;
+        }
+
+        .auth-page .auth-benefit p {
+            color: #aab6ca;
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .auth-page .auth-form-card {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 38px;
+            background: rgba(19,29,49,.68);
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0,0,0,.35);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        .auth-page .auth-form-heading {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .auth-page .auth-icon {
+            width: 62px;
+            height: 62px;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9cff57;
+            background: rgba(156,255,87,.10);
+            border: 1px solid rgba(156,255,87,.2);
+            border-radius: 18px;
+            font-size: 23px;
+        }
+
+        .auth-page .auth-form-heading h2 {
+            color: #fff;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .auth-page .auth-form-heading p {
+            color: #aab6ca;
+            font-size: 14px;
+        }
+
+        .auth-page .settings-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .auth-page .auth-input-group {
+            margin-bottom: 20px;
+            min-width: 0;
+        }
+
+        .auth-page .auth-input-group label {
+            display: block;
+            color: #e5eaf4;
+            margin-bottom: 9px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .auth-page .input-wrapper,
+        .auth-page .auth-password-wrapper {
+            position: relative;
+        }
+
+        .auth-page .input-wrapper > i,
+        .auth-page .auth-password-wrapper > i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8493aa;
+            z-index: 1;
+        }
+
+        .auth-page .auth-input-group input {
+            width: 100%;
+            min-height: 51px;
+            box-sizing: border-box;
+            padding: 13px 15px 13px 43px;
+            color: #fff;
+            background: rgba(4,10,22,.65);
+            border: 1px solid rgba(255,255,255,.13);
+            border-radius: 12px;
+            outline: none;
+            font-family: "DM Sans",sans-serif;
+        }
+
+        .auth-page .auth-input-group input:focus {
+            border-color: #9cff57;
+            box-shadow: 0 0 0 3px rgba(156,255,87,.09);
+        }
+
+        .auth-page .auth-input-group input::placeholder {
+            color: #718096;
+        }
+
+        .auth-page .auth-password-wrapper input {
+            padding-right: 48px;
+        }
+
+        .auth-page .password-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: #9eacc0;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .auth-page .input-hint {
+            display: block;
+            margin-top: 7px;
+            color: #8794a9;
+            font-size: 12px;
+        }
+
+        .auth-page .auth-remember {
+            margin: 12px 0 20px;
+        }
+
+        .auth-page .auth-remember label {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            color: #aab6ca;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .auth-page .auth-remember input {
+            margin-top: 4px;
+            accent-color: #9cff57;
+        }
+
+        .auth-page .auth-remember a,
+        .auth-page .auth-switch a {
+            color: #9cff57;
+            text-decoration: none;
+        }
+
+        .auth-page .auth-remember a:hover,
+        .auth-page .auth-switch a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-page .auth-submit {
+            width: 100%;
+            min-height: 52px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(110deg,#9cff57,#45d7ff);
+            color: #07111b;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .auth-page .auth-submit:hover {
+            filter: brightness(1.08);
+            transform: translateY(-2px);
+        }
+
+        .auth-page .auth-submit:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .auth-page .auth-switch {
+            text-align: center;
+            color: #aab6ca;
+            margin-top: 24px;
+            font-size: 14px;
+        }
+
+        .auth-page .form-message {
+            margin-bottom: 18px;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255,255,255,.05);
+            line-height: 1.5;
+        }
+
+        .auth-page .footer {
+            background: transparent;
+            border-top: 1px solid rgba(255,255,255,.07);
+            color: #8794a9;
+        }
+
+        @media(max-width:850px) {
+
+            .auth-page .auth-container {
+                grid-template-columns: 1fr;
+                gap: 35px;
+                max-width: 550px;
+            }
+
+            .auth-page .auth-information {
+                text-align: center;
+            }
+
+            .auth-page .auth-information > p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .auth-page .auth-benefit {
+                text-align: left;
+            }
+
+            .auth-page .auth-main {
+                padding: 45px 18px;
+            }
+
+        }
+
+        @media(max-width:480px) {
+
+            .auth-page .auth-form-card {
+                padding: 25px 20px;
+            }
+
+            .auth-page .auth-information h1 {
+                font-size: 34px;
+            }
+
+            .auth-page .settings-fields {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+        }
+
+    </style>
 </head>
 
 <body class="auth-page">
 
     <header class="header">
         <div class="container nav-container">
+
             <a href="index.html" class="logo">
                 <span class="logo-icon">
                     <i class="fa-solid fa-heart-pulse"></i>
@@ -31,13 +413,16 @@
                 <i class="fa-solid fa-arrow-left"></i>
                 Back Home
             </a>
+
         </div>
     </header>
 
     <main class="auth-main">
+
         <div class="auth-container">
 
             <section class="auth-information">
+
                 <span class="section-tag">
                     <i class="fa-solid fa-bolt"></i>
                     YOUR JOURNEY STARTS HERE
@@ -86,17 +471,20 @@
                     </div>
 
                 </div>
+
             </section>
 
             <section class="auth-form-card">
 
                 <div class="auth-form-heading">
+
                     <div class="auth-icon">
                         <i class="fa-solid fa-user-plus"></i>
                     </div>
 
                     <h2>Create Your Account</h2>
                     <p>Enter your details to get started with FitGenius.</p>
+
                 </div>
 
                 <form id="registerForm" novalidate>
@@ -105,8 +493,10 @@
 
                         <div class="auth-input-group">
                             <label for="firstName">First Name</label>
+
                             <div class="input-wrapper">
                                 <i class="fa-regular fa-user"></i>
+
                                 <input
                                     type="text"
                                     id="firstName"
@@ -120,8 +510,10 @@
 
                         <div class="auth-input-group">
                             <label for="lastName">Last Name</label>
+
                             <div class="input-wrapper">
                                 <i class="fa-regular fa-user"></i>
+
                                 <input
                                     type="text"
                                     id="lastName"
@@ -137,8 +529,10 @@
 
                     <div class="auth-input-group">
                         <label for="email">Email Address</label>
+
                         <div class="input-wrapper">
                             <i class="fa-regular fa-envelope"></i>
+
                             <input
                                 type="email"
                                 id="email"
@@ -155,6 +549,7 @@
 
                         <div class="auth-password-wrapper">
                             <i class="fa-solid fa-lock"></i>
+
                             <input
                                 type="password"
                                 id="password"
@@ -185,6 +580,7 @@
 
                         <div class="auth-password-wrapper">
                             <i class="fa-solid fa-lock"></i>
+
                             <input
                                 type="password"
                                 id="confirmPassword"
@@ -213,6 +609,7 @@
                                 name="terms"
                                 required
                             >
+
                             <span>
                                 I agree to the
                                 <a href="terms.html">Terms of Service</a>
@@ -227,7 +624,7 @@
                         class="form-message"
                         role="status"
                         aria-live="polite"
-                        style="display: none;"
+                        style="display:none;"
                     ></div>
 
                     <button type="submit" class="btn btn-primary auth-submit">
@@ -241,9 +638,11 @@
                     </p>
 
                 </form>
+
             </section>
 
         </div>
+
     </main>
 
     <footer class="footer auth-footer">
