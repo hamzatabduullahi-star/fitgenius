@@ -4,34 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Login | FitGenius</title>
-
-    <meta name="description" content="Log in to your FitGenius account and continue your fitness journey.">
-
-    <link rel="stylesheet" href="css/style.css">
+    <title>Sign In | FitGenius</title>
+    <meta name="description" content="Sign in to your FitGenius account and continue your fitness and wellness journey.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="auth-page">
 
     <!-- HEADER -->
-    <header class="auth-header">
-        <div class="nav-container">
+    <header class="header">
+        <div class="container nav-container">
 
             <a href="index.html" class="logo">
                 <span class="logo-icon">
                     <i class="fa-solid fa-heart-pulse"></i>
                 </span>
-                Fit<span>Genius</span>
+
+                <span>Fit<span class="logo-highlight">Genius</span></span>
             </a>
 
-            <a href="index.html" class="nav-button">
+            <a href="index.html" class="btn btn-outline">
                 <i class="fa-solid fa-arrow-left"></i>
                 Back Home
             </a>
@@ -43,42 +43,62 @@
     <!-- LOGIN SECTION -->
     <main class="auth-main">
 
-        <div class="auth-glow"></div>
-
         <div class="auth-container">
 
             <!-- LEFT INFORMATION -->
             <section class="auth-information">
 
                 <span class="section-tag">
-                    YOUR JOURNEY CONTINUES
+                    <i class="fa-solid fa-bolt"></i>
+                    WELCOME BACK
                 </span>
 
                 <h1>
-                    Welcome <span>Back.</span>
+                    Your wellness journey
+                    <span class="text-highlight">continues here.</span>
                 </h1>
 
                 <p>
-                    Your health journey doesn't stop here.
-                    Sign in to continue tracking your movement,
-                    monitoring your recovery and improving your lifestyle.
+                    Sign in to continue building healthy habits,
+                    monitoring your progress and understanding your
+                    daily fitness activities.
                 </p>
 
                 <div class="auth-benefits">
 
                     <div class="auth-benefit">
-                        <i class="fa-solid fa-person-walking"></i>
-                        <span>Monitor your daily activities</span>
+                        <span class="benefit-icon">
+                            <i class="fa-solid fa-person-walking"></i>
+                        </span>
+
+                        <div>
+                            <h3>Daily Activity</h3>
+                            <p>Stay informed about your movement and activity.</p>
+                        </div>
                     </div>
 
-                    <div class="auth-benefit">
-                        <i class="fa-solid fa-moon"></i>
-                        <span>Understand your sleep and recovery</span>
-                    </div>
 
                     <div class="auth-benefit">
-                        <i class="fa-solid fa-chart-line"></i>
-                        <span>Follow your fitness progress</span>
+                        <span class="benefit-icon">
+                            <i class="fa-solid fa-moon"></i>
+                        </span>
+
+                        <div>
+                            <h3>Sleep Monitoring</h3>
+                            <p>Understand your sleeping and resting patterns.</p>
+                        </div>
+                    </div>
+
+
+                    <div class="auth-benefit">
+                        <span class="benefit-icon">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </span>
+
+                        <div>
+                            <h3>Track Your Growth</h3>
+                            <p>Keep working towards your personal goals.</p>
+                        </div>
                     </div>
 
                 </div>
@@ -92,30 +112,37 @@
                 <div class="auth-form-heading">
 
                     <div class="auth-icon">
-                        <i class="fa-solid fa-user"></i>
+                        <i class="fa-solid fa-right-to-bracket"></i>
                     </div>
 
-                    <h2>Sign In</h2>
+                    <h2>Welcome Back</h2>
 
-                    <p>Enter your details to access your account</p>
+                    <p>Enter your account details to sign in.</p>
 
                 </div>
 
 
-                <form class="auth-form" id="loginForm">
+                <form id="loginForm" novalidate>
 
                     <!-- EMAIL -->
                     <div class="auth-input-group">
 
                         <label for="loginEmail">Email Address</label>
 
-                        <input
-                            type="email"
-                            id="loginEmail"
-                            placeholder="Enter your email address"
-                            autocomplete="email"
-                            required
-                        >
+                        <div class="input-wrapper">
+
+                            <i class="fa-regular fa-envelope"></i>
+
+                            <input
+                                type="email"
+                                id="loginEmail"
+                                name="email"
+                                placeholder="Enter your email address"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
 
                     </div>
 
@@ -127,9 +154,12 @@
 
                         <div class="auth-password-wrapper">
 
+                            <i class="fa-solid fa-lock"></i>
+
                             <input
                                 type="password"
                                 id="loginPassword"
+                                name="password"
                                 placeholder="Enter your password"
                                 autocomplete="current-password"
                                 required
@@ -141,7 +171,7 @@
                                 data-target="loginPassword"
                                 aria-label="Show password"
                             >
-                                <i class="fa-solid fa-eye"></i>
+                                <i class="fa-regular fa-eye"></i>
                             </button>
 
                         </div>
@@ -149,12 +179,17 @@
                     </div>
 
 
-                    <!-- REMEMBER / FORGOT -->
+                    <!-- REMEMBER AND FORGOT PASSWORD -->
                     <div class="auth-options">
 
                         <label class="auth-remember">
-                            <input type="checkbox" id="rememberMe">
-                            Remember me
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                                name="rememberMe"
+                            >
+
+                            <span>Remember me</span>
                         </label>
 
                         <a href="#" id="forgotPassword">
@@ -164,27 +199,36 @@
                     </div>
 
 
-                    <!-- SUBMIT -->
-                    <button type="submit" class="auth-submit">
+                    <!-- LOGIN MESSAGE -->
+                    <div
+                        id="loginMessage"
+                        class="form-message"
+                        role="status"
+                        aria-live="polite"
+                        style="display: none;"
+                    ></div>
+
+
+                    <!-- SUBMIT BUTTON -->
+                    <button type="submit" class="btn btn-primary auth-submit">
+
                         Sign In
+
                         <i class="fa-solid fa-arrow-right"></i>
+
                     </button>
 
-                    <p class="auth-message" id="loginMessage" aria-live="polite"></p>
+
+                    <!-- REGISTER LINK -->
+                    <p class="auth-switch">
+
+                        Don't have an account?
+
+                        <a href="register.html">Create Account</a>
+
+                    </p>
 
                 </form>
-
-
-                <!-- REGISTER LINK -->
-                <div class="auth-switch">
-
-                    Don't have an account?
-
-                    <a href="register.html">
-                        Create Account
-                    </a>
-
-                </div>
 
             </section>
 
@@ -193,6 +237,22 @@
     </main>
 
 
+    <!-- FOOTER -->
+    <footer class="footer auth-footer">
+
+        <div class="container">
+
+            <p>
+                &copy; <span id="currentYear">2026</span>
+                FitGenius. Built for a healthier tomorrow.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
     <script src="js/script.js"></script>
 
 </body>
