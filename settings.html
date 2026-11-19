@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | FitGenius</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- SIDEBAR -->
+
+    <aside class="dashboard-sidebar" id="dashboardSidebar">
+
+        <a href="index.html" class="logo">
+            <span class="logo-icon">
+                <i class="fa-solid fa-heart-pulse"></i>
+            </span>
+            Fit<span>Genius</span>
+        </a>
+
+        <div class="sidebar-label">MENU</div>
+
+        <nav class="sidebar-navigation">
+
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fa-solid fa-house"></i>
+                Overview
+            </a>
+
+            <a href="dashboard.html#activity" class="sidebar-link">
+                <i class="fa-solid fa-person-walking"></i>
+                Activity
+            </a>
+
+            <a href="dashboard.html#sleep" class="sidebar-link">
+                <i class="fa-solid fa-moon"></i>
+                Sleep
+            </a>
+
+            <a href="dashboard.html#recovery" class="sidebar-link">
+                <i class="fa-solid fa-heart-pulse"></i>
+                Recovery
+            </a>
+
+            <a href="dashboard.html#progress" class="sidebar-link">
+                <i class="fa-solid fa-chart-line"></i>
+                Progress
+            </a>
+
+        </nav>
+
+        <div class="sidebar-label">ACCOUNT</div>
+
+        <nav class="sidebar-navigation">
+
+            <a href="settings.html" class="sidebar-link active">
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </a>
+
+            <a href="index.html" class="sidebar-link">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Log Out
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="dashboard-main">
+
+        <!-- TOPBAR -->
+
+        <header class="dashboard-topbar">
+
+            <button class="dashboard-menu-toggle" id="dashboardMenuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="dashboard-heading">
+                <span class="dashboard-date">PERSONAL PREFERENCES</span>
+                <h1>Settings</h1>
+            </div>
+
+            <div class="dashboard-user-actions">
+
+                <div class="dashboard-user">
+
+                    <div class="user-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div>
+                        <strong>Guest User</strong>
+                        <small>FitGenius Member</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- SETTINGS INTRODUCTION -->
+
+        <section class="dashboard-welcome">
+
+            <div>
+                <span class="section-tag">CONTROL YOUR EXPERIENCE</span>
+
+                <h2>
+                    Manage Your <span>Settings</span>
+                </h2>
+
+                <p>
+                    Personalise your FitGenius experience
+                    and manage your preferences.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- PROFILE SETTINGS -->
+
+        <section class="dashboard-panel settings-section" id="profileSettings">
+
+            <div class="panel-heading">
+
+                <div>
+                    <span class="panel-subtitle">PERSONAL INFORMATION</span>
+                    <h3>Profile Settings</h3>
+                </div>
+
+                <i class="fa-solid fa-user-pen panel-heading-icon"></i>
+
+            </div>
+
+            <form id="profileForm" class="settings-form">
+
+                <div class="settings-fields">
+
+                    <div class="auth-input-group">
+                        <label for="profileFirstName">First Name</label>
+                        <input type="text" id="profileFirstName"
+                            placeholder="Enter first name">
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label for="profileLastName">Last Name</label>
+                        <input type="text" id="profileLastName"
+                            placeholder="Enter last name">
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label for="profileEmail">Email Address</label>
+                        <input type="email" id="profileEmail"
+                            placeholder="Enter email address">
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label for="profileAge">Age</label>
+                        <input type="number" id="profileAge"
+                            placeholder="Enter your age" min="13" max="120">
+                    </div>
+
+                </div>
+
+                <button type="submit" class="dashboard-action-button">
+                    Save Profile
+                    <i class="fa-solid fa-check"></i>
+                </button>
+
+                <p class="auth-message" id="profileMessage"></p>
+
+            </form>
+
+        </section>
+
+
+        <!-- HEALTH TRACKING -->
+
+        <section class="dashboard-panel settings-section">
+
+            <div class="panel-heading">
+
+                <div>
+                    <span class="panel-subtitle">HEALTH DATA</span>
+                    <h3>Tracking Preferences</h3>
+                </div>
+
+                <i class="fa-solid fa-heart-pulse panel-heading-icon"></i>
+
+            </div>
+
+            <div class="settings-option">
+
+                <div>
+                    <h4>Automatic Activity Tracking</h4>
+                    <p>Allow compatible connected devices to provide activity data.</p>
+                </div>
+
+                <span class="settings-badge">Not connected</span>
+
+            </div>
+
+            <div class="settings-option">
+
+                <div>
+                    <h4>Sleep Monitoring</h4>
+                    <p>Use supported health integrations to import sleep information.</p>
+                </div>
+
+                <span class="settings-badge">Not connected</span>
+
+            </div>
+
+            <div class="settings-option">
+
+                <div>
+                    <h4>Health Data Synchronisation</h4>
+                    <p>Synchronise supported health information with your account.</p>
+                </div>
+
+                <span class="settings-badge">Coming soon</span>
+
+            </div>
+
+        </section>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <section class="dashboard-panel settings-section">
+
+            <div class="panel-heading">
+
+                <div>
+                    <span class="panel-subtitle">STAY INFORMED</span>
+                    <h3>Notification Preferences</h3>
+                </div>
+
+                <i class="fa-regular fa-bell panel-heading-icon"></i>
+
+            </div>
+
+            <div class="settings-option">
+
+                <div>
+                    <h4>Activity Reminders</h4>
+                    <p>Receive reminders to take movement breaks.</p>
+                </div>
+
+                <label class="settings-switch">
+                    <input type="checkbox" id="activityNotifications">
+                    <span class="switch-slider"></span>
+                </label>
+
+            </div>
+
+            <div class="settings-option">
+
+                <div>
+                    <h4>Sleep Reminders</h4>
+                    <p>Receive reminders about your preferred bedtime.</p>
+                </div>
+
+                <label class="settings-switch">
+                    <input type="checkbox" id="sleepNotifications">
+                    <span class="switch-slider"></span>
+                </label>
+
+            </div>
+
+            <div class="settings-option">
+
+                <div>
+                    <h4>Wellness Tips</h4>
+                    <p>Receive helpful health and lifestyle suggestions.</p>
+                </div>
+
+                <label class="settings-switch">
+                    <input type="checkbox" id="wellnessNotifications" checked>
+                    <span class="switch-slider"></span>
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRIVACY -->
+
+        <section class="dashboard-panel settings-section">
+
+            <div class="panel-heading">
+
+                <div>
+                    <span class="panel-subtitle">YOUR INFORMATION</span>
+                    <h3>Privacy & Security</h3>
+                </div>
+
+                <i class="fa-solid fa-shield-halved panel-heading-icon"></i>
+
+            </div>
+
+            <div class="settings-option">
+
+                <div>
+                    <h4>Privacy Policy</h4>
+                    <p>Understand how your information will be handled.</p>
+                </div>
+
+                <a href="privacy.html" class="settings-link">
+                    View <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+            <div class="settings-option">
+
+                <div>
+                    <h4>Terms & Conditions</h4>
+                    <p>Read the terms governing your use of FitGenius.</p>
+                </div>
+
+                <a href="terms.html" class="settings-link">
+                    View <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- SAVE PREFERENCES -->
+
+        <section class="settings-save-area">
+
+            <button class="dashboard-action-button" id="saveSettings">
+                Save Preferences
+                <i class="fa-solid fa-floppy-disk"></i>
+            </button>
+
+            <p id="settingsMessage" class="auth-message"></p>
+
+        </section>
+
+
+        <footer class="dashboard-footer">
+            <p>
+                © <span id="dashboardYear"></span>
+                FitGenius. All rights reserved.
+            </p>
+        </footer>
+
+    </main>
+
+
+    <script src="js/script.js"></script>
+
+</body>
+</html>
