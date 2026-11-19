@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | FitGenius</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="auth-page">
+
+    <header class="header">
+
+        <div class="container nav-container">
+
+            <a href="index.html" class="logo">
+                <span class="logo-icon">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </span>
+                Fit<span>Genius</span>
+            </a>
+
+            <a href="index.html" class="secondary-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back Home
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <main class="auth-main">
+
+        <div class="auth-glow"></div>
+
+        <div class="auth-container">
+
+            <!-- LEFT INFORMATION PANEL -->
+
+            <div class="auth-information">
+
+                <span class="section-tag">
+                    YOUR WELLNESS JOURNEY
+                </span>
+
+                <h1>
+                    Start Understanding
+                    <span>Your Body.</span>
+                </h1>
+
+                <p>
+                    Create your FitGenius account and take the first
+                    step towards understanding your movement, sleep
+                    and everyday wellness.
+                </p>
+
+                <div class="auth-benefits">
+
+                    <div>
+                        <i class="fa-solid fa-person-walking"></i>
+                        <span>Track your daily activities</span>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-moon"></i>
+                        <span>Understand your sleep patterns</span>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Monitor your fitness progress</span>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-bell"></i>
+                        <span>Receive helpful wellness reminders</span>
+                    </div>
+
+                </div>
+
+                <div class="auth-security">
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    <span>
+                        Your health information deserves
+                        responsible protection.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <!-- REGISTRATION FORM -->
+
+            <div class="auth-form-card">
+
+                <div class="auth-form-heading">
+
+                    <div class="auth-icon">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+
+                    <h2>Create Your Account</h2>
+
+                    <p>Join FitGenius and begin your wellness journey.</p>
+
+                </div>
+
+
+                <form id="registerForm">
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="firstName">First Name</label>
+
+                            <div class="input-wrapper">
+                                <i class="fa-regular fa-user"></i>
+
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    placeholder="First name"
+                                    autocomplete="given-name"
+                                    required
+                                >
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="lastName">Last Name</label>
+
+                            <div class="input-wrapper">
+                                <i class="fa-regular fa-user"></i>
+
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    placeholder="Last name"
+                                    autocomplete="family-name"
+                                    required
+                                >
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="email">Email Address</label>
+
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-envelope"></i>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="you@example.com"
+                                autocomplete="email"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="password">Password</label>
+
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create a password"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="password"
+                                aria-label="Show password"
+                            >
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Confirm your password"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="confirmPassword"
+                                aria-label="Show password"
+                            >
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <label class="terms-check">
+
+                        <input type="checkbox" id="terms" required>
+
+                        <span>
+                            I agree to the
+                            <a href="terms.html">Terms of Service</a>
+                            and
+                            <a href="privacy.html">Privacy Policy</a>.
+                        </span>
+
+                    </label>
+
+
+                    <button type="submit" class="auth-submit">
+
+                        Create My Account
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+
+                    <p id="registerMessage" class="form-message"></p>
+
+                </form>
+
+
+                <div class="auth-divider">
+                    <span>ALREADY HAVE AN ACCOUNT?</span>
+                </div>
+
+
+                <a href="login.html" class="auth-login-link">
+                    Log In To FitGenius
+                </a>
+
+
+                <p class="auth-bottom-note">
+                    Your wellness journey begins with one step.
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer class="auth-footer">
+
+        <p>
+            &copy; <span id="currentYear">2026</span>
+            FitGenius. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="js/script.js"></script>
+
+</body>
+</html>
