@@ -1,134 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Create Account | FitGenius</title>
-
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Create your FitGenius account and begin your personal fitness and wellness journey.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="auth-page">
 
     <header class="header">
-
         <div class="container nav-container">
-
             <a href="index.html" class="logo">
                 <span class="logo-icon">
                     <i class="fa-solid fa-heart-pulse"></i>
                 </span>
-                Fit<span>Genius</span>
+                <span>Fit<span class="logo-highlight">Genius</span></span>
             </a>
 
-            <a href="index.html" class="secondary-btn">
+            <a href="index.html" class="btn btn-outline">
                 <i class="fa-solid fa-arrow-left"></i>
                 Back Home
             </a>
-
         </div>
-
     </header>
 
-
     <main class="auth-main">
-
-        <div class="auth-glow"></div>
-
         <div class="auth-container">
 
-            <!-- LEFT INFORMATION PANEL -->
-
-            <div class="auth-information">
-
+            <section class="auth-information">
                 <span class="section-tag">
-                    YOUR WELLNESS JOURNEY
+                    <i class="fa-solid fa-bolt"></i>
+                    YOUR JOURNEY STARTS HERE
                 </span>
 
                 <h1>
-                    Start Understanding
-                    <span>Your Body.</span>
+                    Build a healthier
+                    <span class="text-highlight">version of yourself.</span>
                 </h1>
 
                 <p>
-                    Create your FitGenius account and take the first
-                    step towards understanding your movement, sleep
-                    and everyday wellness.
+                    Create your FitGenius account and take your first step
+                    towards understanding your fitness, activity and wellness.
                 </p>
 
                 <div class="auth-benefits">
 
-                    <div>
-                        <i class="fa-solid fa-person-walking"></i>
-                        <span>Track your daily activities</span>
+                    <div class="auth-benefit">
+                        <span class="benefit-icon">
+                            <i class="fa-solid fa-person-walking"></i>
+                        </span>
+                        <div>
+                            <h3>Activity Tracking</h3>
+                            <p>Keep track of your daily movement and progress.</p>
+                        </div>
                     </div>
 
-                    <div>
-                        <i class="fa-solid fa-moon"></i>
-                        <span>Understand your sleep patterns</span>
+                    <div class="auth-benefit">
+                        <span class="benefit-icon">
+                            <i class="fa-solid fa-moon"></i>
+                        </span>
+                        <div>
+                            <h3>Sleep Insights</h3>
+                            <p>Understand your sleep habits and rest patterns.</p>
+                        </div>
                     </div>
 
-                    <div>
-                        <i class="fa-solid fa-chart-line"></i>
-                        <span>Monitor your fitness progress</span>
-                    </div>
-
-                    <div>
-                        <i class="fa-solid fa-bell"></i>
-                        <span>Receive helpful wellness reminders</span>
+                    <div class="auth-benefit">
+                        <span class="benefit-icon">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </span>
+                        <div>
+                            <h3>Personal Progress</h3>
+                            <p>Build healthy habits and follow your journey.</p>
+                        </div>
                     </div>
 
                 </div>
+            </section>
 
-                <div class="auth-security">
-                    <i class="fa-solid fa-shield-halved"></i>
-
-                    <span>
-                        Your health information deserves
-                        responsible protection.
-                    </span>
-                </div>
-
-            </div>
-
-
-            <!-- REGISTRATION FORM -->
-
-            <div class="auth-form-card">
+            <section class="auth-form-card">
 
                 <div class="auth-form-heading">
-
                     <div class="auth-icon">
                         <i class="fa-solid fa-user-plus"></i>
                     </div>
 
                     <h2>Create Your Account</h2>
-
-                    <p>Join FitGenius and begin your wellness journey.</p>
-
+                    <p>Enter your details to get started with FitGenius.</p>
                 </div>
 
+                <form id="registerForm" novalidate>
 
-                <form id="registerForm">
+                    <div class="settings-fields">
 
-                    <div class="form-row">
-
-                        <div class="form-group">
-
+                        <div class="auth-input-group">
                             <label for="firstName">First Name</label>
-
                             <div class="input-wrapper">
                                 <i class="fa-regular fa-user"></i>
-
                                 <input
                                     type="text"
                                     id="firstName"
@@ -138,17 +115,12 @@
                                     required
                                 >
                             </div>
-
                         </div>
 
-
-                        <div class="form-group">
-
+                        <div class="auth-input-group">
                             <label for="lastName">Last Name</label>
-
                             <div class="input-wrapper">
                                 <i class="fa-regular fa-user"></i>
-
                                 <input
                                     type="text"
                                     id="lastName"
@@ -158,39 +130,30 @@
                                     required
                                 >
                             </div>
-
                         </div>
 
                     </div>
 
-
-                    <div class="form-group">
-
+                    <div class="auth-input-group">
                         <label for="email">Email Address</label>
-
                         <div class="input-wrapper">
                             <i class="fa-regular fa-envelope"></i>
-
                             <input
                                 type="email"
                                 id="email"
                                 name="email"
-                                placeholder="you@example.com"
+                                placeholder="Enter your email address"
                                 autocomplete="email"
                                 required
                             >
                         </div>
-
                     </div>
 
-
-                    <div class="form-group">
-
+                    <div class="auth-input-group">
                         <label for="password">Password</label>
 
-                        <div class="input-wrapper">
+                        <div class="auth-password-wrapper">
                             <i class="fa-solid fa-lock"></i>
-
                             <input
                                 type="password"
                                 id="password"
@@ -209,28 +172,24 @@
                             >
                                 <i class="fa-regular fa-eye"></i>
                             </button>
-
                         </div>
 
+                        <small class="input-hint">
+                            Use at least 8 characters.
+                        </small>
                     </div>
 
+                    <div class="auth-input-group">
+                        <label for="confirmPassword">Confirm Password</label>
 
-                    <div class="form-group">
-
-                        <label for="confirmPassword">
-                            Confirm Password
-                        </label>
-
-                        <div class="input-wrapper">
+                        <div class="auth-password-wrapper">
                             <i class="fa-solid fa-lock"></i>
-
                             <input
                                 type="password"
                                 id="confirmPassword"
                                 name="confirmPassword"
-                                placeholder="Confirm your password"
+                                placeholder="Enter your password again"
                                 autocomplete="new-password"
-                                minlength="8"
                                 required
                             >
 
@@ -238,74 +197,62 @@
                                 type="button"
                                 class="password-toggle"
                                 data-target="confirmPassword"
-                                aria-label="Show password"
+                                aria-label="Show confirm password"
                             >
                                 <i class="fa-regular fa-eye"></i>
                             </button>
-
                         </div>
-
                     </div>
 
+                    <div class="auth-remember">
+                        <label>
+                            <input
+                                type="checkbox"
+                                id="terms"
+                                name="terms"
+                                required
+                            >
+                            <span>
+                                I agree to the
+                                <a href="terms.html">Terms of Service</a>
+                                and
+                                <a href="privacy.html">Privacy Policy</a>.
+                            </span>
+                        </label>
+                    </div>
 
-                    <label class="terms-check">
+                    <div
+                        id="registerMessage"
+                        class="form-message"
+                        role="status"
+                        aria-live="polite"
+                        style="display: none;"
+                    ></div>
 
-                        <input type="checkbox" id="terms" required>
-
-                        <span>
-                            I agree to the
-                            <a href="terms.html">Terms of Service</a>
-                            and
-                            <a href="privacy.html">Privacy Policy</a>.
-                        </span>
-
-                    </label>
-
-
-                    <button type="submit" class="auth-submit">
-
-                        Create My Account
-
+                    <button type="submit" class="btn btn-primary auth-submit">
+                        Create Account
                         <i class="fa-solid fa-arrow-right"></i>
-
                     </button>
 
-
-                    <p id="registerMessage" class="form-message"></p>
+                    <p class="auth-switch">
+                        Already have an account?
+                        <a href="login.html">Sign In</a>
+                    </p>
 
                 </form>
-
-
-                <div class="auth-divider">
-                    <span>ALREADY HAVE AN ACCOUNT?</span>
-                </div>
-
-
-                <a href="login.html" class="auth-login-link">
-                    Log In To FitGenius
-                </a>
-
-
-                <p class="auth-bottom-note">
-                    Your wellness journey begins with one step.
-                </p>
-
-            </div>
+            </section>
 
         </div>
-
     </main>
 
-
-    <footer class="auth-footer">
-
-        <p>
-            &copy; <span id="currentYear">2026</span>
-            FitGenius. All rights reserved.
-        </p>
-
+    <footer class="footer auth-footer">
+        <div class="container">
+            <p>
+                &copy; <span id="currentYear">2026</span> FitGenius.
+                Built for a healthier tomorrow.
+            </p>
+        </div>
     </footer>
-
 
     <script src="js/script.js"></script>
 
