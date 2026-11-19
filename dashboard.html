@@ -1,470 +1,488 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Dashboard | FitGenius</title>
-
-    <meta name="description" content="Your personal FitGenius health and fitness dashboard.">
-
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Your personal FitGenius fitness and wellness dashboard.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="dashboard-page">
 
-    <!-- SIDEBAR -->
+    <div class="dashboard-layout">
 
-    <aside class="dashboard-sidebar" id="dashboardSidebar">
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
 
-        <a href="index.html" class="logo">
-            <span class="logo-icon">
-                <i class="fa-solid fa-heart-pulse"></i>
-            </span>
-            Fit<span>Genius</span>
-        </a>
-
-        <div class="sidebar-label">MENU</div>
-
-        <nav class="sidebar-navigation">
-
-            <a href="#overview" class="sidebar-link active">
-                <i class="fa-solid fa-house"></i>
-                Overview
-            </a>
-
-            <a href="#activity" class="sidebar-link">
-                <i class="fa-solid fa-person-walking"></i>
-                Activity
-            </a>
-
-            <a href="#sleep" class="sidebar-link">
-                <i class="fa-solid fa-moon"></i>
-                Sleep
-            </a>
-
-            <a href="#recovery" class="sidebar-link">
-                <i class="fa-solid fa-heart-pulse"></i>
-                Recovery
-            </a>
-
-            <a href="#progress" class="sidebar-link">
-                <i class="fa-solid fa-chart-line"></i>
-                Progress
-            </a>
-
-        </nav>
-
-        <div class="sidebar-label">ACCOUNT</div>
-
-        <nav class="sidebar-navigation">
-
-            <a href="#settings" class="sidebar-link">
-                <i class="fa-solid fa-gear"></i>
-                Settings
-            </a>
-
-            <a href="index.html" class="sidebar-link">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Log Out
-            </a>
-
-        </nav>
-
-        <div class="sidebar-bottom">
-
-            <div class="sidebar-support">
-                <i class="fa-solid fa-shield-heart"></i>
-
-                <h4>Your Health Matters</h4>
-
-                <p>
-                    Small improvements today can create
-                    healthier habits tomorrow.
-                </p>
-            </div>
-
-        </div>
-
-    </aside>
-
-
-    <!-- MAIN CONTENT -->
-
-    <main class="dashboard-main" id="overview">
-
-        <!-- TOPBAR -->
-
-        <header class="dashboard-topbar">
-
-            <button class="dashboard-menu-toggle" id="dashboardMenuToggle"
-                aria-label="Open dashboard menu">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-
-            <div class="dashboard-heading">
-
-                <span class="dashboard-date" id="dashboardDate">
-                    YOUR HEALTH OVERVIEW
+            <a href="index.html" class="logo">
+                <span class="logo-icon">
+                    <i class="fa-solid fa-heart-pulse"></i>
                 </span>
-
-                <h1>Dashboard</h1>
-
-            </div>
-
-            <div class="dashboard-user-actions">
-
-                <button class="notification-button" id="notificationButton"
-                    aria-label="Notifications">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notification-dot"></span>
-                </button>
-
-                <div class="dashboard-user">
-
-                    <div class="user-avatar">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-
-                    <div>
-                        <strong id="dashboardUserName">Guest User</strong>
-                        <small>FitGenius Member</small>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </header>
-
-
-        <!-- WELCOME SECTION -->
-
-        <section class="dashboard-welcome">
-
-            <div>
-
-                <span class="section-tag">YOUR JOURNEY CONTINUES</span>
-
-                <h2>
-                    Hello, <span id="welcomeName">Champion</span> 👋
-                </h2>
-
-                <p>
-                    Every step counts. Keep moving towards
-                    a healthier version of yourself.
-                </p>
-
-            </div>
-
-            <a href="#activity" class="dashboard-action-button">
-                Explore Activity
-                <i class="fa-solid fa-arrow-right"></i>
+                <span>Fit<span class="logo-highlight">Genius</span></span>
             </a>
 
-        </section>
+            <div class="sidebar-section">
+                <p class="sidebar-label">MAIN MENU</p>
 
+                <nav class="sidebar-navigation">
 
-        <!-- HEALTH STATISTICS -->
+                    <a href="dashboard.html" class="sidebar-link active">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Dashboard</span>
+                    </a>
 
-        <section class="dashboard-stats" id="activity">
+                    <a href="#activity" class="sidebar-link">
+                        <i class="fa-solid fa-person-walking"></i>
+                        <span>Activity</span>
+                    </a>
 
-            <div class="dashboard-stat-card">
-
-                <div class="stat-card-top">
-                    <span>Today's Steps</span>
-
-                    <div class="stat-icon green">
-                        <i class="fa-solid fa-shoe-prints"></i>
-                    </div>
-                </div>
-
-                <h3 id="stepsValue">0</h3>
-
-                <p>Daily movement</p>
-
-                <div class="stat-progress">
-                    <div class="progress-track">
-                        <div class="progress-fill" style="width: 0%"></div>
-                    </div>
-
-                    <small>Tracking not connected</small>
-                </div>
-
-            </div>
-
-
-            <div class="dashboard-stat-card">
-
-                <div class="stat-card-top">
-                    <span>Distance</span>
-
-                    <div class="stat-icon cyan">
-                        <i class="fa-solid fa-route"></i>
-                    </div>
-                </div>
-
-                <h3 id="distanceValue">0.0 <small>km</small></h3>
-
-                <p>Walking distance</p>
-
-                <div class="stat-status">
-                    <i class="fa-solid fa-circle-info"></i>
-                    Awaiting activity data
-                </div>
-
-            </div>
-
-
-            <div class="dashboard-stat-card">
-
-                <div class="stat-card-top">
-                    <span>Calories</span>
-
-                    <div class="stat-icon orange">
-                        <i class="fa-solid fa-fire"></i>
-                    </div>
-                </div>
-
-                <h3 id="caloriesValue">0 <small>kcal</small></h3>
-
-                <p>Estimated activity energy</p>
-
-                <div class="stat-status">
-                    <i class="fa-solid fa-circle-info"></i>
-                    Awaiting activity data
-                </div>
-
-            </div>
-
-
-            <div class="dashboard-stat-card" id="sleep">
-
-                <div class="stat-card-top">
-                    <span>Sleep</span>
-
-                    <div class="stat-icon purple">
+                    <a href="#sleep" class="sidebar-link">
                         <i class="fa-solid fa-moon"></i>
-                    </div>
-                </div>
+                        <span>Sleep</span>
+                    </a>
 
-                <h3 id="sleepValue">-- <small>hrs</small></h3>
+                    <a href="#recovery" class="sidebar-link">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        <span>Recovery</span>
+                    </a>
 
-                <p>Last night's sleep</p>
+                    <a href="#progress" class="sidebar-link">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Progress</span>
+                    </a>
 
-                <div class="stat-status">
-                    <i class="fa-solid fa-circle-info"></i>
-                    Sleep data not connected
-                </div>
-
+                </nav>
             </div>
 
-        </section>
+
+            <div class="sidebar-section">
+                <p class="sidebar-label">PREFERENCES</p>
+
+                <nav class="sidebar-navigation">
+
+                    <a href="settings.html" class="sidebar-link">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Settings</span>
+                    </a>
+
+                    <a href="privacy.html" class="sidebar-link">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Privacy</span>
+                    </a>
+
+                    <a href="index.html" class="sidebar-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Back to Website</span>
+                    </a>
+
+                </nav>
+            </div>
 
 
-        <!-- ACTIVITY AND RECOVERY -->
+            <div class="sidebar-bottom">
+                <div class="sidebar-upgrade-card">
+                    <div class="upgrade-icon">
+                        <i class="fa-solid fa-sparkles"></i>
+                    </div>
 
-        <section class="dashboard-grid">
+                    <h3>Your wellness matters</h3>
 
-            <!-- ACTIVITY PANEL -->
+                    <p>
+                        Build better habits one day at a time.
+                    </p>
 
-            <div class="dashboard-panel">
+                    <a href="settings.html" class="upgrade-link">
+                        Explore Settings
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
 
-                <div class="panel-heading">
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOPBAR -->
+            <header class="dashboard-topbar">
+
+                <div class="topbar-left">
+
+                    <button
+                        class="dashboard-menu-toggle"
+                        id="dashboardMenuToggle"
+                        type="button"
+                        aria-label="Open dashboard menu"
+                        aria-expanded="false"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
 
                     <div>
-                        <span class="panel-subtitle">MOVEMENT</span>
-                        <h3>Activity Overview</h3>
+                        <p class="topbar-date" id="dashboardDate">
+                            Your personal dashboard
+                        </p>
                     </div>
 
-                    <span class="live-status">
-                        <span></span>
-                        Waiting for data
+                </div>
+
+
+                <div class="topbar-actions">
+
+                    <button
+                        class="notification-button"
+                        id="notificationButton"
+                        type="button"
+                        aria-label="Notifications"
+                    >
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+
+                    <a href="settings.html" class="dashboard-profile">
+                        <span class="profile-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+
+                        <span class="profile-details">
+                            <strong>My Account</strong>
+                            <small>Personal profile</small>
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+
+                </div>
+
+            </header>
+
+
+            <!-- WELCOME -->
+            <section class="dashboard-welcome">
+
+                <div>
+                    <span class="section-tag">
+                        <i class="fa-solid fa-sun"></i>
+                        YOUR WELLNESS SPACE
                     </span>
 
-                </div>
-
-                <div class="activity-placeholder">
-
-                    <div class="activity-placeholder-icon">
-                        <i class="fa-solid fa-chart-area"></i>
-                    </div>
-
-                    <h4>Your activity chart will appear here</h4>
+                    <h1>Welcome to <span class="text-highlight">FitGenius</span></h1>
 
                     <p>
-                        Connect your phone's health data to
-                        start viewing your daily activity.
+                        Your journey towards better health starts with
+                        understanding your daily habits.
                     </p>
-
                 </div>
 
-            </div>
+                <a href="settings.html" class="btn btn-primary">
+                    <i class="fa-solid fa-gear"></i>
+                    Manage Profile
+                </a>
+
+            </section>
 
 
-            <!-- RECOVERY PANEL -->
+            <!-- CONNECTION STATUS -->
+            <section class="dashboard-panel connection-panel">
 
-            <div class="dashboard-panel" id="recovery">
+                <div class="connection-icon">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                </div>
+
+                <div class="connection-content">
+                    <h3>Connect your health data</h3>
+
+                    <p>
+                        Your activity and sleep information will appear here
+                        after a supported health tracking source is connected.
+                    </p>
+                </div>
+
+                <span class="settings-badge">
+                    Not Connected
+                </span>
+
+            </section>
+
+
+            <!-- STATISTICS -->
+            <section class="dashboard-stats" id="activity">
+
+                <article class="stat-card">
+
+                    <div class="stat-card-top">
+                        <span class="stat-icon green">
+                            <i class="fa-solid fa-shoe-prints"></i>
+                        </span>
+
+                        <span class="stat-label">DAILY STEPS</span>
+                    </div>
+
+                    <h2>--</h2>
+
+                    <p>Waiting for activity data</p>
+
+                    <div class="stat-progress">
+                        <div class="stat-progress-bar"></div>
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-card-top">
+                        <span class="stat-icon cyan">
+                            <i class="fa-solid fa-route"></i>
+                        </span>
+
+                        <span class="stat-label">DISTANCE</span>
+                    </div>
+
+                    <h2>-- <small>km</small></h2>
+
+                    <p>Distance data unavailable</p>
+
+                    <div class="stat-progress">
+                        <div class="stat-progress-bar"></div>
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-card-top">
+                        <span class="stat-icon purple">
+                            <i class="fa-solid fa-fire"></i>
+                        </span>
+
+                        <span class="stat-label">CALORIES</span>
+                    </div>
+
+                    <h2>--</h2>
+
+                    <p>Calorie data unavailable</p>
+
+                    <div class="stat-progress">
+                        <div class="stat-progress-bar"></div>
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card" id="sleep">
+
+                    <div class="stat-card-top">
+                        <span class="stat-icon blue">
+                            <i class="fa-solid fa-moon"></i>
+                        </span>
+
+                        <span class="stat-label">SLEEP</span>
+                    </div>
+
+                    <h2>-- <small>hrs</small></h2>
+
+                    <p>Sleep data unavailable</p>
+
+                    <div class="stat-progress">
+                        <div class="stat-progress-bar"></div>
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- DASHBOARD GRID -->
+            <section class="dashboard-grid">
+
+                <!-- ACTIVITY OVERVIEW -->
+                <article class="dashboard-panel activity-panel" id="progress">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <h2>Activity Overview</h2>
+                            <p>Your daily movement summary</p>
+                        </div>
+
+                        <span class="settings-badge">
+                            Awaiting Data
+                        </span>
+
+                    </div>
+
+                    <div class="empty-state">
+
+                        <div class="empty-state-icon">
+                            <i class="fa-solid fa-chart-area"></i>
+                        </div>
+
+                        <h3>Your activity chart will appear here</h3>
+
+                        <p>
+                            Connect a supported health tracking source
+                            to start viewing your movement and activity trends.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <!-- RECOVERY -->
+                <article class="dashboard-panel recovery-panel" id="recovery">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <h2>Recovery & Rest</h2>
+                            <p>Understand your body's recovery</p>
+                        </div>
+
+                        <i class="fa-solid fa-heart-pulse panel-heading-icon"></i>
+
+                    </div>
+
+                    <div class="empty-state">
+
+                        <div class="empty-state-icon">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+
+                        <h3>Recovery insights coming soon</h3>
+
+                        <p>
+                            Recovery recommendations will be based on
+                            available activity and rest information.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- RECOMMENDATIONS -->
+            <section class="dashboard-panel recommendations-panel">
 
                 <div class="panel-heading">
 
                     <div>
-                        <span class="panel-subtitle">WELLNESS</span>
-                        <h3>Recovery Overview</h3>
+                        <h2>Wellness Recommendations</h2>
+                        <p>Simple habits for a healthier lifestyle</p>
                     </div>
 
-                    <i class="fa-solid fa-heart-pulse panel-heading-icon"></i>
-
-                </div>
-
-                <div class="recovery-content">
-
-                    <div class="recovery-circle">
-                        <i class="fa-solid fa-heart"></i>
-                    </div>
-
-                    <h4>Recovery data unavailable</h4>
-
-                    <p>
-                        Your recovery insights will appear
-                        when compatible health data is connected.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- RECOMMENDATIONS -->
-
-        <section class="dashboard-panel recommendations-panel">
-
-            <div class="panel-heading">
-
-                <div>
-                    <span class="panel-subtitle">DAILY WELLNESS</span>
-                    <h3>Health Recommendations</h3>
-                </div>
-
-                <i class="fa-solid fa-wand-magic-sparkles panel-heading-icon"></i>
-
-            </div>
-
-            <div class="recommendation-grid">
-
-                <div class="recommendation-card">
-
-                    <div class="recommendation-icon green">
-                        <i class="fa-solid fa-person-walking"></i>
-                    </div>
-
-                    <div>
-                        <h4>Stay Active</h4>
-
-                        <p>
-                            Take regular movement breaks
-                            throughout your day.
-                        </p>
-                    </div>
+                    <i class="fa-solid fa-lightbulb panel-heading-icon"></i>
 
                 </div>
 
 
-                <div class="recommendation-card">
+                <div class="recommendation-list">
 
-                    <div class="recommendation-icon cyan">
-                        <i class="fa-solid fa-glass-water"></i>
+                    <div class="recommendation-item">
+
+                        <span class="recommendation-icon">
+                            <i class="fa-solid fa-droplet"></i>
+                        </span>
+
+                        <div>
+                            <h3>Stay Hydrated</h3>
+                            <p>
+                                Drink water regularly throughout the day.
+                            </p>
+                        </div>
+
                     </div>
 
-                    <div>
-                        <h4>Stay Hydrated</h4>
 
-                        <p>
-                            Drink water regularly throughout
-                            the day.
-                        </p>
+                    <div class="recommendation-item">
+
+                        <span class="recommendation-icon">
+                            <i class="fa-solid fa-person-walking"></i>
+                        </span>
+
+                        <div>
+                            <h3>Keep Moving</h3>
+                            <p>
+                                Take comfortable movement breaks during the day.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="recommendation-item">
+
+                        <span class="recommendation-icon">
+                            <i class="fa-solid fa-bed"></i>
+                        </span>
+
+                        <div>
+                            <h3>Prioritise Rest</h3>
+                            <p>
+                                Maintain a consistent sleep schedule where possible.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="recommendation-item">
+
+                        <span class="recommendation-icon">
+                            <i class="fa-solid fa-spa"></i>
+                        </span>
+
+                        <div>
+                            <h3>Take Time to Relax</h3>
+                            <p>
+                                Make time for relaxation and recovery.
+                            </p>
+                        </div>
+
                     </div>
 
                 </div>
 
-
-                <div class="recommendation-card">
-
-                    <div class="recommendation-icon purple">
-                        <i class="fa-solid fa-bed"></i>
-                    </div>
-
-                    <div>
-                        <h4>Prioritise Rest</h4>
-
-                        <p>
-                            Maintain a consistent sleep routine
-                            and allow time for recovery.
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
+            </section>
 
 
-        <!-- PROGRESS -->
-
-        <section class="dashboard-panel progress-panel" id="progress">
-
-            <div class="panel-heading">
-
-                <div>
-                    <span class="panel-subtitle">YOUR DEVELOPMENT</span>
-                    <h3>Fitness Progress</h3>
-                </div>
-
-                <i class="fa-solid fa-trophy panel-heading-icon"></i>
-
-            </div>
-
-            <div class="progress-empty">
-
-                <i class="fa-solid fa-chart-line"></i>
-
-                <h4>Your progress starts here</h4>
+            <!-- FOOTER -->
+            <footer class="dashboard-footer">
 
                 <p>
-                    Your achievements and fitness history
-                    will be displayed once tracking is connected.
+                    &copy; <span id="dashboardYear">2026</span>
+                    FitGenius. Built for a healthier tomorrow.
                 </p>
 
-            </div>
+                <div>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="terms.html">Terms</a>
+                    <a href="index.html">Website</a>
+                </div>
 
-        </section>
+            </footer>
 
+        </main>
 
-        <!-- FOOTER -->
-
-        <footer class="dashboard-footer">
-
-            <p>
-                © <span id="dashboardYear"></span>
-                FitGenius. Understand Your Body. Improve Your Life.
-            </p>
-
-        </footer>
-
-    </main>
+    </div>
 
 
+    <!-- JAVASCRIPT -->
     <script src="js/script.js"></script>
 
 </body>
