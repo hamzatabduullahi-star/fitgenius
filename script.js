@@ -6,7 +6,27 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     /* =========================================
-       1. GLOBAL ELEMENTS
+       1. SUPABASE CONNECTION
+    ========================================= */
+
+    const supabaseClient = window.fitgeniusSupabase || null;
+
+    function requireSupabase(messageElement) {
+        if (!supabaseClient) {
+            showMessage(
+                messageElement,
+                "Authentication service is unavailable. Please refresh the page.",
+                "error"
+            );
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /* =========================================
+       2. GLOBAL ELEMENTS
     ========================================= */
 
     const header = document.getElementById("header");
@@ -17,13 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (currentYear) currentYear.textContent = year;
     if (dashboardYear) dashboardYear.textContent = year;
-
-
-    /* =========================================
-       2. SUPABASE CLIENT
-    ========================================= */
-
-    const supabaseClient = window.fitgeniusSupabase || null;
 
 
     /* =========================================
@@ -78,12 +91,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateHeader() {
 
-        if (!header) return;
-
-        if (window.scrollY > 40) {
-            header.classList.add("scrolled");
-        } else {
-            header.classList.remove("scrolled");
+        if (header) {
+            header.classList.toggle("scrolled", window.scrollY > 40);
         }
 
     }
@@ -154,7 +163,6 @@ document.addEventListener("DOMContentLoaded", function () {
         revealElements.forEach(function (element) {
 
             element.classList.add("reveal");
-
             observer.observe(element);
 
         });
@@ -177,7 +185,6 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener("click", function () {
 
             const targetId = this.getAttribute("data-target");
-
             const passwordField = document.getElementById(targetId);
 
             if (!passwordField) return;
@@ -189,12 +196,15 @@ document.addEventListener("DOMContentLoaded", function () {
             const icon = this.querySelector("i");
 
             if (icon) {
-
                 icon.className = isPassword
                     ? "fa-solid fa-eye-slash"
                     : "fa-solid fa-eye";
-
             }
+
+            this.setAttribute(
+                "aria-label",
+                isPassword ? "Hide password" : "Show password"
+            );
 
         });
 
@@ -202,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       8. MESSAGE DISPLAY FUNCTION
+       8. MESSAGE DISPLAY
     ========================================= */
 
     function showMessage(element, message, type) {
@@ -212,17 +222,15 @@ document.addEventListener("DOMContentLoaded", function () {
         element.textContent = message;
         element.style.display = "block";
 
-        if (type === "success") {
-            element.style.color = "#9cff57";
-        } else {
-            element.style.color = "#ff647c";
-        }
+        element.style.color = type === "success"
+            ? "#9cff57"
+            : "#ff647c";
 
     }
 
 
     /* =========================================
-       9. REGISTRATION — SUPABASE AUTH
+       9. REGISTRATION — SUPABASE
     ========================================= */
 
     const registerForm = document.getElementById("registerForm");
@@ -240,27 +248,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const confirmPassword = document.getElementById("confirmPassword");
             const terms = document.getElementById("terms");
             const message = document.getElementById("registerMessage");
+            const submitButton = registerForm.querySelector('[type="submit"]');
 
-            const submitButton = registerForm.querySelector(
-                'button[type="submit"]'
-            );
+            if (!requireSupabase(message)) return;
 
-            if (
-                !firstName ||
-                !lastName ||
-                !email ||
-                !password ||
-                !confirmPassword
-            ) {
-
-                showMessage(
-                    message,
-                    "Registration form is incomplete.",
-                    "error"
-                );
-
+            if (!firstName || !lastName || !email || !password || !confirmPassword) {
+                showMessage(message, "Registration form is incomplete.", "error");
                 return;
-
             }
 
             if (
@@ -270,100 +264,42 @@ document.addEventListener("DOMContentLoaded", function () {
                 !password.value ||
                 !confirmPassword.value
             ) {
-
-                showMessage(
-                    message,
-                    "Please complete all required fields.",
-                    "error"
-                );
-
+                showMessage(message, "Please complete all required fields.", "error");
                 return;
-
             }
 
             if (!email.validity.valid) {
-
-                showMessage(
-                    message,
-                    "Please enter a valid email address.",
-                    "error"
-                );
-
+                showMessage(message, "Please enter a valid email address.", "error");
                 return;
-
             }
 
             if (password.value.length < 8) {
-
-                showMessage(
-                    message,
-                    "Your password must contain at least 8 characters.",
-                    "error"
-                );
-
+                showMessage(message, "Your password must contain at least 8 characters.", "error");
                 return;
-
             }
 
             if (password.value !== confirmPassword.value) {
-
-                showMessage(
-                    message,
-                    "Your passwords do not match.",
-                    "error"
-                );
-
+                showMessage(message, "Your passwords do not match.", "error");
                 return;
-
             }
 
             if (terms && !terms.checked) {
-
-                showMessage(
-                    message,
-                    "Please accept the Terms and Conditions.",
-                    "error"
-                );
-
+                showMessage(message, "Please accept the Terms and Conditions.", "error");
                 return;
-
             }
 
-            if (!supabaseClient) {
+            if (submitButton) submitButton.disabled = true;
 
-                showMessage(
-                    message,
-                    "Connection error. Please refresh the page and try again.",
-                    "error"
-                );
-
-                console.error("Supabase client is not available.");
-
-                return;
-
-            }
-
-            const originalButtonContent = submitButton
-                ? submitButton.innerHTML
-                : "";
-
-            if (submitButton) {
-
-                submitButton.disabled = true;
-                submitButton.textContent = "Creating your account...";
-
-            }
+            showMessage(message, "Creating your FitGenius account...", "success");
 
             try {
 
                 const { data, error } = await supabaseClient.auth.signUp({
 
                     email: email.value.trim(),
-
                     password: password.value,
 
                     options: {
-
                         data: {
                             first_name: firstName.value.trim(),
                             last_name: lastName.value.trim()
@@ -373,32 +309,27 @@ document.addEventListener("DOMContentLoaded", function () {
                             "login.html",
                             window.location.href
                         ).href
-
                     }
 
                 });
 
-                if (error) {
-                    throw error;
-                }
+                if (error) throw error;
 
                 if (data.session) {
 
                     showMessage(
                         message,
-                        "Your account has been created successfully! Redirecting...",
+                        "Your account has been created successfully. Redirecting...",
                         "success"
                     );
 
-                    setTimeout(function () {
-                        window.location.href = "dashboard.html";
-                    }, 1500);
+                    window.location.href = "dashboard.html";
 
                 } else {
 
                     showMessage(
                         message,
-                        "Your account has been created! Please check your email and click the verification link before signing in.",
+                        "Your account has been created. Please check your email and confirm your address before signing in.",
                         "success"
                     );
 
@@ -410,29 +341,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 console.error("Registration error:", error);
 
-                let errorMessage = error.message ||
-                    "Unable to create your account. Please try again.";
-
-                if (
-                    error.message &&
-                    error.message.toLowerCase().includes("already registered")
-                ) {
-
-                    errorMessage =
-                        "This email is already registered. Please sign in instead.";
-
-                }
-
-                showMessage(message, errorMessage, "error");
+                showMessage(
+                    message,
+                    error.message || "Unable to create your account. Please try again.",
+                    "error"
+                );
 
             } finally {
 
-                if (submitButton) {
-
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = originalButtonContent;
-
-                }
+                if (submitButton) submitButton.disabled = false;
 
             }
 
@@ -442,51 +359,90 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       10. LOGIN FORM
-       LOGIN CONNECTION WILL BE COMPLETED NEXT
+       10. LOGIN — SUPABASE
     ========================================= */
 
     const loginForm = document.getElementById("loginForm");
 
     if (loginForm) {
 
-        loginForm.addEventListener("submit", function (event) {
+        loginForm.addEventListener("submit", async function (event) {
 
             event.preventDefault();
 
             const email = document.getElementById("loginEmail");
             const password = document.getElementById("loginPassword");
             const message = document.getElementById("loginMessage");
+            const submitButton = loginForm.querySelector('[type="submit"]');
+
+            if (!requireSupabase(message)) return;
 
             if (!email || !password) {
-
-                showMessage(
-                    message,
-                    "Login form is incomplete.",
-                    "error"
-                );
-
+                showMessage(message, "Login form is incomplete.", "error");
                 return;
-
             }
 
             if (!email.value.trim() || !password.value) {
+                showMessage(message, "Please enter your email and password.", "error");
+                return;
+            }
+
+            if (!email.validity.valid) {
+                showMessage(message, "Please enter a valid email address.", "error");
+                return;
+            }
+
+            if (submitButton) submitButton.disabled = true;
+
+            showMessage(message, "Signing you in...", "success");
+
+            try {
+
+                const { data, error } =
+                    await supabaseClient.auth.signInWithPassword({
+
+                        email: email.value.trim(),
+                        password: password.value
+
+                    });
+
+                if (error) throw error;
+
+                if (data.session) {
+
+                    showMessage(
+                        message,
+                        "Login successful. Opening your dashboard...",
+                        "success"
+                    );
+
+                    window.location.href = "dashboard.html";
+
+                } else {
+
+                    showMessage(
+                        message,
+                        "Unable to establish your session. Please try again.",
+                        "error"
+                    );
+
+                }
+
+            } catch (error) {
+
+                console.error("Login error:", error);
 
                 showMessage(
                     message,
-                    "Please enter your email and password.",
+                    error.message || "Login failed. Please check your details.",
                     "error"
                 );
 
-                return;
+            } finally {
+
+                if (submitButton) submitButton.disabled = false;
 
             }
-
-            showMessage(
-                message,
-                "Your login form is ready. We'll connect sign-in next.",
-                "success"
-            );
 
         });
 
@@ -495,87 +451,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =========================================
        11. FORGOT PASSWORD
+       FULL RESET FLOW WILL BE ADDED LATER
     ========================================= */
 
     const forgotPassword = document.getElementById("forgotPassword");
 
     if (forgotPassword) {
 
-        forgotPassword.addEventListener("click", async function (event) {
+        forgotPassword.addEventListener("click", function (event) {
 
             event.preventDefault();
 
-            const email = document.getElementById("loginEmail");
             const message = document.getElementById("loginMessage");
 
-            if (!email || !email.value.trim()) {
-
-                showMessage(
-                    message,
-                    "Enter your email address first.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-            if (!email.validity.valid) {
-
-                showMessage(
-                    message,
-                    "Please enter a valid email address.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-            if (!supabaseClient) {
-
-                showMessage(
-                    message,
-                    "Authentication is not connected yet.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-            try {
-
-                const { error } =
-                    await supabaseClient.auth.resetPasswordForEmail(
-                        email.value.trim(),
-                        {
-                            redirectTo: new URL(
-                                "login.html",
-                                window.location.href
-                            ).href
-                        }
-                    );
-
-                if (error) throw error;
-
-                showMessage(
-                    message,
-                    "If an account exists for this email, a password recovery link will be sent.",
-                    "success"
-                );
-
-            } catch (error) {
-
-                console.error("Password recovery error:", error);
-
-                showMessage(
-                    message,
-                    error.message || "Unable to send the recovery email.",
-                    "error"
-                );
-
-            }
+            showMessage(
+                message,
+                "Password recovery is not fully configured yet. We'll add a secure reset page next.",
+                "error"
+            );
 
         });
 
@@ -586,11 +479,8 @@ document.addEventListener("DOMContentLoaded", function () {
        12. DASHBOARD MOBILE SIDEBAR
     ========================================= */
 
-    const dashboardMenuToggle =
-        document.getElementById("dashboardMenuToggle");
-
-    const dashboardSidebar =
-        document.getElementById("dashboardSidebar");
+    const dashboardMenuToggle = document.getElementById("dashboardMenuToggle");
+    const dashboardSidebar = document.getElementById("dashboardSidebar");
 
     if (dashboardMenuToggle && dashboardSidebar) {
 
@@ -602,8 +492,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (icon) {
 
-                icon.className =
-                    dashboardSidebar.classList.contains("active")
+                icon.className = dashboardSidebar.classList.contains("active")
                     ? "fa-solid fa-xmark"
                     : "fa-solid fa-bars";
 
@@ -611,24 +500,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
 
-        dashboardSidebar.querySelectorAll(".sidebar-link").forEach(
-            function (link) {
+        dashboardSidebar.querySelectorAll(".sidebar-link").forEach(function (link) {
 
-                link.addEventListener("click", function () {
+            link.addEventListener("click", function () {
 
-                    dashboardSidebar.classList.remove("active");
+                dashboardSidebar.classList.remove("active");
 
-                    dashboardSidebar.querySelectorAll(".sidebar-link")
-                        .forEach(function (item) {
-                            item.classList.remove("active");
-                        });
-
-                    this.classList.add("active");
-
+                dashboardSidebar.querySelectorAll(".sidebar-link").forEach(function (item) {
+                    item.classList.remove("active");
                 });
 
-            }
-        );
+                this.classList.add("active");
+
+            });
+
+        });
 
     }
 
@@ -644,12 +530,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const today = new Date();
 
         dashboardDate.textContent = today.toLocaleDateString("en-US", {
-
             weekday: "long",
             year: "numeric",
             month: "long",
             day: "numeric"
-
         });
 
     }
@@ -673,16 +557,12 @@ document.addEventListener("DOMContentLoaded", function () {
             toast.style.bottom = "25px";
             toast.style.right = "25px";
             toast.style.zIndex = "9999";
-
             toast.style.padding = "15px 22px";
             toast.style.borderRadius = "14px";
-
             toast.style.background = "#10251b";
             toast.style.border = "1px solid rgba(156,255,87,.4)";
-
             toast.style.color = "#9cff57";
             toast.style.fontSize = "14px";
-
             toast.style.boxShadow = "0 10px 35px rgba(0,0,0,.3)";
 
             document.body.appendChild(toast);
@@ -705,17 +585,12 @@ document.addEventListener("DOMContentLoaded", function () {
        15. DASHBOARD NOTIFICATIONS
     ========================================= */
 
-    const notificationButton =
-        document.getElementById("notificationButton");
+    const notificationButton = document.getElementById("notificationButton");
 
     if (notificationButton) {
 
         notificationButton.addEventListener("click", function () {
-
-            showDashboardMessage(
-                "You have no new notifications yet."
-            );
-
+            showDashboardMessage("You have no new notifications yet.");
         });
 
     }
@@ -726,11 +601,8 @@ document.addEventListener("DOMContentLoaded", function () {
     ========================================= */
 
     const profileForm = document.getElementById("profileForm");
-
     const saveSettings = document.getElementById("saveSettings");
-
-    const settingsMessage =
-        document.getElementById("settingsMessage");
+    const settingsMessage = document.getElementById("settingsMessage");
 
     const notificationOptions = [
         "activityNotifications",
@@ -741,15 +613,9 @@ document.addEventListener("DOMContentLoaded", function () {
     function getSavedSettings() {
 
         try {
-
-            return JSON.parse(
-                localStorage.getItem("fitgeniusSettings") || "{}"
-            );
-
+            return JSON.parse(localStorage.getItem("fitgeniusSettings") || "{}");
         } catch (error) {
-
             return {};
-
         }
 
     }
@@ -766,28 +632,21 @@ document.addEventListener("DOMContentLoaded", function () {
             return true;
 
         } catch (error) {
-
             return false;
-
         }
 
     }
-
-
-    /* LOAD SAVED PROFILE SETTINGS */
 
     const savedSettings = getSavedSettings();
 
     if (profileForm) {
 
-        const profileFields = [
+        [
             "profileFirstName",
             "profileLastName",
             "profileEmail",
             "profileAge"
-        ];
-
-        profileFields.forEach(function (id) {
+        ].forEach(function (id) {
 
             const field = document.getElementById(id);
 
@@ -798,9 +657,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     }
-
-
-    /* LOAD NOTIFICATION PREFERENCES */
 
     notificationOptions.forEach(function (id) {
 
@@ -813,7 +669,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /* SAVE PROFILE INFORMATION */
+    /* =========================================
+       17. SAVE PROFILE INFORMATION
+    ========================================= */
 
     if (profileForm) {
 
@@ -821,17 +679,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             event.preventDefault();
 
-            const firstName =
-                document.getElementById("profileFirstName");
-
-            const lastName =
-                document.getElementById("profileLastName");
-
-            const email =
-                document.getElementById("profileEmail");
-
-            const age =
-                document.getElementById("profileAge");
+            const firstName = document.getElementById("profileFirstName");
+            const lastName = document.getElementById("profileLastName");
+            const email = document.getElementById("profileEmail");
+            const age = document.getElementById("profileAge");
 
             if (!firstName || !lastName || !email || !age) return;
 
@@ -841,24 +692,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 !email.value.trim()
             ) {
 
-                showMessage(
-                    settingsMessage,
-                    "Please complete all required fields.",
-                    "error"
-                );
-
+                showMessage(settingsMessage, "Please complete all required fields.", "error");
                 return;
 
             }
 
             if (!email.validity.valid) {
 
-                showMessage(
-                    settingsMessage,
-                    "Please enter a valid email address.",
-                    "error"
-                );
-
+                showMessage(settingsMessage, "Please enter a valid email address.", "error");
                 return;
 
             }
@@ -872,12 +713,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 )
             ) {
 
-                showMessage(
-                    settingsMessage,
-                    "Please enter a valid age.",
-                    "error"
-                );
-
+                showMessage(settingsMessage, "Please enter a valid age.", "error");
                 return;
 
             }
@@ -912,7 +748,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* SAVE NOTIFICATION PREFERENCES */
+    /* =========================================
+       18. SAVE NOTIFICATION PREFERENCES
+    ========================================= */
 
     if (saveSettings) {
 
@@ -954,7 +792,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       17. GENERAL INITIALIZATION
+       19. GENERAL INITIALIZATION
     ========================================= */
 
     console.log("FitGenius initialized successfully!");
