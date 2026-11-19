@@ -297,4 +297,148 @@ if (forgotPassword) {
     });
 
 }
+/* =========================================
+   FITGENIUS — DASHBOARD FUNCTIONALITY
+========================================= */
+
+// MOBILE SIDEBAR
+
+const dashboardMenuToggle = document.getElementById("dashboardMenuToggle");
+const dashboardSidebar = document.getElementById("dashboardSidebar");
+
+if (dashboardMenuToggle && dashboardSidebar) {
+
+    dashboardMenuToggle.addEventListener("click", function() {
+
+        dashboardSidebar.classList.toggle("active");
+
+        const icon = dashboardMenuToggle.querySelector("i");
+
+        if (icon) {
+            icon.classList.toggle("fa-bars");
+            icon.classList.toggle("fa-xmark");
+        }
+
+    });
+
+}
+
+
+// CLOSE SIDEBAR AFTER CLICKING A LINK
+
+document.querySelectorAll(".sidebar-link").forEach(link => {
+
+    link.addEventListener("click", function() {
+
+        if (dashboardSidebar) {
+            dashboardSidebar.classList.remove("active");
+        }
+
+        if (dashboardMenuToggle) {
+            const icon = dashboardMenuToggle.querySelector("i");
+
+            if (icon) {
+                icon.classList.add("fa-bars");
+                icon.classList.remove("fa-xmark");
+            }
+        }
+
+        document.querySelectorAll(".sidebar-link").forEach(item => {
+            item.classList.remove("active");
+        });
+
+        this.classList.add("active");
+
+    });
+
+});
+
+
+// AUTOMATIC DASHBOARD DATE
+
+const dashboardDate = document.getElementById("dashboardDate");
+
+if (dashboardDate) {
+
+    const today = new Date();
+
+    dashboardDate.textContent = today.toLocaleDateString("en-GB", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    }).toUpperCase();
+
+}
+
+
+// AUTOMATIC FOOTER YEAR
+
+const dashboardYear = document.getElementById("dashboardYear");
+
+if (dashboardYear) {
+    dashboardYear.textContent = new Date().getFullYear();
+}
+
+
+// NOTIFICATION BUTTON
+
+const notificationButton = document.getElementById("notificationButton");
+
+if (notificationButton) {
+
+    notificationButton.addEventListener("click", function() {
+
+        showDashboardMessage(
+            "You have no new notifications yet."
+        );
+
+    });
+
+}
+
+
+// DASHBOARD MESSAGE
+
+function showDashboardMessage(messageText) {
+
+    let messageBox = document.getElementById("dashboardToast");
+
+    if (!messageBox) {
+
+        messageBox = document.createElement("div");
+
+        messageBox.id = "dashboardToast";
+
+        messageBox.style.position = "fixed";
+        messageBox.style.bottom = "25px";
+        messageBox.style.right = "25px";
+        messageBox.style.padding = "16px 22px";
+        messageBox.style.background = "#111a30";
+        messageBox.style.color = "#9cff57";
+        messageBox.style.border = "1px solid rgba(156,255,87,.3)";
+        messageBox.style.borderRadius = "12px";
+        messageBox.style.zIndex = "9999";
+        messageBox.style.boxShadow = "0 10px 35px rgba(0,0,0,.3)";
+        messageBox.style.fontSize = "14px";
+
+        document.body.appendChild(messageBox);
+
+    }
+
+    messageBox.textContent = messageText;
+    messageBox.style.display = "block";
+
+    clearTimeout(window.dashboardToastTimer);
+
+    window.dashboardToastTimer = setTimeout(() => {
+        messageBox.style.display = "none";
+    }, 3500);
+
+}
+
+
+// DASHBOARD INITIALIZATION
+
+console.log("FitGenius Dashboard initialized successfully.");
 
