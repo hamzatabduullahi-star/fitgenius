@@ -236,4 +236,65 @@ if (registerForm) {
         console.log("FitGenius registration form validated.");
     });
 }
+/* =========================================
+   FITGENIUS — LOGIN FUNCTIONALITY
+========================================= */
+
+const loginForm = document.getElementById("loginForm");
+
+if (loginForm) {
+
+    loginForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value;
+        const message = document.getElementById("loginMessage");
+
+        message.style.color = "#ff7070";
+        message.textContent = "";
+
+        if (!email || !password) {
+            message.textContent = "Please enter your email and password.";
+            return;
+        }
+
+        if (password.length < 8) {
+            message.textContent = "Please enter a valid password.";
+            return;
+        }
+
+        message.style.color = "#9cff57";
+
+        message.textContent =
+            "Your details are valid. Secure login will be available after authentication setup.";
+
+        console.log("FitGenius login form validated.");
+
+    });
+
+}
+
+
+// FORGOT PASSWORD INTERACTION
+
+const forgotPassword = document.getElementById("forgotPassword");
+
+if (forgotPassword) {
+
+    forgotPassword.addEventListener("click", function(event) {
+
+        event.preventDefault();
+
+        const message = document.getElementById("loginMessage");
+
+        message.style.color = "#45d7ff";
+
+        message.textContent =
+            "Password recovery will be available after Supabase integration.";
+
+    });
+
+}
 
