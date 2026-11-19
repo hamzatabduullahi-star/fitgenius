@@ -792,7 +792,108 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       19. GENERAL INITIALIZATION
+       19. DASHBOARD AUTHENTICATION PROTECTION
+    ========================================= */
+
+    const logoutButton = document.getElementById("logoutButton");
+
+    const dashboardUserName = document.getElementById("dashboardUserName");
+    const dashboardUserEmail = document.getElementById("dashboardUserEmail");
+
+    const isDashboardPage =
+        window.location.pathname.endsWith("/dashboard.html") ||
+        window.location.pathname === "dashboard.html";
+
+    if (isDashboardPage) {
+
+        async function protectDashboard() {
+
+            if (!supabaseClient) {
+                window.location.replace("login.html");
+                return;
+            }
+
+            try {
+
+                const { data, error } = await supabaseClient.auth.getSession();
+
+                if (error || !data.session) {
+                    window.location.replace("login.html");
+                    return;
+                }
+
+                const user = data.session.user;
+
+                const firstName = user.user_metadata?.first_name || "";
+                const lastName = user.user_metadata?.last_name || "";
+
+                const fullName = `${firstName} ${lastName}`.trim();
+
+                if (dashboardUserName) {
+                    dashboardUserName.textContent =
+                        fullName || "FitGenius Member";
+                }
+
+                if (dashboardUserEmail) {
+                    dashboardUserEmail.textContent = user.email || "";
+                }
+
+            } catch (error) {
+
+                console.error("Dashboard authentication error:", error);
+
+                window.location.replace("login.html");
+
+            }
+
+        }
+
+        protectDashboard();
+
+
+        /* SIGN OUT */
+
+        if (logoutButton) {
+
+            logoutButton.addEventListener("click", async function () {
+
+                logoutButton.disabled = true;
+
+                logoutButton.innerHTML =
+                    '<i class="fa-solid fa-spinner fa-spin"></i> Signing out...';
+
+                try {
+
+                    const { error } = await supabaseClient.auth.signOut();
+
+                    if (error) throw error;
+
+                    window.location.replace("login.html");
+
+                } catch (error) {
+
+                    console.error("Sign out error:", error);
+
+                    showDashboardMessage(
+                        "Unable to sign out. Please try again."
+                    );
+
+                    logoutButton.disabled = false;
+
+                    logoutButton.innerHTML =
+                        '<i class="fa-solid fa-right-from-bracket"></i> Sign Out';
+
+                }
+
+            });
+
+        }
+
+    }
+
+
+    /* =========================================
+       20. GENERAL INITIALIZATION
     ========================================= */
 
     console.log("FitGenius initialized successfully!");
