@@ -1285,3 +1285,47 @@ button {
         font-size: 2.3rem;
     }
 }
+/* =========================================
+   FITGENIUS — LOGIN PAGE
+========================================= */
+
+.auth-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: .82rem;
+    margin: 2px 0 5px;
+}
+
+.auth-remember {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--text-muted);
+}
+
+.auth-remember input {
+    accent-color: var(--primary);
+}
+
+.auth-options a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.auth-options a:hover,
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+#loginMessage {
+    min-height: 18px;
+}
+
+@media (max-width: 380px) {
+    .auth-options {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
