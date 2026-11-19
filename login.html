@@ -15,6 +15,341 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- LOGIN PAGE GLASS BACKGROUND -->
+    <style>
+
+        body.auth-page {
+            min-height: 100vh;
+            margin: 0;
+            color: #f4f7ff;
+            background:
+                radial-gradient(ellipse at 15% 20%, rgba(0, 255, 153, 0.15), transparent 38%),
+                radial-gradient(ellipse at 85% 25%, rgba(0, 195, 255, 0.16), transparent 40%),
+                radial-gradient(ellipse at 50% 100%, rgba(91, 75, 255, 0.13), transparent 45%),
+                #070c18 !important;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body.auth-page::before {
+            content: "";
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            top: 20%;
+            left: -150px;
+            background: rgba(0, 255, 153, 0.12);
+            filter: blur(110px);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body.auth-page::after {
+            content: "";
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            right: -180px;
+            bottom: 5%;
+            background: rgba(0, 195, 255, 0.13);
+            filter: blur(120px);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .auth-page .header,
+        .auth-page .auth-main,
+        .auth-page .footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-page .header {
+            background: rgba(7, 12, 24, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .auth-page .auth-main {
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            padding: 65px 20px;
+        }
+
+        .auth-page .auth-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 65px;
+        }
+
+        .auth-page .auth-information h1 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            line-height: 1.15;
+            color: #ffffff;
+            margin: 22px 0;
+        }
+
+        .auth-page .auth-information h1 span {
+            display: block;
+            color: #9cff57;
+        }
+
+        .auth-page .auth-information > p {
+            color: #aab6ca;
+            line-height: 1.8;
+            max-width: 480px;
+        }
+
+        .auth-page .section-label {
+            color: #9cff57;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .auth-page .auth-benefits {
+            list-style: none;
+            padding: 0;
+            margin-top: 30px;
+        }
+
+        .auth-page .auth-benefits li {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 18px 0;
+            color: #d5deed;
+        }
+
+        .auth-page .auth-benefits i {
+            color: #9cff57;
+            font-size: 18px;
+        }
+
+        .auth-page .auth-form-card {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 38px;
+            background: rgba(19, 29, 49, 0.68);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.35);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        .auth-page .auth-form-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-page .auth-icon {
+            width: 62px;
+            height: 62px;
+            margin: 0 auto 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 18px;
+            color: #9cff57;
+            background: rgba(156,255,87,0.10);
+            border: 1px solid rgba(156,255,87,0.2);
+            font-size: 23px;
+        }
+
+        .auth-page .auth-form-heading h2 {
+            color: #ffffff;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .auth-page .auth-form-heading p {
+            color: #aab6ca;
+        }
+
+        .auth-page .auth-input-group {
+            margin-bottom: 21px;
+        }
+
+        .auth-page .auth-input-group label {
+            display: block;
+            color: #e5eaf4;
+            margin-bottom: 9px;
+            font-weight: 600;
+        }
+
+        .auth-page .auth-input-group input {
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 52px;
+            padding: 13px 15px;
+            color: #ffffff;
+            background: rgba(4, 10, 22, 0.65);
+            border: 1px solid rgba(255,255,255,0.13);
+            border-radius: 12px;
+            outline: none;
+            font-family: "DM Sans", sans-serif;
+        }
+
+        .auth-page .auth-input-group input:focus {
+            border-color: #9cff57;
+            box-shadow: 0 0 0 3px rgba(156,255,87,0.09);
+        }
+
+        .auth-page .auth-input-group input::placeholder {
+            color: #718096;
+        }
+
+        .auth-page .auth-password-wrapper {
+            position: relative;
+        }
+
+        .auth-page .auth-password-wrapper input {
+            padding-right: 48px;
+        }
+
+        .auth-page .password-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: #9eacc0;
+            cursor: pointer;
+        }
+
+        .auth-page .auth-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin: 18px 0 22px;
+            font-size: 13px;
+        }
+
+        .auth-page .auth-remember {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #b8c4d7;
+        }
+
+        .auth-page .auth-options a,
+        .auth-page .auth-switch a {
+            color: #9cff57;
+            text-decoration: none;
+        }
+
+        .auth-page .auth-options a:hover,
+        .auth-page .auth-switch a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-page .auth-submit {
+            width: 100%;
+            min-height: 52px;
+            justify-content: center;
+            gap: 12px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(110deg, #9cff57, #45d7ff);
+            color: #07111b;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .auth-page .auth-submit:hover {
+            filter: brightness(1.08);
+            transform: translateY(-2px);
+        }
+
+        .auth-page .auth-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .auth-page .auth-switch {
+            text-align: center;
+            color: #aab6ca;
+            margin-top: 25px;
+            font-size: 14px;
+        }
+
+        .auth-page .form-message {
+            margin-bottom: 18px;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            line-height: 1.5;
+        }
+
+        .auth-page .footer {
+            background: transparent;
+            border-top: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .auth-page .footer-bottom {
+            color: #8794a9;
+        }
+
+        @media (max-width: 850px) {
+
+            .auth-page .auth-container {
+                grid-template-columns: 1fr;
+                gap: 35px;
+                max-width: 550px;
+            }
+
+            .auth-page .auth-information {
+                text-align: center;
+            }
+
+            .auth-page .auth-information > p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .auth-page .auth-benefits {
+                display: inline-block;
+                text-align: left;
+            }
+
+            .auth-page .auth-main {
+                padding: 45px 18px;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+
+            .auth-page .auth-form-card {
+                padding: 25px 20px;
+            }
+
+            .auth-page .auth-information h1 {
+                font-size: 34px;
+            }
+
+            .auth-page .auth-options {
+                font-size: 12px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 <body class="auth-page">
@@ -101,7 +436,6 @@
 
                 <form id="loginForm" novalidate>
 
-                    <!-- EMAIL -->
                     <div class="auth-input-group">
 
                         <label for="loginEmail">Email Address</label>
@@ -118,7 +452,6 @@
                     </div>
 
 
-                    <!-- PASSWORD -->
                     <div class="auth-input-group">
 
                         <label for="loginPassword">Password</label>
@@ -148,7 +481,6 @@
                     </div>
 
 
-                    <!-- REMEMBER AND FORGOT PASSWORD -->
                     <div class="auth-options">
 
                         <label class="auth-remember">
@@ -170,7 +502,6 @@
                     </div>
 
 
-                    <!-- LOGIN MESSAGE -->
                     <div
                         id="loginMessage"
                         class="form-message"
@@ -180,7 +511,6 @@
                     ></div>
 
 
-                    <!-- SUBMIT BUTTON -->
                     <button type="submit" class="btn btn-primary auth-submit">
 
                         Sign In
@@ -190,7 +520,6 @@
                     </button>
 
 
-                    <!-- REGISTER LINK -->
                     <p class="auth-switch">
 
                         Don't have an account?
