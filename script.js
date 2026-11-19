@@ -441,4 +441,134 @@ function showDashboardMessage(messageText) {
 // DASHBOARD INITIALIZATION
 
 console.log("FitGenius Dashboard initialized successfully.");
+/* =========================================
+   FITGENIUS — SETTINGS FUNCTIONALITY
+========================================= */
 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const profileForm = document.getElementById("profileForm");
+    const saveSettings = document.getElementById("saveSettings");
+    const settingsMessage = document.getElementById("settingsMessage");
+
+    const notificationOptions = [
+        "activityNotifications",
+        "sleepNotifications",
+        "wellnessNotifications"
+    ];
+
+    // Load saved settings
+    const savedSettings = JSON.parse(
+        localStorage.getItem("fitgeniusSettings") || "{}"
+    );
+
+    if (profileForm) {
+        const fields = [
+            "profileFirstName",
+            "profileLastName",
+            "profileEmail",
+            "profileAge"
+        ];
+
+        fields.forEach(function (id) {
+            const field = document.getElementById(id);
+
+            if (field && savedSettings[id] !== undefined) {
+                field.value = savedSettings[id];
+            }
+        });
+    }
+
+    notificationOptions.forEach(function (id) {
+        const checkbox = document.getElementById(id);
+
+        if (checkbox && savedSettings[id] !== undefined) {
+            checkbox.checked = savedSettings[id];
+        }
+    });
+
+    // Save profile information
+    if (profileForm) {
+        profileForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const firstName = document.getElementById("profileFirstName");
+            const lastName = document.getElementById("profileLastName");
+            const email = document.getElementById("profileEmail");
+            const age = document.getElementById("profileAge");
+
+            if (!firstName.value.trim() ||
+                !lastName.value.trim() ||
+                !email.value.trim()) {
+
+                showSettingsMessage("Please complete all required fields.");
+                return;
+            }
+
+            if (!email.validity.valid) {
+                showSettingsMessage("Please enter a valid email address.");
+                return;
+            }
+
+            if (age.value && (Number(age.value) < 13 ||
+                Number(age.value) > 120)) {
+                showSettingsMessage("Please enter a valid age.");
+                return;
+            }
+
+            const settings = JSON.parse(
+                localStorage.getItem("fitgeniusSettings") || "{}"
+            );
+
+            settings.profileFirstName = firstName.value.trim();
+            settings.profileLastName = lastName.value.trim();
+            settings.profileEmail = email.value.trim();
+            settings.profileAge = age.value;
+
+            localStorage.setItem(
+                "fitgeniusSettings",
+                JSON.stringify(settings)
+            );
+
+            showSettingsMessage("Profile information saved successfully!");
+        });
+    }
+
+    // Save notification preferences
+    if (saveSettings) {
+        saveSettings.addEventListener("click", function () {
+
+            const settings = JSON.parse(
+                localStorage.getItem("fitgeniusSettings") || "{}"
+            );
+
+            notificationOptions.forEach(function (id) {
+                const checkbox = document.getElementById(id);
+
+                if (checkbox) {
+                    settings[id] = checkbox.checked;
+                }
+            });
+
+            localStorage.setItem(
+                "fitgeniusSettings",
+                JSON.stringify(settings)
+            );
+
+            showSettingsMessage("Your preferences have been saved!");
+        });
+    }
+
+    // Display settings messages
+    function showSettingsMessage(message) {
+        if (!settingsMessage) return;
+
+        settingsMessage.textContent = message;
+        settingsMessage.style.display = "block";
+
+        setTimeout(function () {
+            settingsMessage.style.display = "none";
+        }, 3500);
+    }
+
+});
