@@ -77,6 +77,17 @@
                 Back to Website
             </a>
 
+            <!-- SIGN OUT -->
+            <button
+                type="button"
+                id="logoutButton"
+                class="sidebar-link"
+                style="width:100%;border:0;background:transparent;text-align:left;cursor:pointer;"
+            >
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Sign Out
+            </button>
+
         </nav>
 
     </aside>
@@ -88,7 +99,7 @@
         <!-- TOP BAR -->
         <header class="dashboard-topbar">
 
-            <div style="display:flex; align-items:center; gap:15px;">
+            <div style="display:flex;align-items:center;gap:15px;">
 
                 <button
                     class="dashboard-icon-btn dashboard-menu-toggle"
@@ -117,7 +128,12 @@
                     <i class="fa-regular fa-bell"></i>
                 </button>
 
-                <a href="settings.html" class="dashboard-icon-btn" style="display:grid;place-items:center;" aria-label="Settings">
+                <a
+                    href="settings.html"
+                    class="dashboard-icon-btn"
+                    style="display:grid;place-items:center;"
+                    aria-label="Settings"
+                >
                     <i class="fa-solid fa-user"></i>
                 </a>
 
@@ -134,13 +150,18 @@
             </span>
 
             <h1>
-                Welcome to <span>FitGenius</span>
+                Welcome, <span id="dashboardUserName">FitGenius Member</span>
             </h1>
 
             <p>
                 Your journey towards better fitness, healthier habits
                 and improved wellbeing starts here.
             </p>
+
+            <p
+                id="dashboardUserEmail"
+                style="margin-top:8px;font-size:13px;opacity:.7;"
+            ></p>
 
         </section>
 
@@ -412,7 +433,13 @@
 </div>
 
 
-<!-- JAVASCRIPT -->
+<!-- SUPABASE LIBRARY -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- SUPABASE CONNECTION -->
+<script src="js/supabase.js"></script>
+
+<!-- MAIN JAVASCRIPT -->
 <script src="js/script.js"></script>
 
 </body>
