@@ -166,3 +166,74 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("FitGenius initialized successfully!");
 
 });
+/* =========================================
+   FITGENIUS — REGISTRATION FUNCTIONALITY
+========================================= */
+
+// SHOW / HIDE PASSWORD
+
+document.querySelectorAll(".password-toggle").forEach(button => {
+    button.addEventListener("click", () => {
+        const targetId = button.dataset.target;
+        const passwordInput = document.getElementById(targetId);
+
+        if (!passwordInput) return;
+
+        const isPassword = passwordInput.type === "password";
+
+        passwordInput.type = isPassword ? "text" : "password";
+
+        button.innerHTML = isPassword
+            ? '<i class="fa-solid fa-eye-slash"></i>'
+            : '<i class="fa-solid fa-eye"></i>';
+    });
+});
+
+
+// REGISTRATION FORM VALIDATION
+
+const registerForm = document.getElementById("registerForm");
+
+if (registerForm) {
+    registerForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const firstName = document.getElementById("firstName").value.trim();
+        const lastName = document.getElementById("lastName").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+        const terms = document.getElementById("terms");
+        const message = document.getElementById("registerMessage");
+
+        message.textContent = "";
+        message.style.color = "#ff7070";
+
+        if (!firstName || !lastName || !email || !password || !confirmPassword) {
+            message.textContent = "Please complete all fields.";
+            return;
+        }
+
+        if (password.length < 8) {
+            message.textContent = "Password must contain at least 8 characters.";
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            message.textContent = "Your passwords do not match.";
+            return;
+        }
+
+        if (!terms.checked) {
+            message.textContent = "Please accept the terms and conditions.";
+            return;
+        }
+
+        message.style.color = "#9cff57";
+        message.textContent =
+            "Your details are valid! Account creation will be available when secure authentication is connected.";
+
+        console.log("FitGenius registration form validated.");
+    });
+}
+
