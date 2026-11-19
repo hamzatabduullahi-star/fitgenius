@@ -24,11 +24,8 @@
         <div class="container nav-container">
 
             <a href="index.html" class="logo">
-                <span class="logo-icon">
-                    <i class="fa-solid fa-heart-pulse"></i>
-                </span>
-
-                <span>Fit<span class="logo-highlight">Genius</span></span>
+                <i class="fa-solid fa-heart-pulse"></i>
+                <span>FitGenius</span>
             </a>
 
             <a href="index.html" class="btn btn-outline">
@@ -48,14 +45,14 @@
             <!-- LEFT INFORMATION -->
             <section class="auth-information">
 
-                <span class="section-tag">
+                <span class="section-label">
                     <i class="fa-solid fa-bolt"></i>
                     WELCOME BACK
                 </span>
 
                 <h1>
                     Your wellness journey
-                    <span class="text-highlight">continues here.</span>
+                    <span>continues here.</span>
                 </h1>
 
                 <p>
@@ -64,44 +61,24 @@
                     daily fitness activities.
                 </p>
 
-                <div class="auth-benefits">
+                <ul class="auth-benefits">
 
-                    <div class="auth-benefit">
-                        <span class="benefit-icon">
-                            <i class="fa-solid fa-person-walking"></i>
-                        </span>
+                    <li>
+                        <i class="fa-solid fa-person-walking"></i>
+                        Daily activity tracking
+                    </li>
 
-                        <div>
-                            <h3>Daily Activity</h3>
-                            <p>Stay informed about your movement and activity.</p>
-                        </div>
-                    </div>
+                    <li>
+                        <i class="fa-solid fa-moon"></i>
+                        Sleep and recovery insights
+                    </li>
 
+                    <li>
+                        <i class="fa-solid fa-chart-line"></i>
+                        Personal progress monitoring
+                    </li>
 
-                    <div class="auth-benefit">
-                        <span class="benefit-icon">
-                            <i class="fa-solid fa-moon"></i>
-                        </span>
-
-                        <div>
-                            <h3>Sleep Monitoring</h3>
-                            <p>Understand your sleeping and resting patterns.</p>
-                        </div>
-                    </div>
-
-
-                    <div class="auth-benefit">
-                        <span class="benefit-icon">
-                            <i class="fa-solid fa-chart-line"></i>
-                        </span>
-
-                        <div>
-                            <h3>Track Your Growth</h3>
-                            <p>Keep working towards your personal goals.</p>
-                        </div>
-                    </div>
-
-                </div>
+                </ul>
 
             </section>
 
@@ -129,20 +106,14 @@
 
                         <label for="loginEmail">Email Address</label>
 
-                        <div class="input-wrapper">
-
-                            <i class="fa-regular fa-envelope"></i>
-
-                            <input
-                                type="email"
-                                id="loginEmail"
-                                name="email"
-                                placeholder="Enter your email address"
-                                autocomplete="email"
-                                required
-                            >
-
-                        </div>
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            name="email"
+                            placeholder="Enter your email address"
+                            autocomplete="email"
+                            required
+                        >
 
                     </div>
 
@@ -153,8 +124,6 @@
                         <label for="loginPassword">Password</label>
 
                         <div class="auth-password-wrapper">
-
-                            <i class="fa-solid fa-lock"></i>
 
                             <input
                                 type="password"
@@ -183,6 +152,7 @@
                     <div class="auth-options">
 
                         <label class="auth-remember">
+
                             <input
                                 type="checkbox"
                                 id="rememberMe"
@@ -190,6 +160,7 @@
                             >
 
                             <span>Remember me</span>
+
                         </label>
 
                         <a href="#" id="forgotPassword">
@@ -202,7 +173,6 @@
                     <!-- LOGIN MESSAGE -->
                     <div
                         id="loginMessage"
-                        class="form-message"
                         role="status"
                         aria-live="polite"
                         style="display: none;"
@@ -238,14 +208,20 @@
 
 
     <!-- FOOTER -->
-    <footer class="footer auth-footer">
+    <footer class="footer">
 
         <div class="container">
 
-            <p>
-                &copy; <span id="currentYear">2026</span>
-                FitGenius. Built for a healthier tomorrow.
-            </p>
+            <div class="footer-bottom">
+
+                <p>
+                    &copy; <span id="currentYear">2026</span>
+                    FitGenius. Built for a healthier tomorrow.
+                </p>
+
+                <p>Move Better. Live Better.</p>
+
+            </div>
 
         </div>
 
