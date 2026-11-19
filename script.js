@@ -1,6 +1,6 @@
 /* =====================================================
    FITGENIUS — COMPLETE JAVASCRIPT
-   GLASS V2.2
+   GLASS V2.2 + SUPABASE AUTHENTICATION
 ===================================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -13,20 +13,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const currentYear = document.getElementById("currentYear");
     const dashboardYear = document.getElementById("dashboardYear");
 
-    // Automatic copyright year
     const year = new Date().getFullYear();
 
-    if (currentYear) {
-        currentYear.textContent = year;
-    }
-
-    if (dashboardYear) {
-        dashboardYear.textContent = year;
-    }
+    if (currentYear) currentYear.textContent = year;
+    if (dashboardYear) dashboardYear.textContent = year;
 
 
     /* =========================================
-       2. MOBILE NAVIGATION
+       2. SUPABASE CLIENT
+    ========================================= */
+
+    const supabaseClient = window.fitgeniusSupabase || null;
+
+
+    /* =========================================
+       3. MOBILE NAVIGATION
     ========================================= */
 
     const menuToggle = document.getElementById("menuToggle");
@@ -52,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
 
-        // Close menu after selecting a navigation link
         navigation.querySelectorAll("a").forEach(function (link) {
 
             link.addEventListener("click", function () {
@@ -63,9 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const icon = menuToggle.querySelector("i");
 
-                if (icon) {
-                    icon.className = "fa-solid fa-bars";
-                }
+                if (icon) icon.className = "fa-solid fa-bars";
 
             });
 
@@ -75,30 +73,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       3. HEADER SCROLL EFFECT
+       4. HEADER SCROLL EFFECT
     ========================================= */
 
     function updateHeader() {
 
-        if (header) {
+        if (!header) return;
 
-            if (window.scrollY > 40) {
-                header.classList.add("scrolled");
-            } else {
-                header.classList.remove("scrolled");
-            }
-
+        if (window.scrollY > 40) {
+            header.classList.add("scrolled");
+        } else {
+            header.classList.remove("scrolled");
         }
 
     }
 
     window.addEventListener("scroll", updateHeader);
-
     updateHeader();
 
 
     /* =========================================
-       4. SMOOTH SCROLLING
+       5. SMOOTH SCROLLING
     ========================================= */
 
     document.querySelectorAll('a[href^="#"]').forEach(function (link) {
@@ -128,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       5. SCROLL REVEAL ANIMATIONS
+       6. SCROLL REVEAL ANIMATIONS
     ========================================= */
 
     const revealElements = document.querySelectorAll(
@@ -153,9 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
 
             },
-            {
-                threshold: 0.12
-            }
+            { threshold: 0.12 }
         );
 
         revealElements.forEach(function (element) {
@@ -176,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       6. PASSWORD VISIBILITY
+       7. PASSWORD VISIBILITY
     ========================================= */
 
     document.querySelectorAll(".password-toggle").forEach(function (button) {
@@ -209,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       7. MESSAGE DISPLAY FUNCTION
+       8. MESSAGE DISPLAY FUNCTION
     ========================================= */
 
     function showMessage(element, message, type) {
@@ -217,31 +210,26 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!element) return;
 
         element.textContent = message;
-
         element.style.display = "block";
 
         if (type === "success") {
-
             element.style.color = "#9cff57";
-
         } else {
-
             element.style.color = "#ff647c";
-
         }
 
     }
 
 
     /* =========================================
-       8. REGISTRATION FORM
+       9. REGISTRATION — SUPABASE AUTH
     ========================================= */
 
     const registerForm = document.getElementById("registerForm");
 
     if (registerForm) {
 
-        registerForm.addEventListener("submit", function (event) {
+        registerForm.addEventListener("submit", async function (event) {
 
             event.preventDefault();
 
@@ -251,8 +239,11 @@ document.addEventListener("DOMContentLoaded", function () {
             const password = document.getElementById("password");
             const confirmPassword = document.getElementById("confirmPassword");
             const terms = document.getElementById("terms");
-
             const message = document.getElementById("registerMessage");
+
+            const submitButton = registerForm.querySelector(
+                'button[type="submit"]'
+            );
 
             if (
                 !firstName ||
@@ -261,8 +252,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 !password ||
                 !confirmPassword
             ) {
-                showMessage(message, "Registration form is incomplete.", "error");
+
+                showMessage(
+                    message,
+                    "Registration form is incomplete.",
+                    "error"
+                );
+
                 return;
+
             }
 
             if (
@@ -273,44 +271,170 @@ document.addEventListener("DOMContentLoaded", function () {
                 !confirmPassword.value
             ) {
 
-                showMessage(message, "Please complete all required fields.", "error");
+                showMessage(
+                    message,
+                    "Please complete all required fields.",
+                    "error"
+                );
+
                 return;
 
             }
 
             if (!email.validity.valid) {
 
-                showMessage(message, "Please enter a valid email address.", "error");
+                showMessage(
+                    message,
+                    "Please enter a valid email address.",
+                    "error"
+                );
+
                 return;
 
             }
 
             if (password.value.length < 8) {
 
-                showMessage(message, "Your password must contain at least 8 characters.", "error");
+                showMessage(
+                    message,
+                    "Your password must contain at least 8 characters.",
+                    "error"
+                );
+
                 return;
 
             }
 
             if (password.value !== confirmPassword.value) {
 
-                showMessage(message, "Your passwords do not match.", "error");
+                showMessage(
+                    message,
+                    "Your passwords do not match.",
+                    "error"
+                );
+
                 return;
 
             }
 
             if (terms && !terms.checked) {
 
-                showMessage(message, "Please accept the Terms and Conditions.", "error");
+                showMessage(
+                    message,
+                    "Please accept the Terms and Conditions.",
+                    "error"
+                );
+
                 return;
 
             }
 
-            showMessage(
-                message,
-                "Your details are valid. Account creation will be available when authentication is connected.",
-                "success"
-            );
+            if (!supabaseClient) {
+
+                showMessage(
+                    message,
+                    "Connection error. Please refresh the page and try again.",
+                    "error"
+                );
+
+                console.error("Supabase client is not available.");
+
+                return;
+
+            }
+
+            const originalButtonContent = submitButton
+                ? submitButton.innerHTML
+                : "";
+
+            if (submitButton) {
+
+                submitButton.disabled = true;
+                submitButton.textContent = "Creating your account...";
+
+            }
+
+            try {
+
+                const { data, error } = await supabaseClient.auth.signUp({
+
+                    email: email.value.trim(),
+
+                    password: password.value,
+
+                    options: {
+
+                        data: {
+                            first_name: firstName.value.trim(),
+                            last_name: lastName.value.trim()
+                        },
+
+                        emailRedirectTo: new URL(
+                            "login.html",
+                            window.location.href
+                        ).href
+
+                    }
+
+                });
+
+                if (error) {
+                    throw error;
+                }
+
+                if (data.session) {
+
+                    showMessage(
+                        message,
+                        "Your account has been created successfully! Redirecting...",
+                        "success"
+                    );
+
+                    setTimeout(function () {
+                        window.location.href = "dashboard.html";
+                    }, 1500);
+
+                } else {
+
+                    showMessage(
+                        message,
+                        "Your account has been created! Please check your email and click the verification link before signing in.",
+                        "success"
+                    );
+
+                    registerForm.reset();
+
+                }
+
+            } catch (error) {
+
+                console.error("Registration error:", error);
+
+                let errorMessage = error.message ||
+                    "Unable to create your account. Please try again.";
+
+                if (
+                    error.message &&
+                    error.message.toLowerCase().includes("already registered")
+                ) {
+
+                    errorMessage =
+                        "This email is already registered. Please sign in instead.";
+
+                }
+
+                showMessage(message, errorMessage, "error");
+
+            } finally {
+
+                if (submitButton) {
+
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalButtonContent;
+
+                }
+
+            }
 
         });
 
@@ -318,7 +442,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       9. LOGIN FORM
+       10. LOGIN FORM
+       LOGIN CONNECTION WILL BE COMPLETED NEXT
     ========================================= */
 
     const loginForm = document.getElementById("loginForm");
@@ -331,33 +456,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const email = document.getElementById("loginEmail");
             const password = document.getElementById("loginPassword");
-
             const message = document.getElementById("loginMessage");
 
             if (!email || !password) {
 
-                showMessage(message, "Login form is incomplete.", "error");
+                showMessage(
+                    message,
+                    "Login form is incomplete.",
+                    "error"
+                );
+
                 return;
 
             }
 
             if (!email.value.trim() || !password.value) {
 
-                showMessage(message, "Please enter your email and password.", "error");
-                return;
+                showMessage(
+                    message,
+                    "Please enter your email and password.",
+                    "error"
+                );
 
-            }
-
-            if (!email.validity.valid) {
-
-                showMessage(message, "Please enter a valid email address.", "error");
                 return;
 
             }
 
             showMessage(
                 message,
-                "Your details have been checked. Real account login will be available after authentication is connected.",
+                "Your login form is ready. We'll connect sign-in next.",
                 "success"
             );
 
@@ -367,24 +494,88 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       10. FORGOT PASSWORD
+       11. FORGOT PASSWORD
     ========================================= */
 
     const forgotPassword = document.getElementById("forgotPassword");
 
     if (forgotPassword) {
 
-        forgotPassword.addEventListener("click", function (event) {
+        forgotPassword.addEventListener("click", async function (event) {
 
             event.preventDefault();
 
+            const email = document.getElementById("loginEmail");
             const message = document.getElementById("loginMessage");
 
-            showMessage(
-                message,
-                "Password recovery will be available after account authentication is connected.",
-                "error"
-            );
+            if (!email || !email.value.trim()) {
+
+                showMessage(
+                    message,
+                    "Enter your email address first.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            if (!email.validity.valid) {
+
+                showMessage(
+                    message,
+                    "Please enter a valid email address.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            if (!supabaseClient) {
+
+                showMessage(
+                    message,
+                    "Authentication is not connected yet.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            try {
+
+                const { error } =
+                    await supabaseClient.auth.resetPasswordForEmail(
+                        email.value.trim(),
+                        {
+                            redirectTo: new URL(
+                                "login.html",
+                                window.location.href
+                            ).href
+                        }
+                    );
+
+                if (error) throw error;
+
+                showMessage(
+                    message,
+                    "If an account exists for this email, a password recovery link will be sent.",
+                    "success"
+                );
+
+            } catch (error) {
+
+                console.error("Password recovery error:", error);
+
+                showMessage(
+                    message,
+                    error.message || "Unable to send the recovery email.",
+                    "error"
+                );
+
+            }
 
         });
 
@@ -392,12 +583,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       11. DASHBOARD MOBILE SIDEBAR
+       12. DASHBOARD MOBILE SIDEBAR
     ========================================= */
 
-    const dashboardMenuToggle = document.getElementById("dashboardMenuToggle");
+    const dashboardMenuToggle =
+        document.getElementById("dashboardMenuToggle");
 
-    const dashboardSidebar = document.getElementById("dashboardSidebar");
+    const dashboardSidebar =
+        document.getElementById("dashboardSidebar");
 
     if (dashboardMenuToggle && dashboardSidebar) {
 
@@ -409,7 +602,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (icon) {
 
-                icon.className = dashboardSidebar.classList.contains("active")
+                icon.className =
+                    dashboardSidebar.classList.contains("active")
                     ? "fa-solid fa-xmark"
                     : "fa-solid fa-bars";
 
@@ -417,29 +611,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
 
-        dashboardSidebar.querySelectorAll(".sidebar-link").forEach(function (link) {
+        dashboardSidebar.querySelectorAll(".sidebar-link").forEach(
+            function (link) {
 
-            link.addEventListener("click", function () {
+                link.addEventListener("click", function () {
 
-                dashboardSidebar.classList.remove("active");
+                    dashboardSidebar.classList.remove("active");
 
-                dashboardSidebar.querySelectorAll(".sidebar-link").forEach(function (item) {
+                    dashboardSidebar.querySelectorAll(".sidebar-link")
+                        .forEach(function (item) {
+                            item.classList.remove("active");
+                        });
 
-                    item.classList.remove("active");
+                    this.classList.add("active");
 
                 });
 
-                this.classList.add("active");
-
-            });
-
-        });
+            }
+        );
 
     }
 
 
     /* =========================================
-       12. DASHBOARD DATE
+       13. DASHBOARD DATE
     ========================================= */
 
     const dashboardDate = document.getElementById("dashboardDate");
@@ -449,17 +644,19 @@ document.addEventListener("DOMContentLoaded", function () {
         const today = new Date();
 
         dashboardDate.textContent = today.toLocaleDateString("en-US", {
+
             weekday: "long",
             year: "numeric",
             month: "long",
             day: "numeric"
+
         });
 
     }
 
 
     /* =========================================
-       13. DASHBOARD TOAST MESSAGE
+       14. DASHBOARD TOAST MESSAGE
     ========================================= */
 
     function showDashboardMessage(message) {
@@ -493,31 +690,31 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         toast.textContent = message;
-
         toast.style.display = "block";
 
         clearTimeout(window.fitGeniusToastTimer);
 
         window.fitGeniusToastTimer = setTimeout(function () {
-
             toast.style.display = "none";
-
         }, 3500);
 
     }
 
 
     /* =========================================
-       14. DASHBOARD NOTIFICATIONS
+       15. DASHBOARD NOTIFICATIONS
     ========================================= */
 
-    const notificationButton = document.getElementById("notificationButton");
+    const notificationButton =
+        document.getElementById("notificationButton");
 
     if (notificationButton) {
 
         notificationButton.addEventListener("click", function () {
 
-            showDashboardMessage("You have no new notifications yet.");
+            showDashboardMessage(
+                "You have no new notifications yet."
+            );
 
         });
 
@@ -525,14 +722,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       15. SETTINGS — LOCAL STORAGE
+       16. SETTINGS — LOCAL STORAGE
     ========================================= */
 
     const profileForm = document.getElementById("profileForm");
 
     const saveSettings = document.getElementById("saveSettings");
 
-    const settingsMessage = document.getElementById("settingsMessage");
+    const settingsMessage =
+        document.getElementById("settingsMessage");
 
     const notificationOptions = [
         "activityNotifications",
@@ -576,7 +774,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    // Load saved settings
+    /* LOAD SAVED PROFILE SETTINGS */
 
     const savedSettings = getSavedSettings();
 
@@ -594,9 +792,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const field = document.getElementById(id);
 
             if (field && savedSettings[id] !== undefined) {
-
                 field.value = savedSettings[id];
-
             }
 
         });
@@ -604,22 +800,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    // Load notification preferences
+    /* LOAD NOTIFICATION PREFERENCES */
 
     notificationOptions.forEach(function (id) {
 
         const checkbox = document.getElementById(id);
 
         if (checkbox && savedSettings[id] !== undefined) {
-
             checkbox.checked = savedSettings[id];
-
         }
 
     });
 
 
-    // Save profile information
+    /* SAVE PROFILE INFORMATION */
 
     if (profileForm) {
 
@@ -627,13 +821,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
             event.preventDefault();
 
-            const firstName = document.getElementById("profileFirstName");
+            const firstName =
+                document.getElementById("profileFirstName");
 
-            const lastName = document.getElementById("profileLastName");
+            const lastName =
+                document.getElementById("profileLastName");
 
-            const email = document.getElementById("profileEmail");
+            const email =
+                document.getElementById("profileEmail");
 
-            const age = document.getElementById("profileAge");
+            const age =
+                document.getElementById("profileAge");
 
             if (!firstName || !lastName || !email || !age) return;
 
@@ -687,11 +885,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const settings = getSavedSettings();
 
             settings.profileFirstName = firstName.value.trim();
-
             settings.profileLastName = lastName.value.trim();
-
             settings.profileEmail = email.value.trim();
-
             settings.profileAge = age.value;
 
             if (saveSettingsToStorage(settings)) {
@@ -717,7 +912,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    // Save notification preferences
+    /* SAVE NOTIFICATION PREFERENCES */
 
     if (saveSettings) {
 
@@ -730,9 +925,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const checkbox = document.getElementById(id);
 
                 if (checkbox) {
-
                     settings[id] = checkbox.checked;
-
                 }
 
             });
@@ -761,7 +954,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       16. GENERAL INITIALIZATION
+       17. GENERAL INITIALIZATION
     ========================================= */
 
     console.log("FitGenius initialized successfully!");
