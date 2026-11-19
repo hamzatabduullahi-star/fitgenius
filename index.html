@@ -1,52 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="FitGenius helps you understand your fitness, walking activity, sleep and recovery.">
+    <title>FitGenius | Smart Fitness & Wellness Tracking</title>
 
-    <title>FitGenius | Understand Your Body</title>
+    <meta name="description" content="Understand your body, track your movement, monitor your sleep and improve your recovery with FitGenius.">
 
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="theme-color" content="#050b14">
 
+    <!-- MAIN STYLESHEET -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
 <body>
 
-    <!-- NAVIGATION -->
+    <!-- ================= HEADER ================= -->
 
     <header class="header" id="header">
 
         <div class="container nav-container">
 
             <a href="index.html" class="logo">
-                <span class="logo-icon">
-                    <i class="fa-solid fa-heart-pulse"></i>
-                </span>
-                Fit<span>Genius</span>
+                <i class="fa-solid fa-heart-pulse"></i>
+                <span>FitGenius</span>
             </a>
 
             <nav class="navigation" id="navigation">
-                <a href="#home">Home</a>
-                <a href="#features">Features</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#about">About</a>
+
+                <a href="#home" class="nav-link">Home</a>
+
+                <a href="#features" class="nav-link">Features</a>
+
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+
+                <a href="#about" class="nav-link">About</a>
+
+                <div class="mobile-nav-actions">
+
+                    <a href="login.html" class="btn btn-outline">
+                        Log In
+                    </a>
+
+                    <a href="register.html" class="btn btn-primary">
+                        Get Started
+                    </a>
+
+                </div>
+
             </nav>
 
             <div class="nav-actions">
-                <a href="login.html" class="login-btn">Log In</a>
-                <a href="register.html" class="signup-btn">Get Started</a>
+
+                <a href="login.html" class="btn btn-outline">
+                    Log In
+                </a>
+
+                <a href="register.html" class="btn btn-primary">
+                    Get Started
+                </a>
+
             </div>
 
-            <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">
+            <button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false">
+
                 <i class="fa-solid fa-bars"></i>
+
             </button>
 
         </div>
@@ -54,7 +85,7 @@
     </header>
 
 
-    <!-- HERO SECTION -->
+    <!-- ================= HERO SECTION ================= -->
 
     <main>
 
@@ -66,10 +97,10 @@
 
                 <div class="hero-content">
 
-                    <div class="hero-badge">
-                        <span class="pulse-dot"></span>
+                    <span class="hero-label">
+                        <i class="fa-solid fa-sparkles"></i>
                         SMARTER HEALTH STARTS HERE
-                    </div>
+                    </span>
 
                     <h1>
                         Understand Your Body.
@@ -79,17 +110,18 @@
                     <p>
                         Your daily movement, sleep and recovery deserve
                         more attention. FitGenius helps you understand
-                        your health data and make smarter lifestyle decisions.
+                        your health data and make smarter lifestyle
+                        decisions.
                     </p>
 
                     <div class="hero-buttons">
 
-                        <a href="register.html" class="primary-btn">
+                        <a href="register.html" class="btn btn-primary">
                             Get Started Free
                             <i class="fa-solid fa-arrow-right"></i>
                         </a>
 
-                        <a href="#features" class="secondary-btn">
+                        <a href="#features" class="btn btn-outline">
                             Explore Features
                         </a>
 
@@ -103,7 +135,7 @@
 
                         <div>
                             <strong>Your health matters</strong>
-                            <small>Personal insights. Smarter decisions.</small>
+                            <span>Personal insights. Smarter decisions.</span>
                         </div>
 
                     </div>
@@ -111,106 +143,117 @@
                 </div>
 
 
-                <!-- DASHBOARD PREVIEW -->
+                <!-- HERO DASHBOARD PREVIEW -->
 
                 <div class="hero-dashboard">
 
-                    <div class="dashboard-top">
+                    <div class="dashboard-preview">
 
-                        <div>
-                            <span class="dashboard-label">YOUR OVERVIEW</span>
-                            <h3>Daily Activity</h3>
-                        </div>
+                        <div class="preview-header">
 
-                        <span class="live-indicator">
-                            <span></span> PREVIEW
-                        </span>
-
-                    </div>
-
-
-                    <div class="activity-card">
-
-                        <div class="activity-heading">
-                            <span>Daily Steps</span>
-                            <i class="fa-solid fa-person-walking"></i>
-                        </div>
-
-                        <div class="steps-number">
-                            7,842 <small>steps</small>
-                        </div>
-
-                        <div class="progress-track">
-                            <div class="progress-fill"></div>
-                        </div>
-
-                        <div class="progress-details">
-                            <span>Illustrative progress</span>
-                            <span>78%</span>
-                        </div>
-
-                    </div>
-
-
-                    <div class="dashboard-grid">
-
-                        <div class="mini-card">
-
-                            <div class="mini-icon sleep-icon">
-                                <i class="fa-solid fa-moon"></i>
+                            <div>
+                                <span class="preview-label">YOUR OVERVIEW</span>
+                                <h3>Daily Activity</h3>
                             </div>
 
-                            <span>Sleep</span>
-                            <h3>7h 30m</h3>
-                            <small>Example data</small>
+                            <span class="preview-status">
+                                <span class="status-dot"></span>
+                                PREVIEW
+                            </span>
 
                         </div>
 
 
-                        <div class="mini-card">
+                        <div class="preview-stats">
 
-                            <div class="mini-icon distance-icon">
-                                <i class="fa-solid fa-route"></i>
+                            <div class="preview-card">
+
+                                <div class="preview-card-top">
+                                    <span>Daily Steps</span>
+                                    <i class="fa-solid fa-person-walking"></i>
+                                </div>
+
+                                <h2>7,842</h2>
+
+                                <span class="preview-caption">
+                                    Example data
+                                </span>
+
+                                <div class="progress-track">
+                                    <div class="progress-fill" style="width: 78%;"></div>
+                                </div>
+
+                                <small>Illustrative progress: 78%</small>
+
                             </div>
 
-                            <span>Distance</span>
-                            <h3>5.2 km</h3>
-                            <small>Example data</small>
 
-                        </div>
+                            <div class="preview-card">
 
+                                <div class="preview-card-top">
+                                    <span>Sleep</span>
+                                    <i class="fa-solid fa-moon"></i>
+                                </div>
 
-                        <div class="mini-card">
+                                <h2>7h 30m</h2>
 
-                            <div class="mini-icon calorie-icon">
-                                <i class="fa-solid fa-fire"></i>
+                                <span class="preview-caption">
+                                    Example data
+                                </span>
+
+                                <div class="progress-track">
+                                    <div class="progress-fill cyan-fill" style="width: 88%;"></div>
+                                </div>
+
+                                <small>Illustrative sleep duration</small>
+
                             </div>
 
-                            <span>Calories</span>
-                            <h3>320 kcal</h3>
-                            <small>Estimated</small>
 
-                        </div>
+                            <div class="preview-card">
 
+                                <div class="preview-card-top">
+                                    <span>Distance</span>
+                                    <i class="fa-solid fa-route"></i>
+                                </div>
 
-                        <div class="mini-card">
+                                <h2>5.2 km</h2>
 
-                            <div class="mini-icon recovery-icon">
-                                <i class="fa-solid fa-heart"></i>
+                                <span class="preview-caption">
+                                    Example data
+                                </span>
+
                             </div>
 
-                            <span>Recovery</span>
-                            <h3>Rest & Move</h3>
-                            <small>Example insight</small>
+
+                            <div class="preview-card">
+
+                                <div class="preview-card-top">
+                                    <span>Calories</span>
+                                    <i class="fa-solid fa-fire"></i>
+                                </div>
+
+                                <h2>320 kcal</h2>
+
+                                <span class="preview-caption">
+                                    Estimated example
+                                </span>
+
+                            </div>
 
                         </div>
 
-                    </div>
+                        <div class="preview-footer">
 
+                            <i class="fa-solid fa-circle-info"></i>
 
-                    <div class="dashboard-footer">
-                        <i class="fa-solid fa-circle-info"></i>
-                        Sample dashboard data — not live measurements.
+                            <span>
+                                Sample figures only. Real tracking requires
+                                a connected device or supported health service.
+                            </span>
+
+                        </div>
+
                     </div>
 
                 </div>
@@ -220,7 +263,7 @@
         </section>
 
 
-        <!-- FEATURES -->
+        <!-- ================= FEATURES ================= -->
 
         <section class="features section-padding" id="features">
 
@@ -228,13 +271,18 @@
 
                 <div class="section-heading">
 
-                    <span class="section-tag">WHAT FITGENIUS OFFERS</span>
+                    <span class="section-label">
+                        WHAT FITGENIUS OFFERS
+                    </span>
 
-                    <h2>Your Health, <span>All In One Place.</span></h2>
+                    <h2>
+                        Everything You Need to
+                        <span>Understand Your Health</span>
+                    </h2>
 
                     <p>
-                        Understand your daily habits through connected
-                        health information and intelligent insights.
+                        Bring your daily health information together
+                        and build better lifestyle habits.
                     </p>
 
                 </div>
@@ -244,120 +292,96 @@
 
                     <div class="feature-card">
 
-                        <div class="feature-icon green">
+                        <div class="feature-icon green-icon">
                             <i class="fa-solid fa-person-walking"></i>
                         </div>
 
                         <h3>Activity Tracking</h3>
 
                         <p>
-                            Monitor your daily steps, walking distance,
-                            movement and activity progress.
+                            Monitor daily steps, walking distance
+                            and estimated calories burned.
                         </p>
-
-                        <a href="register.html">
-                            Explore tracking <i class="fa-solid fa-arrow-right"></i>
-                        </a>
 
                     </div>
 
 
                     <div class="feature-card">
 
-                        <div class="feature-icon purple">
+                        <div class="feature-icon cyan-icon">
                             <i class="fa-solid fa-moon"></i>
                         </div>
 
                         <h3>Sleep Monitoring</h3>
 
                         <p>
-                            Understand your sleeping duration,
-                            consistency and available sleep patterns.
+                            Understand your sleep duration and
+                            develop healthier sleeping habits.
                         </p>
-
-                        <a href="register.html">
-                            Explore sleep <i class="fa-solid fa-arrow-right"></i>
-                        </a>
 
                     </div>
 
 
                     <div class="feature-card">
 
-                        <div class="feature-icon orange">
+                        <div class="feature-icon purple-icon">
                             <i class="fa-solid fa-heart-pulse"></i>
                         </div>
 
                         <h3>Recovery Insights</h3>
 
                         <p>
-                            Receive helpful recommendations based on
-                            your available activity and recovery data.
+                            Explore your activity and rest patterns
+                            to support balanced daily routines.
                         </p>
-
-                        <a href="register.html">
-                            Explore recovery <i class="fa-solid fa-arrow-right"></i>
-                        </a>
 
                     </div>
 
 
                     <div class="feature-card">
 
-                        <div class="feature-icon blue">
-                            <i class="fa-solid fa-bell"></i>
-                        </div>
-
-                        <h3>Smart Notifications</h3>
-
-                        <p>
-                            Get reminders about movement, rest and
-                            healthy daily routines.
-                        </p>
-
-                        <a href="register.html">
-                            Explore notifications <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-
-                    </div>
-
-
-                    <div class="feature-card">
-
-                        <div class="feature-icon pink">
+                        <div class="feature-icon green-icon">
                             <i class="fa-solid fa-chart-line"></i>
                         </div>
 
-                        <h3>Progress Reports</h3>
+                        <h3>Progress Analytics</h3>
 
                         <p>
-                            Review your daily, weekly and monthly
-                            fitness progress in one dashboard.
+                            Understand your activity trends and
+                            follow your progress over time.
                         </p>
-
-                        <a href="register.html">
-                            View progress <i class="fa-solid fa-arrow-right"></i>
-                        </a>
 
                     </div>
 
 
                     <div class="feature-card">
 
-                        <div class="feature-icon cyan">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
+                        <div class="feature-icon cyan-icon">
+                            <i class="fa-solid fa-bell"></i>
                         </div>
 
-                        <h3>Connected Devices</h3>
+                        <h3>Smart Reminders</h3>
 
                         <p>
-                            Connect supported health platforms and
-                            devices to bring your activity information together.
+                            Get reminders and wellness notifications
+                            when supported notification services are enabled.
                         </p>
 
-                        <a href="register.html">
-                            Discover integration <i class="fa-solid fa-arrow-right"></i>
-                        </a>
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon purple-icon">
+                            <i class="fa-solid fa-mobile-screen"></i>
+                        </div>
+
+                        <h3>Connected Experience</h3>
+
+                        <p>
+                            Access your wellness dashboard through
+                            the website and planned mobile application.
+                        </p>
 
                     </div>
 
@@ -368,21 +392,25 @@
         </section>
 
 
-        <!-- HOW IT WORKS -->
+        <!-- ================= HOW IT WORKS ================= -->
 
-        <section class="how-section section-padding" id="how-it-works">
+        <section class="how-it-works section-padding" id="how-it-works">
 
             <div class="container">
 
                 <div class="section-heading">
 
-                    <span class="section-tag">SIMPLE AND SMART</span>
+                    <span class="section-label">
+                        SIMPLE AND INTELLIGENT
+                    </span>
 
-                    <h2>Your Wellness Journey <span>Starts Here.</span></h2>
+                    <h2>
+                        How <span>FitGenius Works</span>
+                    </h2>
 
                     <p>
-                        Three simple steps towards understanding your
-                        daily fitness and recovery.
+                        Your journey towards better health starts
+                        with a few simple steps.
                     </p>
 
                 </div>
@@ -392,14 +420,14 @@
 
                     <div class="step-card">
 
-                        <span class="step-number">01</span>
+                        <div class="step-number">01</div>
 
                         <i class="fa-solid fa-user-plus"></i>
 
                         <h3>Create Your Account</h3>
 
                         <p>
-                            Register and create your personal
+                            Sign up and create your personal
                             FitGenius profile.
                         </p>
 
@@ -408,15 +436,15 @@
 
                     <div class="step-card">
 
-                        <span class="step-number">02</span>
+                        <div class="step-number">02</div>
 
-                        <i class="fa-solid fa-mobile-screen"></i>
+                        <i class="fa-solid fa-link"></i>
 
-                        <h3>Connect Your Health Data</h3>
+                        <h3>Connect Your Device</h3>
 
                         <p>
-                            Connect supported health platforms and
-                            grant permission to access available data.
+                            Connect supported health services and
+                            grant the necessary permissions.
                         </p>
 
                     </div>
@@ -424,15 +452,31 @@
 
                     <div class="step-card">
 
-                        <span class="step-number">03</span>
+                        <div class="step-number">03</div>
 
                         <i class="fa-solid fa-chart-pie"></i>
 
-                        <h3>Understand Your Progress</h3>
+                        <h3>Understand Your Data</h3>
 
                         <p>
-                            Explore your activity, sleep and recovery
-                            insights through your dashboard.
+                            Explore your activity, sleep and
+                            recovery information.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step-card">
+
+                        <div class="step-number">04</div>
+
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+
+                        <h3>Improve Your Habits</h3>
+
+                        <p>
+                            Use wellness insights to make
+                            more informed lifestyle decisions.
                         </p>
 
                     </div>
@@ -444,51 +488,95 @@
         </section>
 
 
-        <!-- ABOUT -->
+        <!-- ================= ABOUT ================= -->
 
-        <section class="about-section section-padding" id="about">
+        <section class="about section-padding" id="about">
 
             <div class="container about-container">
 
-                <div class="about-visual">
+                <div class="about-content">
 
-                    <div class="about-circle">
-                        <i class="fa-solid fa-heart-pulse"></i>
-                    </div>
+                    <span class="section-label">
+                        ABOUT FITGENIUS
+                    </span>
 
-                    <div class="about-floating-card">
-                        <i class="fa-solid fa-leaf"></i>
-                        <span>Better habits. Better living.</span>
-                    </div>
+                    <h2>
+                        Your Health.
+                        <span>Your Movement.</span>
+                        Your Recovery.
+                    </h2>
+
+                    <p>
+                        FitGenius is designed to make fitness and
+                        wellness information easier to understand.
+                    </p>
+
+                    <p>
+                        We believe that understanding your daily habits
+                        can help you make better decisions about movement,
+                        sleep and recovery.
+                    </p>
+
+                    <a href="register.html" class="btn btn-primary">
+                        Start Your Journey
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
 
                 </div>
 
 
-                <div class="about-content">
+                <div class="about-visual">
 
-                    <span class="section-tag">ABOUT FITGENIUS</span>
+                    <div class="about-glass-card">
+
+                        <div class="about-icon">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+
+                        <h3>Better Awareness</h3>
+
+                        <p>
+                            Small improvements can contribute to
+                            healthier everyday habits.
+                        </p>
+
+                        <div class="about-decoration">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CTA ================= -->
+
+        <section class="cta section-padding">
+
+            <div class="container">
+
+                <div class="cta-container">
+
+                    <span class="section-label">
+                        YOUR JOURNEY STARTS HERE
+                    </span>
 
                     <h2>
-                        Technology That Helps You
-                        <span>Listen To Your Body.</span>
+                        Make Every Day
+                        <span>Count.</span>
                     </h2>
 
                     <p>
-                        FitGenius is designed to make personal wellness
-                        information easier to understand.
-
-                        We bring activity tracking, sleep information,
-                        progress reports and recovery recommendations
-                        into one connected experience.
+                        Take a smarter approach to understanding
+                        your body and improving your daily habits.
                     </p>
 
-                    <p>
-                        Our mission is to help people develop healthier
-                        habits through better awareness of their daily lives.
-                    </p>
-
-                    <a href="register.html" class="primary-btn">
-                        Start Your Journey
+                    <a href="register.html" class="btn btn-primary">
+                        Get Started Free
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
 
@@ -498,38 +586,10 @@
 
         </section>
 
-
-        <!-- CALL TO ACTION -->
-
-        <section class="cta-section">
-
-            <div class="container cta-container">
-
-                <span class="section-tag">YOUR NEXT CHAPTER STARTS NOW</span>
-
-                <h2>
-                    Make Every Step
-                    <span>Count.</span>
-                </h2>
-
-                <p>
-                    Take control of your daily movement,
-                    understand your rest and build healthier habits.
-                </p>
-
-                <a href="register.html" class="primary-btn">
-                    Join FitGenius
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
-
-            </div>
-
-        </section>
-
     </main>
 
 
-    <!-- FOOTER -->
+    <!-- ================= FOOTER ================= -->
 
     <footer class="footer">
 
@@ -538,16 +598,12 @@
             <div class="footer-brand">
 
                 <a href="index.html" class="logo">
-                    <span class="logo-icon">
-                        <i class="fa-solid fa-heart-pulse"></i>
-                    </span>
-                    Fit<span>Genius</span>
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    FitGenius
                 </a>
 
                 <p>
-                    Understand your body.
-                    Improve your life.
-                    Build healthier habits.
+                    Understand Your Body. Improve Your Life.
                 </p>
 
             </div>
@@ -557,19 +613,13 @@
 
                 <h4>Platform</h4>
 
-                <a href="#home">Home</a>
+                <a href="index.html">Home</a>
+
                 <a href="#features">Features</a>
-                <a href="#how-it-works">How It Works</a>
 
-            </div>
-
-
-            <div class="footer-links">
-
-                <h4>Account</h4>
+                <a href="register.html">Create Account</a>
 
                 <a href="login.html">Log In</a>
-                <a href="register.html">Create Account</a>
 
             </div>
 
@@ -578,9 +628,11 @@
 
                 <h4>Information</h4>
 
-                <a href="#about">About Us</a>
                 <a href="privacy.html">Privacy Policy</a>
-                <a href="contact.html">Contact</a>
+
+                <a href="terms.html">Terms & Conditions</a>
+
+                <a href="contact.html">Contact Us</a>
 
             </div>
 
@@ -590,12 +642,12 @@
         <div class="container footer-bottom">
 
             <p>
-                &copy; <span id="currentYear">2026</span>
+                &copy; <span id="currentYear"></span>
                 FitGenius. All rights reserved.
             </p>
 
             <p>
-                Built for better everyday wellness.
+                Made for a healthier lifestyle.
             </p>
 
         </div>
@@ -603,7 +655,8 @@
     </footer>
 
 
-    <script src="js/script.js"></script>
+    <!-- MAIN JAVASCRIPT -->
+    <script src="script.js"></script>
 
 </body>
 </html>
