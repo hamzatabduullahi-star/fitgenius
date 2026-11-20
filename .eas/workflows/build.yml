@@ -1,0 +1,14 @@
+name: FitGenius Android Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_android:
+    name: Build FitGenius Android
+    type: build
+    params:
+      platform: android
+      profile: preview
