@@ -14,7 +14,113 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <link rel="stylesheet" href="css/style.css">
+    <!-- CORRECT CSS PATH -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- DASHBOARD BACKGROUND -->
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            color: #f4f7ff;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(0,255,153,0.12), transparent 35%),
+                radial-gradient(ellipse at 90% 15%, rgba(0,195,255,0.13), transparent 38%),
+                radial-gradient(ellipse at 50% 100%, rgba(91,75,255,0.12), transparent 45%),
+                #070c18;
+            background-attachment: fixed;
+        }
+
+        .dashboard-layout {
+            min-height: 100vh;
+            background: transparent;
+        }
+
+        .dashboard-sidebar {
+            background: rgba(10, 17, 32, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .dashboard-main {
+            background: transparent;
+        }
+
+        .dashboard-topbar {
+            background: rgba(7, 12, 24, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .dashboard-panel,
+        .stat-card {
+            background: rgba(19, 29, 49, 0.72);
+            border: 1px solid rgba(255,255,255,0.09);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.18);
+        }
+
+        .dashboard-welcome {
+            position: relative;
+            overflow: hidden;
+            padding: 30px;
+            border-radius: 22px;
+            background:
+                linear-gradient(120deg, rgba(156,255,87,0.12), rgba(69,215,255,0.08)),
+                rgba(19,29,49,0.72);
+            border: 1px solid rgba(156,255,87,0.15);
+            backdrop-filter: blur(20px);
+        }
+
+        .dashboard-welcome h1 {
+            color: #ffffff;
+        }
+
+        .dashboard-welcome h1 span {
+            color: #9cff57;
+        }
+
+        .dashboard-welcome p {
+            color: #aab6ca;
+        }
+
+        .dashboard-footer {
+            color: #8794a9;
+        }
+
+        .empty-state {
+            color: #aab6ca;
+        }
+
+        .empty-state h3 {
+            color: #f4f7ff;
+        }
+
+        .recommendation-item {
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+
+        .recommendation-item h4 {
+            color: #ffffff;
+        }
+
+        .recommendation-item p {
+            color: #aab6ca;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                background-attachment: scroll;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -77,7 +183,6 @@
                 Back to Website
             </a>
 
-            <!-- SIGN OUT -->
             <button
                 type="button"
                 id="logoutButton"
@@ -91,7 +196,6 @@
         </nav>
 
     </aside>
-
 
     <!-- MAIN CONTENT -->
     <main class="dashboard-main">
@@ -141,7 +245,6 @@
 
         </header>
 
-
         <!-- WELCOME -->
         <section class="dashboard-welcome">
 
@@ -164,7 +267,6 @@
             ></p>
 
         </section>
-
 
         <!-- HEALTH TRACKING STATUS -->
         <section class="dashboard-panel">
@@ -192,74 +294,53 @@
 
         </section>
 
-
         <!-- STATISTICS -->
         <section class="dashboard-stats" id="activity">
 
             <article class="stat-card">
-
                 <div class="stat-card-top">
                     <span>Steps Today</span>
                     <i class="fa-solid fa-person-walking"></i>
                 </div>
-
                 <h2>0</h2>
-
                 <small>Waiting for activity data</small>
-
             </article>
 
-
             <article class="stat-card">
-
                 <div class="stat-card-top">
                     <span>Distance</span>
                     <i class="fa-solid fa-route"></i>
                 </div>
-
                 <h2>0 km</h2>
-
                 <small>Waiting for activity data</small>
-
             </article>
 
-
             <article class="stat-card">
-
                 <div class="stat-card-top">
                     <span>Calories</span>
                     <i class="fa-solid fa-fire"></i>
                 </div>
-
                 <h2>0</h2>
-
                 <small>Waiting for activity data</small>
-
             </article>
 
-
             <article class="stat-card">
-
                 <div class="stat-card-top">
                     <span>Sleep</span>
                     <i class="fa-solid fa-moon"></i>
                 </div>
-
                 <h2>--</h2>
-
                 <small>No sleep data available</small>
-
             </article>
 
         </section>
 
-
         <!-- DASHBOARD GRID -->
         <section class="dashboard-grid">
 
-            <!-- ACTIVITY PANEL -->
             <div>
 
+                <!-- ACTIVITY PANEL -->
                 <article class="dashboard-panel">
 
                     <div class="panel-heading">
@@ -268,21 +349,16 @@
                     </div>
 
                     <div class="empty-state">
-
                         <i class="fa-solid fa-chart-simple"></i>
-
                         <h3>Activity data will appear here</h3>
-
                         <p>
                             Connect a supported mobile health service
                             to view your daily steps, walking distance
                             and activity progress.
                         </p>
-
                     </div>
 
                 </article>
-
 
                 <!-- SLEEP -->
                 <article class="dashboard-panel" id="sleep">
@@ -293,23 +369,18 @@
                     </div>
 
                     <div class="empty-state">
-
                         <i class="fa-solid fa-bed"></i>
-
                         <h3>No sleep records yet</h3>
-
                         <p>
                             Your sleep duration and available sleep
                             information will be displayed here once
                             a supported health source is connected.
                         </p>
-
                     </div>
 
                 </article>
 
             </div>
-
 
             <!-- RIGHT COLUMN -->
             <div>
@@ -323,21 +394,16 @@
                     </div>
 
                     <div class="empty-state">
-
                         <i class="fa-solid fa-leaf"></i>
-
                         <h3>Your recovery overview</h3>
-
                         <p>
                             Recovery information and rest suggestions
                             will become available when relevant data
                             and features are connected.
                         </p>
-
                     </div>
 
                 </article>
-
 
                 <!-- RECOMMENDATIONS -->
                 <article class="dashboard-panel">
@@ -359,7 +425,6 @@
 
                     </div>
 
-
                     <div class="recommendation-item">
 
                         <div class="recommendation-icon">
@@ -372,7 +437,6 @@
                         </div>
 
                     </div>
-
 
                     <div class="recommendation-item">
 
@@ -393,7 +457,6 @@
 
         </section>
 
-
         <!-- PROGRESS -->
         <section class="dashboard-panel" id="progress">
 
@@ -402,21 +465,16 @@
             </div>
 
             <div class="empty-state">
-
                 <i class="fa-solid fa-chart-line"></i>
-
                 <h3>Your progress starts here</h3>
-
                 <p>
                     As your tracking data becomes available,
                     FitGenius will help you understand your activity
                     patterns and follow your wellness journey.
                 </p>
-
             </div>
 
         </section>
-
 
         <!-- FOOTER -->
         <footer class="dashboard-footer">
@@ -432,15 +490,14 @@
 
 </div>
 
-
 <!-- SUPABASE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- SUPABASE CONNECTION -->
-<script src="js/supabase.js"></script>
+<!-- CORRECT SUPABASE CONNECTION PATH -->
+<script src="supabase.js"></script>
 
-<!-- MAIN JAVASCRIPT -->
-<script src="js/script.js"></script>
+<!-- CORRECT MAIN JAVASCRIPT PATH -->
+<script src="script.js"></script>
 
 </body>
 </html>
