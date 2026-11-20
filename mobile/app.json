@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "owner": "hamztechs-team",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hamztech.fitgenius"
@@ -14,6 +15,11 @@
       "package": "com.hamztech.fitgenius",
       "adaptiveIcon": {
         "backgroundColor": "#080d1c"
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "caddfb8d-e644-401a-922f-1e1eea4158c0"
       }
     }
   }
