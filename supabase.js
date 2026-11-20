@@ -2,7 +2,7 @@
    FITGENIUS — SUPABASE CONNECTION
 ========================================= */
 
-const SUPABASE_URL = "https://ozdltishoxofahpqlina.supabase.co";
+const SUPABASE_URL = "https://ozdltishoxofahpqllna.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_TXLAcHOPJIn8JsahTmfupw_ZYBk5V6p";
