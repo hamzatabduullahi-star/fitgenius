@@ -14,110 +14,193 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <!-- CORRECT CSS PATH -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- DASHBOARD BACKGROUND -->
     <style>
         body {
             min-height: 100vh;
             margin: 0;
             color: #f4f7ff;
             background:
-                radial-gradient(ellipse at 10% 10%, rgba(0,255,153,0.12), transparent 35%),
-                radial-gradient(ellipse at 90% 15%, rgba(0,195,255,0.13), transparent 38%),
-                radial-gradient(ellipse at 50% 100%, rgba(91,75,255,0.12), transparent 45%),
+                radial-gradient(ellipse at 10% 10%, rgba(0,255,153,.12), transparent 35%),
+                radial-gradient(ellipse at 90% 15%, rgba(0,195,255,.13), transparent 38%),
+                radial-gradient(ellipse at 50% 100%, rgba(91,75,255,.12), transparent 45%),
                 #070c18;
             background-attachment: fixed;
         }
 
-        .dashboard-layout {
-            min-height: 100vh;
-            background: transparent;
-        }
-
-        .dashboard-sidebar {
-            background: rgba(10, 17, 32, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-right: 1px solid rgba(255,255,255,0.08);
-        }
-
+        .dashboard-layout,
         .dashboard-main {
             background: transparent;
         }
 
+        .dashboard-sidebar {
+            background: rgba(10,17,32,.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255,255,255,.08);
+        }
+
         .dashboard-topbar {
-            background: rgba(7, 12, 24, 0.75);
+            background: rgba(7,12,24,.8);
             backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,.08);
         }
 
         .dashboard-panel,
         .stat-card {
-            background: rgba(19, 29, 49, 0.72);
-            border: 1px solid rgba(255,255,255,0.09);
+            background: rgba(19,29,49,.78);
+            border: 1px solid rgba(255,255,255,.09);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 15px 45px rgba(0,0,0,0.18);
+            box-shadow: 0 15px 45px rgba(0,0,0,.18);
         }
 
         .dashboard-welcome {
-            position: relative;
-            overflow: hidden;
             padding: 30px;
             border-radius: 22px;
-            background:
-                linear-gradient(120deg, rgba(156,255,87,0.12), rgba(69,215,255,0.08)),
-                rgba(19,29,49,0.72);
-            border: 1px solid rgba(156,255,87,0.15);
-            backdrop-filter: blur(20px);
+            background: linear-gradient(120deg,rgba(156,255,87,.12),rgba(69,215,255,.08)),rgba(19,29,49,.75);
+            border: 1px solid rgba(156,255,87,.15);
         }
 
-        .dashboard-welcome h1 {
-            color: #ffffff;
+        .dashboard-welcome h1 { color: white; }
+        .dashboard-welcome h1 span { color: #9cff57; }
+        .dashboard-welcome p { color: #aab6ca; }
+
+        .dashboard-footer { color: #8794a9; }
+
+        .tracking-form {
+            display: grid;
+            grid-template-columns: repeat(2,minmax(0,1fr));
+            gap: 16px;
+            margin-top: 20px;
         }
 
-        .dashboard-welcome h1 span {
-            color: #9cff57;
+        .tracking-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .dashboard-welcome p {
-            color: #aab6ca;
+        .tracking-field label {
+            color: #dce5f5;
+            font-size: 13px;
+            font-weight: 600;
         }
 
-        .dashboard-footer {
+        .tracking-field input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,.05);
+            color: white;
+            outline: none;
+        }
+
+        .tracking-field input:focus {
+            border-color: #9cff57;
+        }
+
+        .tracking-field input::placeholder {
             color: #8794a9;
         }
 
-        .empty-state {
-            color: #aab6ca;
+        .tracking-submit {
+            margin-top: 18px;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #9cff57;
+            color: #07111c;
+            font-weight: 800;
+            cursor: pointer;
         }
 
-        .empty-state h3 {
-            color: #f4f7ff;
+        .tracking-submit:hover {
+            opacity: .9;
+        }
+
+        .tracking-message {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #9cff57;
+        }
+
+        .tracking-note {
+            color: #9aa9bf;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-top: 12px;
+        }
+
+        .tracking-value {
+            font-size: 28px;
+            font-weight: 800;
+            margin: 12px 0 5px;
+            color: white;
         }
 
         .recommendation-item {
-            background: rgba(255,255,255,0.035);
-            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,.035);
+            border: 1px solid rgba(255,255,255,.06);
             border-radius: 14px;
             padding: 14px;
             margin-bottom: 12px;
         }
 
-        .recommendation-item h4 {
-            color: #ffffff;
-        }
+        .recommendation-item h4 { color: white; }
+        .recommendation-item p { color: #aab6ca; }
 
-        .recommendation-item p {
+        .empty-state {
             color: #aab6ca;
         }
 
-        @media (max-width: 768px) {
-            body {
-                background-attachment: scroll;
+        .empty-state h3 { color: white; }
+
+        .tracking-badge {
+            display: inline-block;
+            padding: 7px 11px;
+            border-radius: 30px;
+            font-size: 11px;
+            background: rgba(156,255,87,.1);
+            color: #9cff57;
+        }
+
+        .progress-item {
+            margin: 18px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .progress-track {
+            height: 9px;
+            background: rgba(255,255,255,.08);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg,#9cff57,#45d7ff);
+            border-radius: 20px;
+        }
+
+        @media(max-width:600px) {
+            .tracking-form {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-welcome {
+                padding: 22px;
             }
         }
     </style>
@@ -142,75 +225,59 @@
             <span class="sidebar-heading">MAIN MENU</span>
 
             <a href="dashboard.html" class="sidebar-link active">
-                <i class="fa-solid fa-house"></i>
-                Dashboard
+                <i class="fa-solid fa-house"></i> Dashboard
             </a>
 
             <a href="#activity" class="sidebar-link">
-                <i class="fa-solid fa-person-walking"></i>
-                Activity
+                <i class="fa-solid fa-person-walking"></i> Activity
             </a>
 
             <a href="#sleep" class="sidebar-link">
-                <i class="fa-solid fa-moon"></i>
-                Sleep Insights
+                <i class="fa-solid fa-moon"></i> Sleep Insights
             </a>
 
             <a href="#recovery" class="sidebar-link">
-                <i class="fa-solid fa-heart-pulse"></i>
-                Recovery
+                <i class="fa-solid fa-heart-pulse"></i> Recovery
             </a>
 
             <a href="#progress" class="sidebar-link">
-                <i class="fa-solid fa-chart-line"></i>
-                My Progress
+                <i class="fa-solid fa-chart-line"></i> My Progress
             </a>
 
             <span class="sidebar-heading">PREFERENCES</span>
 
             <a href="settings.html" class="sidebar-link">
-                <i class="fa-solid fa-gear"></i>
-                Settings
+                <i class="fa-solid fa-gear"></i> Settings
             </a>
 
             <a href="privacy.html" class="sidebar-link">
-                <i class="fa-solid fa-shield-halved"></i>
-                Privacy
+                <i class="fa-solid fa-shield-halved"></i> Privacy
             </a>
 
             <a href="index.html" class="sidebar-link">
-                <i class="fa-solid fa-arrow-left"></i>
-                Back to Website
+                <i class="fa-solid fa-arrow-left"></i> Back to Website
             </a>
 
-            <button
-                type="button"
-                id="logoutButton"
+            <button type="button" id="logoutButton"
                 class="sidebar-link"
-                style="width:100%;border:0;background:transparent;text-align:left;cursor:pointer;"
-            >
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Sign Out
+                style="width:100%;border:0;background:transparent;text-align:left;cursor:pointer;">
+                <i class="fa-solid fa-right-from-bracket"></i> Sign Out
             </button>
 
         </nav>
 
     </aside>
 
-    <!-- MAIN CONTENT -->
+    <!-- MAIN -->
     <main class="dashboard-main">
 
-        <!-- TOP BAR -->
+        <!-- TOPBAR -->
         <header class="dashboard-topbar">
 
             <div style="display:flex;align-items:center;gap:15px;">
 
-                <button
-                    class="dashboard-icon-btn dashboard-menu-toggle"
-                    id="dashboardMenuToggle"
-                    type="button"
-                    aria-label="Open dashboard menu"
-                >
+                <button class="dashboard-icon-btn dashboard-menu-toggle"
+                    id="dashboardMenuToggle" type="button">
                     <i class="fa-solid fa-bars"></i>
                 </button>
 
@@ -223,21 +290,13 @@
 
             <div class="dashboard-topbar-actions">
 
-                <button
-                    class="dashboard-icon-btn"
-                    id="notificationButton"
-                    type="button"
-                    aria-label="Notifications"
-                >
+                <button class="dashboard-icon-btn"
+                    id="notificationButton" type="button">
                     <i class="fa-regular fa-bell"></i>
                 </button>
 
-                <a
-                    href="settings.html"
-                    class="dashboard-icon-btn"
-                    style="display:grid;place-items:center;"
-                    aria-label="Settings"
-                >
+                <a href="settings.html" class="dashboard-icon-btn"
+                    style="display:grid;place-items:center;">
                     <i class="fa-solid fa-user"></i>
                 </a>
 
@@ -248,49 +307,30 @@
         <!-- WELCOME -->
         <section class="dashboard-welcome">
 
-            <span class="section-label">
-                YOUR PERSONAL WELLNESS SPACE
-            </span>
+            <span class="section-label">YOUR PERSONAL WELLNESS SPACE</span>
 
             <h1>
                 Welcome, <span id="dashboardUserName">FitGenius Member</span>
             </h1>
 
-            <p>
-                Your journey towards better fitness, healthier habits
-                and improved wellbeing starts here.
-            </p>
+            <p>Your journey towards better fitness, healthier habits and improved wellbeing starts here.</p>
 
-            <p
-                id="dashboardUserEmail"
-                style="margin-top:8px;font-size:13px;opacity:.7;"
-            ></p>
+            <p id="dashboardUserEmail" style="margin-top:8px;font-size:13px;opacity:.7;"></p>
 
         </section>
 
-        <!-- HEALTH TRACKING STATUS -->
+        <!-- TRACKING STATUS -->
         <section class="dashboard-panel">
 
             <div class="panel-heading">
                 <h3>Tracking Connection</h3>
-
-                <span class="settings-badge">
-                    Not connected
-                </span>
+                <span class="tracking-badge" id="trackingStatus">Manual tracking</span>
             </div>
 
-            <p>
-                Your activity and sleep information will appear here
-                after you connect a supported health tracking device
-                or mobile app.
+            <p style="color:#aab6ca;">
+                You can now record your activities and sleep manually.
+                Automatic phone health tracking will be added through a supported mobile integration.
             </p>
-
-            <div style="margin-top:20px;">
-                <a href="settings.html" class="btn btn-outline">
-                    <i class="fa-solid fa-link"></i>
-                    View Settings
-                </a>
-            </div>
 
         </section>
 
@@ -302,8 +342,8 @@
                     <span>Steps Today</span>
                     <i class="fa-solid fa-person-walking"></i>
                 </div>
-                <h2>0</h2>
-                <small>Waiting for activity data</small>
+                <h2 class="tracking-value" id="stepsValue">0</h2>
+                <small>Manually recorded steps</small>
             </article>
 
             <article class="stat-card">
@@ -311,8 +351,8 @@
                     <span>Distance</span>
                     <i class="fa-solid fa-route"></i>
                 </div>
-                <h2>0 km</h2>
-                <small>Waiting for activity data</small>
+                <h2 class="tracking-value" id="distanceValue">0 km</h2>
+                <small>Estimated walking distance</small>
             </article>
 
             <article class="stat-card">
@@ -320,8 +360,8 @@
                     <span>Calories</span>
                     <i class="fa-solid fa-fire"></i>
                 </div>
-                <h2>0</h2>
-                <small>Waiting for activity data</small>
+                <h2 class="tracking-value" id="caloriesValue">0</h2>
+                <small>Estimated calories</small>
             </article>
 
             <article class="stat-card">
@@ -329,54 +369,91 @@
                     <span>Sleep</span>
                     <i class="fa-solid fa-moon"></i>
                 </div>
-                <h2>--</h2>
-                <small>No sleep data available</small>
+                <h2 class="tracking-value" id="sleepValue">--</h2>
+                <small>Recorded sleep duration</small>
             </article>
 
         </section>
 
-        <!-- DASHBOARD GRID -->
+        <!-- TRACKING FORMS -->
         <section class="dashboard-grid">
 
             <div>
 
-                <!-- ACTIVITY PANEL -->
+                <!-- ACTIVITY FORM -->
                 <article class="dashboard-panel">
 
                     <div class="panel-heading">
-                        <h3>Daily Activity</h3>
-                        <i class="fa-solid fa-person-walking" style="color:var(--primary);"></i>
+                        <h3><i class="fa-solid fa-person-walking"></i> Record Daily Activity</h3>
                     </div>
 
-                    <div class="empty-state">
-                        <i class="fa-solid fa-chart-simple"></i>
-                        <h3>Activity data will appear here</h3>
-                        <p>
-                            Connect a supported mobile health service
-                            to view your daily steps, walking distance
-                            and activity progress.
-                        </p>
-                    </div>
+                    <form id="activityForm">
+
+                        <div class="tracking-form">
+
+                            <div class="tracking-field">
+                                <label for="stepsInput">Steps taken today</label>
+                                <input type="number" id="stepsInput"
+                                    min="0" max="100000" placeholder="e.g. 5000" required>
+                            </div>
+
+                            <div class="tracking-field">
+                                <label for="activityMinutes">Activity duration (minutes)</label>
+                                <input type="number" id="activityMinutes"
+                                    min="0" max="1440" placeholder="e.g. 30" required>
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="tracking-submit">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Save Activity
+                        </button>
+
+                        <p id="activityMessage" class="tracking-message" aria-live="polite"></p>
+
+                    </form>
+
+                    <p class="tracking-note">
+                        Distance and calories are estimates based on your recorded steps.
+                        They are not live measurements from your phone.
+                    </p>
 
                 </article>
 
-                <!-- SLEEP -->
+                <!-- SLEEP FORM -->
                 <article class="dashboard-panel" id="sleep">
 
                     <div class="panel-heading">
-                        <h3>Sleep Insights</h3>
-                        <i class="fa-solid fa-moon" style="color:var(--cyan);"></i>
+                        <h3><i class="fa-solid fa-moon"></i> Record Sleep</h3>
                     </div>
 
-                    <div class="empty-state">
-                        <i class="fa-solid fa-bed"></i>
-                        <h3>No sleep records yet</h3>
-                        <p>
-                            Your sleep duration and available sleep
-                            information will be displayed here once
-                            a supported health source is connected.
-                        </p>
-                    </div>
+                    <form id="sleepForm">
+
+                        <div class="tracking-form">
+
+                            <div class="tracking-field">
+                                <label for="sleepHours">Hours slept</label>
+                                <input type="number" id="sleepHours"
+                                    min="0" max="24" step="0.25"
+                                    placeholder="e.g. 7.5" required>
+                            </div>
+
+                            <div class="tracking-field">
+                                <label for="sleepDate">Sleep date</label>
+                                <input type="date" id="sleepDate" required>
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="tracking-submit">
+                            <i class="fa-solid fa-moon"></i>
+                            Save Sleep Record
+                        </button>
+
+                        <p id="sleepMessage" class="tracking-message" aria-live="polite"></p>
+
+                    </form>
 
                 </article>
 
@@ -390,22 +467,18 @@
 
                     <div class="panel-heading">
                         <h3>Recovery & Rest</h3>
-                        <i class="fa-solid fa-heart-pulse" style="color:var(--primary);"></i>
+                        <i class="fa-solid fa-heart-pulse"></i>
                     </div>
 
-                    <div class="empty-state">
+                    <div class="empty-state" id="recoveryContent">
                         <i class="fa-solid fa-leaf"></i>
                         <h3>Your recovery overview</h3>
-                        <p>
-                            Recovery information and rest suggestions
-                            will become available when relevant data
-                            and features are connected.
-                        </p>
+                        <p>Record your activity and sleep to receive basic rest suggestions.</p>
                     </div>
 
                 </article>
 
-                <!-- RECOMMENDATIONS -->
+                <!-- WELLNESS -->
                 <article class="dashboard-panel">
 
                     <div class="panel-heading">
@@ -413,42 +486,18 @@
                     </div>
 
                     <div class="recommendation-item">
-
-                        <div class="recommendation-icon">
-                            <i class="fa-solid fa-droplet"></i>
-                        </div>
-
-                        <div>
-                            <h4>Stay Hydrated</h4>
-                            <p>Drink water regularly throughout the day.</p>
-                        </div>
-
+                        <h4><i class="fa-solid fa-droplet"></i> Stay Hydrated</h4>
+                        <p>Drink water regularly throughout the day.</p>
                     </div>
 
                     <div class="recommendation-item">
-
-                        <div class="recommendation-icon">
-                            <i class="fa-solid fa-person-walking"></i>
-                        </div>
-
-                        <div>
-                            <h4>Keep Moving</h4>
-                            <p>Take comfortable movement breaks during the day.</p>
-                        </div>
-
+                        <h4><i class="fa-solid fa-person-walking"></i> Keep Moving</h4>
+                        <p>Take comfortable movement breaks during the day.</p>
                     </div>
 
                     <div class="recommendation-item">
-
-                        <div class="recommendation-icon">
-                            <i class="fa-solid fa-bed"></i>
-                        </div>
-
-                        <div>
-                            <h4>Prioritise Rest</h4>
-                            <p>Maintain a regular sleep routine.</p>
-                        </div>
-
+                        <h4><i class="fa-solid fa-bed"></i> Prioritise Rest</h4>
+                        <p>Maintain a regular sleep routine.</p>
                     </div>
 
                 </article>
@@ -464,14 +513,30 @@
                 <h3>Your Personal Progress</h3>
             </div>
 
-            <div class="empty-state">
-                <i class="fa-solid fa-chart-line"></i>
-                <h3>Your progress starts here</h3>
-                <p>
-                    As your tracking data becomes available,
-                    FitGenius will help you understand your activity
-                    patterns and follow your wellness journey.
-                </p>
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>Daily steps goal</span>
+                    <span id="stepsProgressText">0 / 10,000</span>
+                </div>
+
+                <div class="progress-track">
+                    <div class="progress-fill" id="stepsProgressBar"></div>
+                </div>
+            </div>
+
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>Sleep goal</span>
+                    <span id="sleepProgressText">0 / 8 hours</span>
+                </div>
+
+                <div class="progress-track">
+                    <div class="progress-fill" id="sleepProgressBar"></div>
+                </div>
+            </div>
+
+            <div class="empty-state" id="progressMessage">
+                Your progress will appear here after you record your activity and sleep.
             </div>
 
         </section>
@@ -490,13 +555,8 @@
 
 </div>
 
-<!-- SUPABASE LIBRARY -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- CORRECT SUPABASE CONNECTION PATH -->
 <script src="supabase.js"></script>
-
-<!-- CORRECT MAIN JAVASCRIPT PATH -->
 <script src="script.js"></script>
 
 </body>
