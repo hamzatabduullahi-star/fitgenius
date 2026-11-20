@@ -14,14 +14,114 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <link rel="stylesheet" href="css/style.css">
+    <!-- CORRECT ROOT CSS PATH -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- SETTINGS PAGE BACKGROUND -->
+    <style>
+        body.dashboard-page {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(71, 118, 255, 0.16), transparent 35%),
+                radial-gradient(circle at 90% 80%, rgba(155, 109, 255, 0.13), transparent 35%),
+                linear-gradient(135deg, #080d1c, #0b1224 55%, #080d1c) !important;
+            background-attachment: fixed !important;
+            color: #f5f7ff;
+        }
+
+        .dashboard-layout {
+            min-height: 100vh;
+            background: transparent !important;
+        }
+
+        .dashboard-main {
+            background: transparent !important;
+        }
+
+        .dashboard-panel {
+            background: rgba(17, 26, 48, 0.88) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 18px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+        }
+
+        .dashboard-topbar {
+            background: rgba(8, 13, 28, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .settings-section {
+            margin-bottom: 24px;
+        }
+
+        .settings-option {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .settings-option:last-of-type {
+            border-bottom: none;
+        }
+
+        .settings-option h3,
+        .panel-heading h2,
+        .dashboard-welcome h1 {
+            color: #ffffff;
+        }
+
+        .settings-option p,
+        .panel-heading p,
+        .dashboard-welcome p {
+            color: #aab5cc;
+        }
+
+        .settings-badge {
+            background: rgba(71, 118, 255, 0.14);
+            color: #8eafff;
+            border: 1px solid rgba(71, 118, 255, 0.2);
+        }
+
+        .settings-form input {
+            background: rgba(8, 13, 28, 0.75);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .settings-form input::placeholder {
+            color: #77839d;
+        }
+
+        .settings-form input:focus {
+            border-color: #4776ff;
+            outline: none;
+        }
+
+        .dashboard-footer {
+            color: #8995ae;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-main {
+                padding: 16px;
+            }
+
+            .dashboard-welcome {
+                margin-bottom: 22px;
+            }
+
+            .dashboard-panel {
+                padding: 18px;
+            }
+        }
+    </style>
 </head>
 
 <body class="dashboard-page">
 
     <div class="dashboard-layout">
 
-        <!-- SIDEBAR -->
         <aside class="dashboard-sidebar" id="dashboardSidebar">
 
             <a href="index.html" class="logo">
@@ -90,10 +190,8 @@
         </aside>
 
 
-        <!-- MAIN CONTENT -->
         <main class="dashboard-main">
 
-            <!-- TOPBAR -->
             <header class="dashboard-topbar">
 
                 <div class="topbar-left">
@@ -126,7 +224,6 @@
             </header>
 
 
-            <!-- PAGE HEADING -->
             <section class="dashboard-welcome">
 
                 <div>
@@ -146,7 +243,6 @@
             </section>
 
 
-            <!-- PROFILE SETTINGS -->
             <section class="dashboard-panel settings-section">
 
                 <div class="panel-heading">
@@ -264,7 +360,6 @@
             </section>
 
 
-            <!-- NOTIFICATION SETTINGS -->
             <section class="dashboard-panel settings-section">
 
                 <div class="panel-heading">
@@ -295,10 +390,7 @@
                     </div>
 
                     <label class="settings-switch">
-                        <input
-                            type="checkbox"
-                            id="activityNotifications"
-                        >
+                        <input type="checkbox" id="activityNotifications">
                         <span class="switch-slider"></span>
                     </label>
 
@@ -319,10 +411,7 @@
                     </div>
 
                     <label class="settings-switch">
-                        <input
-                            type="checkbox"
-                            id="sleepNotifications"
-                        >
+                        <input type="checkbox" id="sleepNotifications">
                         <span class="switch-slider"></span>
                     </label>
 
@@ -343,10 +432,7 @@
                     </div>
 
                     <label class="settings-switch">
-                        <input
-                            type="checkbox"
-                            id="wellnessNotifications"
-                        >
+                        <input type="checkbox" id="wellnessNotifications">
                         <span class="switch-slider"></span>
                     </label>
 
@@ -377,7 +463,6 @@
             </section>
 
 
-            <!-- HEALTH DATA CONNECTION -->
             <section class="dashboard-panel settings-section">
 
                 <div class="panel-heading">
@@ -437,7 +522,6 @@
             </section>
 
 
-            <!-- PRIVACY AND ACCOUNT -->
             <section class="dashboard-panel settings-section">
 
                 <div class="panel-heading">
@@ -498,7 +582,6 @@
             </section>
 
 
-            <!-- FOOTER -->
             <footer class="dashboard-footer">
 
                 <p>
@@ -519,8 +602,9 @@
     </div>
 
 
-    <!-- JAVASCRIPT -->
-    <script src="js/script.js"></script>
+    <!-- CORRECT ROOT JAVASCRIPT PATH -->
+    <script src="supabase.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
