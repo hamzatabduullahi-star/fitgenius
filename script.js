@@ -1,6 +1,6 @@
 /* =====================================================
    FITGENIUS — COMPLETE JAVASCRIPT
-   GLASS V2.2 + SUPABASE AUTHENTICATION
+   GLASS V2.3 + SUPABASE AUTH + FITNESS TRACKING
 ===================================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -451,7 +451,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* =========================================
        11. FORGOT PASSWORD
-       FULL RESET FLOW WILL BE ADDED LATER
     ========================================= */
 
     const forgotPassword = document.getElementById("forgotPassword");
@@ -527,9 +526,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (dashboardDate) {
 
-        const today = new Date();
-
-        dashboardDate.textContent = today.toLocaleDateString("en-US", {
+        dashboardDate.textContent = new Date().toLocaleDateString("en-US", {
             weekday: "long",
             year: "numeric",
             month: "long",
@@ -792,7 +789,505 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       19. DASHBOARD AUTHENTICATION PROTECTION
+       19. FITNESS TRACKING SYSTEM
+    ========================================= */
+
+    function initializeFitnessTracking(userId) {
+
+        const activityForm = document.getElementById("activityForm");
+        const sleepForm = document.getElementById("sleepForm");
+
+        if (!activityForm && !sleepForm) return;
+
+        const stepsInput = document.getElementById("stepsInput");
+        const activityMinutes = document.getElementById("activityMinutes");
+
+        const sleepHours = document.getElementById("sleepHours");
+        const sleepDate = document.getElementById("sleepDate");
+
+        const activityMessage = document.getElementById("activityMessage");
+        const sleepMessage = document.getElementById("sleepMessage");
+
+        const stepsValue = document.getElementById("stepsValue");
+        const distanceValue = document.getElementById("distanceValue");
+        const caloriesValue = document.getElementById("caloriesValue");
+        const sleepValue = document.getElementById("sleepValue");
+
+        const recoveryContent = document.getElementById("recoveryContent");
+
+        const stepsProgressText = document.getElementById("stepsProgressText");
+        const stepsProgressBar = document.getElementById("stepsProgressBar");
+
+        const sleepProgressText = document.getElementById("sleepProgressText");
+        const sleepProgressBar = document.getElementById("sleepProgressBar");
+
+        const progressMessage = document.getElementById("progressMessage");
+
+        const today = getLocalDateKey();
+
+        const storageKey = "fitgeniusTracking_" + userId;
+
+        let records = {};
+
+        /* LOAD SAVED RECORDS */
+
+        function loadRecords() {
+
+            try {
+
+                const stored = localStorage.getItem(storageKey);
+
+                records = stored ? JSON.parse(stored) : {};
+
+                if (
+                    !records ||
+                    typeof records !== "object" ||
+                    Array.isArray(records)
+                ) {
+                    records = {};
+                }
+
+            } catch (error) {
+
+                console.error("Tracking storage error:", error);
+
+                records = {};
+
+            }
+
+        }
+
+
+        /* SAVE RECORDS */
+
+        function saveRecords() {
+
+            try {
+
+                localStorage.setItem(
+                    storageKey,
+                    JSON.stringify(records)
+                );
+
+                return true;
+
+            } catch (error) {
+
+                console.error("Unable to save tracking records:", error);
+
+                return false;
+
+            }
+
+        }
+
+
+        /* LOCAL DATE */
+
+        function getLocalDateKey(date = new Date()) {
+
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const day = String(date.getDate()).padStart(2, "0");
+
+            return `${year}-${month}-${day}`;
+
+        }
+
+
+        /* GET TODAY'S RECORD */
+
+        function getTodayRecord() {
+
+            if (!records[today]) {
+
+                records[today] = {
+                    steps: 0,
+                    minutes: 0,
+                    sleep: null,
+                    updatedAt: null
+                };
+
+            }
+
+            return records[today];
+
+        }
+
+
+        /* FORMAT NUMBERS */
+
+        function formatNumber(value) {
+
+            return Number(value || 0).toLocaleString("en-US");
+
+        }
+
+
+        /* UPDATE DASHBOARD */
+
+        function updateDashboard() {
+
+            const record = getTodayRecord();
+
+            const steps = Number(record.steps) || 0;
+            const minutes = Number(record.minutes) || 0;
+
+            const sleep = Number(record.sleep) || 0;
+
+            /* DISTANCE ESTIMATE */
+
+            const distance = steps * 0.000762;
+
+            /* APPROXIMATE CALORIES */
+
+            const calories = Math.round(steps * 0.04);
+
+            if (stepsValue) {
+                stepsValue.textContent = formatNumber(steps);
+            }
+
+            if (distanceValue) {
+                distanceValue.textContent = distance.toFixed(2) + " km";
+            }
+
+            if (caloriesValue) {
+                caloriesValue.textContent = formatNumber(calories) + " kcal";
+            }
+
+            if (sleepValue) {
+                sleepValue.textContent = sleep > 0
+                    ? sleep.toFixed(1) + " hrs"
+                    : "0 hrs";
+            }
+
+
+            /* STEPS PROGRESS */
+
+            const stepGoal = 8000;
+
+            const stepPercentage = Math.min(
+                (steps / stepGoal) * 100,
+                100
+            );
+
+            if (stepsProgressText) {
+
+                stepsProgressText.textContent =
+                    `${formatNumber(steps)} / ${formatNumber(stepGoal)} steps`;
+
+            }
+
+            if (stepsProgressBar) {
+
+                stepsProgressBar.style.width = stepPercentage + "%";
+
+            }
+
+
+            /* SLEEP PROGRESS */
+
+            const sleepGoal = 8;
+
+            const sleepPercentage = Math.min(
+                (sleep / sleepGoal) * 100,
+                100
+            );
+
+            if (sleepProgressText) {
+
+                sleepProgressText.textContent =
+                    `${sleep.toFixed(1)} / ${sleepGoal} hours`;
+
+            }
+
+            if (sleepProgressBar) {
+
+                sleepProgressBar.style.width = sleepPercentage + "%";
+
+            }
+
+
+            /* RECOVERY RECOMMENDATIONS */
+
+            if (recoveryContent) {
+
+                let recoveryMessage = "";
+
+                if (sleep === 0 && minutes === 0) {
+
+                    recoveryMessage =
+                        "Start recording your sleep and daily activities to receive recovery insights.";
+
+                } else if (sleep > 0 && sleep < 6) {
+
+                    recoveryMessage =
+                        "Your recorded sleep is below 6 hours. Consider prioritising rest and allowing your body more time to recover.";
+
+                } else if (sleep >= 6 && sleep < 7) {
+
+                    recoveryMessage =
+                        "Your sleep is improving. Consider getting a little more rest tonight.";
+
+                } else if (minutes >= 120 && sleep < 8) {
+
+                    recoveryMessage =
+                        "You recorded a high activity duration. Prioritise hydration and adequate sleep.";
+
+                } else if (sleep >= 7 && minutes <= 60) {
+
+                    recoveryMessage =
+                        "Your recorded sleep is within a good range. Keep maintaining a balanced activity and rest routine.";
+
+                } else {
+
+                    recoveryMessage =
+                        "Keep monitoring your activity and sleep. Consistent rest and balanced movement support recovery.";
+
+                }
+
+                recoveryContent.textContent = recoveryMessage;
+
+            }
+
+
+            /* PROGRESS MESSAGE */
+
+            if (progressMessage) {
+
+                if (steps >= stepGoal && sleep >= sleepGoal) {
+
+                    progressMessage.textContent =
+                        "Excellent! You have reached both of today's activity and sleep goals.";
+
+                } else if (steps >= stepGoal) {
+
+                    progressMessage.textContent =
+                        "Great work! You have reached your daily step goal.";
+
+                } else if (sleep >= sleepGoal) {
+
+                    progressMessage.textContent =
+                        "Well done! You have reached your sleep goal.";
+
+                } else {
+
+                    progressMessage.textContent =
+                        "Keep going. Your daily progress will update as you record activities and sleep.";
+
+                }
+
+            }
+
+        }
+
+
+        /* =========================================
+           ACTIVITY FORM
+        ========================================= */
+
+        if (activityForm) {
+
+            activityForm.addEventListener("submit", function (event) {
+
+                event.preventDefault();
+
+                if (!stepsInput || !activityMinutes) return;
+
+                const steps = Number(stepsInput.value);
+                const minutes = Number(activityMinutes.value);
+
+                if (
+                    stepsInput.value.trim() === "" ||
+                    activityMinutes.value.trim() === ""
+                ) {
+
+                    showMessage(
+                        activityMessage,
+                        "Please enter both your steps and activity duration.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+                if (
+                    !Number.isFinite(steps) ||
+                    !Number.isFinite(minutes) ||
+                    !Number.isInteger(steps) ||
+                    !Number.isInteger(minutes) ||
+                    steps < 0 ||
+                    steps > 100000 ||
+                    minutes < 0 ||
+                    minutes > 1440
+                ) {
+
+                    showMessage(
+                        activityMessage,
+                        "Please enter valid activity values.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+                const record = getTodayRecord();
+
+                record.steps = steps;
+                record.minutes = minutes;
+                record.updatedAt = new Date().toISOString();
+
+                if (!saveRecords()) {
+
+                    showMessage(
+                        activityMessage,
+                        "Unable to save your activity. Check your browser storage.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+                updateDashboard();
+
+                showMessage(
+                    activityMessage,
+                    "Your daily activity has been saved successfully!",
+                    "success"
+                );
+
+                showDashboardMessage("Activity updated successfully!");
+
+            });
+
+        }
+
+
+        /* =========================================
+           SLEEP FORM
+        ========================================= */
+
+        if (sleepDate) {
+
+            sleepDate.value = today;
+            sleepDate.max = today;
+
+        }
+
+        if (sleepForm) {
+
+            sleepForm.addEventListener("submit", function (event) {
+
+                event.preventDefault();
+
+                if (!sleepHours || !sleepDate) return;
+
+                const hours = Number(sleepHours.value);
+                const selectedDate = sleepDate.value;
+
+                if (
+                    sleepHours.value.trim() === "" ||
+                    !selectedDate
+                ) {
+
+                    showMessage(
+                        sleepMessage,
+                        "Please enter your sleep duration and date.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+                if (
+                    !Number.isFinite(hours) ||
+                    hours < 0 ||
+                    hours > 24
+                ) {
+
+                    showMessage(
+                        sleepMessage,
+                        "Please enter a sleep duration between 0 and 24 hours.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+                if (selectedDate > today) {
+
+                    showMessage(
+                        sleepMessage,
+                        "You cannot record sleep for a future date.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+                if (!records[selectedDate]) {
+
+                    records[selectedDate] = {
+                        steps: 0,
+                        minutes: 0,
+                        sleep: null,
+                        updatedAt: null
+                    };
+
+                }
+
+                records[selectedDate].sleep = hours;
+
+                records[selectedDate].updatedAt =
+                    new Date().toISOString();
+
+                if (!saveRecords()) {
+
+                    showMessage(
+                        sleepMessage,
+                        "Unable to save your sleep record.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+                if (selectedDate === today) {
+                    updateDashboard();
+                }
+
+                showMessage(
+                    sleepMessage,
+                    "Your sleep record has been saved successfully!",
+                    "success"
+                );
+
+                showDashboardMessage("Sleep record saved!");
+
+            });
+
+        }
+
+
+        /* INITIALIZE */
+
+        loadRecords();
+        updateDashboard();
+
+        console.log("FitGenius tracking initialized for user:", userId);
+
+    }
+
+
+    /* =========================================
+       20. DASHBOARD AUTHENTICATION PROTECTION
     ========================================= */
 
     const logoutButton = document.getElementById("logoutButton");
@@ -837,6 +1332,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (dashboardUserEmail) {
                     dashboardUserEmail.textContent = user.email || "";
                 }
+
+                /* START TRACKING AFTER AUTHENTICATION */
+
+                initializeFitnessTracking(user.id);
 
             } catch (error) {
 
@@ -893,7 +1392,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       20. GENERAL INITIALIZATION
+       21. GENERAL INITIALIZATION
     ========================================= */
 
     console.log("FitGenius initialized successfully!");
