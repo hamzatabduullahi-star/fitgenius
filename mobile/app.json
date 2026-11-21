@@ -1,47 +1,18 @@
-{
-  "expo": {
-    "name": "FitGenius",
-    "slug": "fitgenius",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "userInterfaceStyle": "dark",
-    "newArchEnabled": true,
-    "owner": "hamztechs-team",
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.hamztech.fitgenius",
-      "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
-    },
-    "android": {
-      "package": "com.hamztech.fitgenius",
-      "adaptiveIcon": {
-        "backgroundColor": "#080d1c"
-      }
-    },
-    "plugins": [
-      [
-        "@appeeky/expo-healthkit",
-        {
-          "healthSharePermission": "Allow FitGenius to read your health data",
-          "healthUpdatePermission": "Allow FitGenius to write your health data",
-          "healthConnectPermissions": [
-            "READ_STEPS",
-            "READ_DISTANCE",
-            "READ_ACTIVE_CALORIES_BURNED",
-            "READ_HEART_RATE",
-            "READ_SLEEP",
-            "READ_EXERCISE",
-            "READ_HEALTH_DATA_HISTORY"
-          ]
-        }
-      ]
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "caddfb8d-e644-401a-922f-1e1eea4158c0"
-      }
-    }
+[
+  "@appeeky/expo-healthkit",
+  {
+    "healthSharePermission": "Allow FitGenius to read your health data",
+    "healthUpdatePermission": "Allow FitGenius to write your health data",
+    "isBackgroundDeliveryEnabled": true,
+    "isHealthConnectBackgroundReadEnabled": true,
+    "healthConnectPermissions": [
+      "READ_STEPS",
+      "READ_DISTANCE",
+      "READ_ACTIVE_CALORIES_BURNED",
+      "READ_HEART_RATE",
+      "READ_SLEEP",
+      "READ_EXERCISE",
+      "READ_HEALTH_DATA_HISTORY"
+    ]
   }
-}
+]
