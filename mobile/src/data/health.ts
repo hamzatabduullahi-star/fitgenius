@@ -16,6 +16,7 @@ export async function connectHealth() {
     }
 
     await HealthKit.requestAuthorization({
+      includeBackgroundRead: true,
       toRead: [
         HealthKit.QuantityType.stepCount,
         HealthKit.QuantityType.distanceWalkingRunning,
