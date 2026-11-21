@@ -9,7 +9,10 @@
     "owner": "hamztechs-team",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.hamztech.fitgenius"
+      "bundleIdentifier": "com.hamztech.fitgenius",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.hamztech.fitgenius",
