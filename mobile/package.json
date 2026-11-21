@@ -9,6 +9,7 @@
     "ios": "expo start --ios"
   },
   "dependencies": {
+    "@appeeky/expo-healthkit": "^0.4.2",
     "expo": "~54.0.0",
     "expo-status-bar": "~3.0.8",
     "react": "19.1.0",
