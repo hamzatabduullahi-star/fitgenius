@@ -14,9 +14,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import MetricCard from '../components/MetricCard';
 import StepsRing from '../components/StepsRing';
+import WeeklyActivityChart from '../components/WeeklyActivityChart';
+
 import {
   connectHealth,
   getTodayHealthData,
+  getWeeklyActivityData,
 } from '../data/health';
 
 import { theme } from '../../theme';
@@ -25,6 +28,7 @@ const STEP_GOAL = 10000;
 
 export default function DashboardScreen() {
   const [health, setHealth] = useState<any>(null);
+  const [weeklyActivity, setWeeklyActivity] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   const [status, setStatus] = useState(
@@ -70,7 +74,10 @@ export default function DashboardScreen() {
     setLoading(true);
 
     try {
-      const result = await getTodayHealthData();
+      const [result, weeklyResult] = await Promise.all([
+        getTodayHealthData(),
+        getWeeklyActivityData(),
+      ]);
 
       if (!result.success) {
         setStatus(
@@ -80,6 +87,11 @@ export default function DashboardScreen() {
       }
 
       setHealth(result);
+
+      if (weeklyResult.success) {
+        setWeeklyActivity(weeklyResult.days);
+      }
+
       setStatus('Your health data is up to date.');
     } catch (error) {
       console.error('Health refresh error:', error);
@@ -111,7 +123,10 @@ export default function DashboardScreen() {
         setTimeout(resolve, 1000)
       );
 
-      const result = await getTodayHealthData();
+      const [result, weeklyResult] = await Promise.all([
+        getTodayHealthData(),
+        getWeeklyActivityData(),
+      ]);
 
       if (!result.success) {
         setStatus(
@@ -121,6 +136,11 @@ export default function DashboardScreen() {
       }
 
       setHealth(result);
+
+      if (weeklyResult.success) {
+        setWeeklyActivity(weeklyResult.days);
+      }
+
       setStatus('Your health data is up to date.');
     } catch (error) {
       console.error('Health connection error:', error);
@@ -259,7 +279,7 @@ export default function DashboardScreen() {
               </Text>
             </View>
 
-            {/* ACTIVITY */}
+            {/* TODAY'S ACTIVITY */}
 
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>
@@ -312,6 +332,20 @@ export default function DashboardScreen() {
                 color={theme.colors.accent}
               />
             </View>
+
+            {/* WEEKLY PROGRESS */}
+
+            <View style={[styles.sectionHeader, styles.weeklyHeader]}>
+              <Text style={styles.sectionTitle}>
+                Weekly Progress
+              </Text>
+
+              <Text style={styles.sectionCaption}>
+                LAST 7 DAYS
+              </Text>
+            </View>
+
+            <WeeklyActivityChart days={weeklyActivity} />
 
           </>
         )}
@@ -507,6 +541,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
+  },
+
+  weeklyHeader: {
+    marginTop: 28,
   },
 
   sectionTitle: {
