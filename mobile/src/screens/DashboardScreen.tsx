@@ -14,7 +14,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import MetricCard from '../components/MetricCard';
 import StepsRing from '../components/StepsRing';
-import { connectHealth, getTodayHealthData } from '../data/health';
+import {
+  connectHealth,
+  getTodayHealthData,
+} from '../data/health';
+
 import { theme } from '../../theme';
 
 const STEP_GOAL = 10000;
@@ -30,6 +34,35 @@ export default function DashboardScreen() {
   const hasConnected = useRef(false);
   const isLoading = useRef(false);
 
+  const today = new Date();
+
+  const formattedDate = today.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const hour = today.getHours();
+
+  const greeting =
+    hour < 12
+      ? 'Good morning'
+      : hour < 17
+      ? 'Good afternoon'
+      : 'Good evening';
+
+  const steps = health?.steps ?? 0;
+
+  const progress = Math.min(
+    (steps / STEP_GOAL) * 100,
+    100
+  );
+
+  const remainingSteps = Math.max(
+    STEP_GOAL - steps,
+    0
+  );
+
   async function refreshHealthData() {
     if (isLoading.current) return;
 
@@ -40,7 +73,9 @@ export default function DashboardScreen() {
       const result = await getTodayHealthData();
 
       if (!result.success) {
-        setStatus(result.message || 'Unable to retrieve health data.');
+        setStatus(
+          result.message || 'Unable to retrieve health data.'
+        );
         return;
       }
 
@@ -72,13 +107,16 @@ export default function DashboardScreen() {
 
       hasConnected.current = true;
 
-      // Allow the health service time to finish processing permissions.
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve =>
+        setTimeout(resolve, 1000)
+      );
 
       const result = await getTodayHealthData();
 
       if (!result.success) {
-        setStatus(result.message || 'Unable to retrieve health data.');
+        setStatus(
+          result.message || 'Unable to retrieve health data.'
+        );
         return;
       }
 
@@ -126,15 +164,46 @@ export default function DashboardScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.content}
+      >
 
-        <Text style={styles.logo}>FITGENIUS</Text>
+        {/* HEADER */}
 
-        <Text style={styles.title}>Today</Text>
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.logo}>
+              FITGENIUS
+            </Text>
 
-        <Text style={styles.subtitle}>
-          Your health and activity at a glance.
-        </Text>
+            <Text style={styles.date}>
+              {formattedDate}
+            </Text>
+          </View>
+
+          <View style={styles.profileIcon}>
+            <Text style={styles.profileLetter}>
+              F
+            </Text>
+          </View>
+        </View>
+
+        {/* GREETING */}
+
+        <View style={styles.greetingSection}>
+          <Text style={styles.greeting}>
+            {greeting} 👋
+          </Text>
+
+          <Text style={styles.title}>
+            Let's get moving.
+          </Text>
+
+          <Text style={styles.subtitle}>
+            Your health and activity at a glance.
+          </Text>
+        </View>
 
         {loading && !health ? (
           <View style={styles.loading}>
@@ -149,16 +218,58 @@ export default function DashboardScreen() {
           </View>
         ) : (
           <>
-            <View style={styles.ringWrap}>
-              <StepsRing
-                steps={health?.steps ?? 0}
-                goal={STEP_GOAL}
-              />
+
+            {/* STEPS SECTION */}
+
+            <View style={styles.stepsCard}>
+              <Text style={styles.cardHeading}>
+                DAILY STEPS
+              </Text>
+
+              <View style={styles.ringWrap}>
+                <StepsRing
+                  steps={steps}
+                  goal={STEP_GOAL}
+                />
+              </View>
+
+              <View style={styles.progressHeader}>
+                <Text style={styles.progressLabel}>
+                  Daily goal progress
+                </Text>
+
+                <Text style={styles.progressValue}>
+                  {Math.round(progress)}%
+                </Text>
+              </View>
+
+              <View style={styles.progressBackground}>
+                <View
+                  style={[
+                    styles.progressFill,
+                    { width: `${progress}%` },
+                  ]}
+                />
+              </View>
+
+              <Text style={styles.remaining}>
+                {remainingSteps > 0
+                  ? `${remainingSteps.toLocaleString()} steps left to reach your goal`
+                  : 'Congratulations! You reached your daily goal.'}
+              </Text>
             </View>
 
-            <Text style={styles.sectionTitle}>
-              Your Activity
-            </Text>
+            {/* ACTIVITY */}
+
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>
+                Your Activity
+              </Text>
+
+              <Text style={styles.sectionCaption}>
+                TODAY
+              </Text>
+            </View>
 
             <View style={styles.grid}>
               <MetricCard
@@ -201,31 +312,51 @@ export default function DashboardScreen() {
                 color={theme.colors.accent}
               />
             </View>
+
           </>
         )}
 
+        {/* HEALTH CONNECTION */}
+
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>
-            Health Tracking Status
-          </Text>
+          <View style={styles.statusHeader}>
+            <View style={styles.statusDot} />
+
+            <Text style={styles.noticeTitle}>
+              Health Connection
+            </Text>
+          </View>
 
           <Text style={styles.noticeText}>
             {status}
           </Text>
 
           <Pressable
-            style={styles.button}
+            style={[
+              styles.button,
+              loading && styles.buttonDisabled,
+            ]}
             onPress={loadHealth}
             disabled={loading}
           >
-            <Text style={styles.buttonText}>
-              {loading ? 'Refreshing...' : 'Refresh Health Data'}
-            </Text>
+            {loading ? (
+              <ActivityIndicator color="#080d1c" />
+            ) : (
+              <Text style={styles.buttonText}>
+                ↻  Refresh Health Data
+              </Text>
+            )}
           </Pressable>
         </View>
 
+        {/* FOOTER */}
+
         <Text style={styles.footer}>
           FITGENIUS © 2026
+        </Text>
+
+        <Text style={styles.footerCaption}>
+          Your health. Your progress. Your journey.
         </Text>
 
       </ScrollView>
@@ -244,24 +375,64 @@ const styles = StyleSheet.create({
     paddingBottom: theme.spacing(6),
   },
 
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+
   logo: {
     color: theme.colors.steps,
     fontSize: 22,
     fontWeight: '900',
     letterSpacing: 3,
-    marginBottom: 25,
+  },
+
+  date: {
+    color: theme.colors.textMuted,
+    fontSize: 12,
+    marginTop: 6,
+  },
+
+  profileIcon: {
+    width: 45,
+    height: 45,
+    borderRadius: 23,
+    backgroundColor: theme.colors.card,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  profileLetter: {
+    color: theme.colors.steps,
+    fontSize: 19,
+    fontWeight: '900',
+  },
+
+  greetingSection: {
+    marginBottom: 24,
+  },
+
+  greeting: {
+    color: theme.colors.steps,
+    fontSize: 15,
+    fontWeight: '700',
   },
 
   title: {
     color: theme.colors.text,
-    fontSize: 34,
+    fontSize: 30,
     fontWeight: '800',
+    marginTop: 7,
   },
 
   subtitle: {
     color: theme.colors.textMuted,
-    fontSize: 15,
-    marginTop: 4,
+    fontSize: 14,
+    marginTop: 7,
   },
 
   loading: {
@@ -274,16 +445,81 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
 
+  stepsCard: {
+    backgroundColor: theme.colors.card,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    borderRadius: 22,
+    padding: 20,
+    marginBottom: 30,
+  },
+
+  cardHeading: {
+    color: theme.colors.textMuted,
+    fontSize: 12,
+    fontWeight: '800',
+    letterSpacing: 2,
+  },
+
   ringWrap: {
     alignItems: 'center',
-    marginVertical: theme.spacing(4),
+    marginVertical: 22,
+  },
+
+  progressHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+
+  progressLabel: {
+    color: theme.colors.textMuted,
+    fontSize: 13,
+  },
+
+  progressValue: {
+    color: theme.colors.steps,
+    fontSize: 13,
+    fontWeight: '800',
+  },
+
+  progressBackground: {
+    height: 9,
+    backgroundColor: theme.colors.border,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+
+  progressFill: {
+    height: '100%',
+    backgroundColor: theme.colors.steps,
+    borderRadius: 10,
+  },
+
+  remaining: {
+    color: theme.colors.textMuted,
+    fontSize: 12,
+    marginTop: 13,
+  },
+
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
   },
 
   sectionTitle: {
     color: theme.colors.text,
     fontSize: 20,
-    fontWeight: '700',
-    marginBottom: 16,
+    fontWeight: '800',
+  },
+
+  sectionCaption: {
+    color: theme.colors.steps,
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 2,
   },
 
   grid: {
@@ -301,10 +537,23 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
 
+  statusHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  statusDot: {
+    width: 9,
+    height: 9,
+    borderRadius: 5,
+    backgroundColor: theme.colors.accent,
+    marginRight: 9,
+  },
+
   noticeTitle: {
     color: theme.colors.text,
-    fontSize: 17,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontWeight: '800',
   },
 
   noticeText: {
@@ -318,17 +567,33 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 15,
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 18,
+    minHeight: 48,
+  },
+
+  buttonDisabled: {
+    opacity: 0.6,
   },
 
   buttonText: {
     color: '#080d1c',
-    fontWeight: '800',
+    fontWeight: '900',
   },
 
   footer: {
     color: theme.colors.textMuted,
     textAlign: 'center',
     marginTop: 35,
+    fontSize: 12,
+    fontWeight: '800',
+    letterSpacing: 2,
+  },
+
+  footerCaption: {
+    color: theme.colors.textMuted,
+    textAlign: 'center',
+    fontSize: 11,
+    marginTop: 7,
   },
 });
