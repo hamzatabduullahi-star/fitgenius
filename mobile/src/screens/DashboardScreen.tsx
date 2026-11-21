@@ -1,12 +1,69 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import MetricCard from '../components/MetricCard';
 import StepsRing from '../components/StepsRing';
-import { today } from '../data/placeholder';
+import { connectHealth, getTodayHealthData } from '../data/health';
 import { theme } from '../../theme';
 
+const STEP_GOAL = 10000;
+
 export default function DashboardScreen() {
+  const [health, setHealth] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState(
+    'Connect your health service to begin.'
+  );
+
+  async function loadHealth() {
+    setLoading(true);
+
+    try {
+      const connection = await connectHealth();
+
+      if (!connection.success) {
+        setStatus(connection.message);
+        setHealth(null);
+        return;
+      }
+
+      const result = await getTodayHealthData();
+
+      if (!result.success) {
+        setStatus(result.message || 'Unable to retrieve health data.');
+        setHealth(null);
+        return;
+      }
+
+      setHealth(result);
+      setStatus('Health data loaded successfully.');
+    } catch (error) {
+      console.error(error);
+      setStatus('Health connection failed. Please try again.');
+      setHealth(null);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    loadHealth();
+  }, []);
+
+  const display = (value: number | null | undefined, decimals = 0) => {
+    if (value === null || value === undefined) return '—';
+    return decimals ? value.toFixed(decimals) : Math.round(value).toString();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
@@ -16,76 +73,91 @@ export default function DashboardScreen() {
         <Text style={styles.title}>Today</Text>
 
         <Text style={styles.subtitle}>
-          Keep moving, you're doing great.
+          Your health and activity at a glance.
         </Text>
 
-        <View style={styles.ringWrap}>
-          <StepsRing
-            steps={today.steps}
-            goal={today.stepGoal}
-          />
-        </View>
+        {loading ? (
+          <View style={styles.loading}>
+            <ActivityIndicator size="large" color={theme.colors.steps} />
+            <Text style={styles.loadingText}>
+              Connecting to health services...
+            </Text>
+          </View>
+        ) : (
+          <>
+            <View style={styles.ringWrap}>
+              <StepsRing
+                steps={health?.steps ?? 0}
+                goal={STEP_GOAL}
+              />
+            </View>
 
-        <Text style={styles.sectionTitle}>
-          Your Activity
-        </Text>
+            <Text style={styles.sectionTitle}>
+              Your Activity
+            </Text>
 
-        <View style={styles.grid}>
-          <MetricCard
-            icon="🔥"
-            label="Calories"
-            value={String(today.calories)}
-            unit="kcal"
-            color={theme.colors.calories}
-          />
+            <View style={styles.grid}>
+              <MetricCard
+                icon="🔥"
+                label="Calories"
+                value={display(health?.calories)}
+                unit="kcal"
+                color={theme.colors.calories}
+              />
 
-          <MetricCard
-            icon="📍"
-            label="Distance"
-            value={today.distanceKm.toFixed(1)}
-            unit="km"
-            color={theme.colors.steps}
-          />
+              <MetricCard
+                icon="📍"
+                label="Distance"
+                value={display(health?.distanceKm, 1)}
+                unit="km"
+                color={theme.colors.steps}
+              />
 
-          <MetricCard
-            icon="❤️"
-            label="Heart Rate"
-            value={String(today.heartRate)}
-            unit="bpm"
-            color={theme.colors.heart}
-          />
+              <MetricCard
+                icon="❤️"
+                label="Heart Rate"
+                value={display(health?.heartRate)}
+                unit="bpm"
+                color={theme.colors.heart}
+              />
 
-          <MetricCard
-            icon="🌙"
-            label="Sleep"
-            value={today.sleepHours.toFixed(1)}
-            unit="hrs"
-            color={theme.colors.sleep}
-          />
+              <MetricCard
+                icon="🌙"
+                label="Sleep"
+                value={display(health?.sleepHours, 1)}
+                unit="hrs"
+                color={theme.colors.sleep}
+              />
 
-          <MetricCard
-            icon="⚡"
-            label="Exercise"
-            value={String(today.exerciseMinutes)}
-            unit="min"
-            color={theme.colors.accent}
-          />
-        </View>
+              <MetricCard
+                icon="⚡"
+                label="Exercise"
+                value={display(health?.exerciseMinutes)}
+                unit="min"
+                color={theme.colors.accent}
+              />
+            </View>
+          </>
+        )}
 
         <View style={styles.notice}>
           <Text style={styles.noticeTitle}>
-            Automatic Health Tracking
+            Health Tracking Status
           </Text>
 
           <Text style={styles.noticeText}>
-            HealthKit and Health Connect integration
-            will allow FitGenius to access supported
-            health data with your permission.
+            {status}
           </Text>
 
-          <Text style={styles.status}>
-            ● Integration coming soon
-          </Text>
+          <Pressable
+            style={styles.button}
+            onPress={loadHealth}
+            disabled={loading}
+          >
+            <Text style={styles.buttonText}>
+              {loading ? 'Connecting...' : 'Connect / Refresh Health Data'}
+            </Text>
+          </Pressable>
         </View>
 
         <Text style={styles.footer}>
@@ -128,6 +200,16 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 
+  loading: {
+    alignItems: 'center',
+    marginVertical: 55,
+  },
+
+  loadingText: {
+    color: theme.colors.textMuted,
+    marginTop: 15,
+  },
+
   ringWrap: {
     alignItems: 'center',
     marginVertical: theme.spacing(4),
@@ -167,9 +249,17 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
 
-  status: {
-    color: theme.colors.accent,
-    marginTop: 15,
+  button: {
+    backgroundColor: theme.colors.steps,
+    borderRadius: 12,
+    padding: 15,
+    alignItems: 'center',
+    marginTop: 18,
+  },
+
+  buttonText: {
+    color: '#080d1c',
+    fontWeight: '800',
   },
 
   footer: {
