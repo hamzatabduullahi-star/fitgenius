@@ -6,12 +6,25 @@ const startOfDay = () => {
   return date;
 };
 
+/* CHECK HEALTH SERVICE AVAILABILITY */
+
+export function isHealthAvailable() {
+  try {
+    return HealthKit.isAvailable();
+  } catch (error) {
+    return false;
+  }
+}
+
+/* CONNECT HEALTH SERVICE */
+
 export async function connectHealth() {
   try {
-    if (!HealthKit.isAvailable()) {
+    if (!isHealthAvailable()) {
       return {
         success: false,
-        message: 'Health services are unavailable on this device.',
+        unavailable: true,
+        message: 'Health services are not available on this device. You can still use FitGenius.',
       };
     }
 
@@ -29,6 +42,7 @@ export async function connectHealth() {
 
     return {
       success: true,
+      unavailable: false,
       message: 'Health permission request completed.',
     };
   } catch (error) {
@@ -36,12 +50,23 @@ export async function connectHealth() {
 
     return {
       success: false,
-      message: 'Unable to request health permissions.',
+      unavailable: false,
+      message: 'Unable to connect to health services. You can still use FitGenius.',
     };
   }
 }
 
+/* TODAY'S HEALTH DATA */
+
 export async function getTodayHealthData() {
+  if (!isHealthAvailable()) {
+    return {
+      success: false,
+      unavailable: true,
+      message: 'Health services are unavailable. You can still use other FitGenius features.',
+    };
+  }
+
   try {
     const today = startOfDay();
     const now = new Date();
@@ -121,19 +146,17 @@ export async function getTodayHealthData() {
       return total + Math.max(0, minutes);
     }, 0);
 
-    const exerciseMinutes = workouts.reduce(
-      (total, workout) => {
-        const minutes =
-          (new Date(workout.endDate).getTime() -
-            new Date(workout.startDate).getTime()) / 60000;
+    const exerciseMinutes = workouts.reduce((total, workout) => {
+      const minutes =
+        (new Date(workout.endDate).getTime() -
+          new Date(workout.startDate).getTime()) / 60000;
 
-        return total + Math.max(0, minutes);
-      },
-      0
-    );
+      return total + Math.max(0, minutes);
+    }, 0);
 
     return {
       success: true,
+      unavailable: false,
       steps: steps.sum ?? 0,
       distanceKm: (distance.sum ?? 0) / 1000,
       calories: calories.sum ?? 0,
@@ -146,6 +169,7 @@ export async function getTodayHealthData() {
 
     return {
       success: false,
+      unavailable: false,
       message: 'Unable to retrieve health readings.',
     };
   }
@@ -154,6 +178,15 @@ export async function getTodayHealthData() {
 /* WEEKLY ACTIVITY DATA */
 
 export async function getWeeklyActivityData() {
+  if (!isHealthAvailable()) {
+    return {
+      success: false,
+      unavailable: true,
+      message: 'Health services are unavailable.',
+      days: [],
+    };
+  }
+
   try {
     const endDate = new Date();
 
@@ -222,6 +255,7 @@ export async function getWeeklyActivityData() {
 
     return {
       success: true,
+      unavailable: false,
       days: weeklyData,
     };
   } catch (error) {
@@ -229,6 +263,7 @@ export async function getWeeklyActivityData() {
 
     return {
       success: false,
+      unavailable: false,
       message: 'Unable to retrieve weekly health data.',
       days: [],
     };
