@@ -121,7 +121,13 @@ export async function getTodayHealthData() {
     }, 0);
 
     const exerciseMinutes = workouts.reduce(
-      (total, workout) => total + workout.duration / 60,
+      (total, workout) => {
+        const minutes =
+          (new Date(workout.endDate).getTime() -
+            new Date(workout.startDate).getTime()) / 60000;
+
+        return total + Math.max(0, minutes);
+      },
       0
     );
 
