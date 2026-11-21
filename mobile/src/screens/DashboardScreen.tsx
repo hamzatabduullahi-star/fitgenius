@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
 import {
   ActivityIndicator,
+  AppState,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -20,11 +22,43 @@ const STEP_GOAL = 10000;
 export default function DashboardScreen() {
   const [health, setHealth] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+
   const [status, setStatus] = useState(
-    'Connect your health service to begin.'
+    'Connecting to your health service...'
   );
 
+  const hasConnected = useRef(false);
+  const isLoading = useRef(false);
+
+  async function refreshHealthData() {
+    if (isLoading.current) return;
+
+    isLoading.current = true;
+    setLoading(true);
+
+    try {
+      const result = await getTodayHealthData();
+
+      if (!result.success) {
+        setStatus(result.message || 'Unable to retrieve health data.');
+        return;
+      }
+
+      setHealth(result);
+      setStatus('Your health data is up to date.');
+    } catch (error) {
+      console.error('Health refresh error:', error);
+      setStatus('Unable to refresh health data.');
+    } finally {
+      isLoading.current = false;
+      setLoading(false);
+    }
+  }
+
   async function loadHealth() {
+    if (isLoading.current) return;
+
+    isLoading.current = true;
     setLoading(true);
 
     try {
@@ -36,32 +70,58 @@ export default function DashboardScreen() {
         return;
       }
 
+      hasConnected.current = true;
+
+      // Allow the health service time to finish processing permissions.
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
       const result = await getTodayHealthData();
 
       if (!result.success) {
         setStatus(result.message || 'Unable to retrieve health data.');
-        setHealth(null);
         return;
       }
 
       setHealth(result);
-      setStatus('Health data loaded successfully.');
+      setStatus('Your health data is up to date.');
     } catch (error) {
-      console.error(error);
+      console.error('Health connection error:', error);
       setStatus('Health connection failed. Please try again.');
-      setHealth(null);
     } finally {
+      isLoading.current = false;
       setLoading(false);
     }
   }
 
   useEffect(() => {
     loadHealth();
+
+    const subscription = AppState.addEventListener(
+      'change',
+      nextAppState => {
+        if (
+          nextAppState === 'active' &&
+          hasConnected.current
+        ) {
+          refreshHealthData();
+        }
+      }
+    );
+
+    return () => subscription.remove();
   }, []);
 
-  const display = (value: number | null | undefined, decimals = 0) => {
-    if (value === null || value === undefined) return '—';
-    return decimals ? value.toFixed(decimals) : Math.round(value).toString();
+  const display = (
+    value: number | null | undefined,
+    decimals = 0
+  ) => {
+    if (value === null || value === undefined) {
+      return '—';
+    }
+
+    return decimals
+      ? value.toFixed(decimals)
+      : Math.round(value).toString();
   };
 
   return (
@@ -76,9 +136,13 @@ export default function DashboardScreen() {
           Your health and activity at a glance.
         </Text>
 
-        {loading ? (
+        {loading && !health ? (
           <View style={styles.loading}>
-            <ActivityIndicator size="large" color={theme.colors.steps} />
+            <ActivityIndicator
+              size="large"
+              color={theme.colors.steps}
+            />
+
             <Text style={styles.loadingText}>
               Connecting to health services...
             </Text>
@@ -155,7 +219,7 @@ export default function DashboardScreen() {
             disabled={loading}
           >
             <Text style={styles.buttonText}>
-              {loading ? 'Connecting...' : 'Connect / Refresh Health Data'}
+              {loading ? 'Refreshing...' : 'Refresh Health Data'}
             </Text>
           </Pressable>
         </View>
