@@ -20,6 +20,7 @@ import {
   connectHealth,
   getTodayHealthData,
   getWeeklyActivityData,
+  isHealthAvailable,
 } from '../data/health';
 
 import { theme } from '../../theme';
@@ -30,9 +31,10 @@ export default function DashboardScreen() {
   const [health, setHealth] = useState<any>(null);
   const [weeklyActivity, setWeeklyActivity] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [available, setAvailable] = useState(false);
 
   const [status, setStatus] = useState(
-    'Connecting to your health service...'
+    'Checking health service availability...'
   );
 
   const hasConnected = useRef(false);
@@ -70,6 +72,16 @@ export default function DashboardScreen() {
   async function refreshHealthData() {
     if (isLoading.current) return;
 
+    if (!isHealthAvailable()) {
+      setAvailable(false);
+      setHealth(null);
+      setWeeklyActivity([]);
+      setStatus(
+        'Health services are unavailable on this device. You can still use FitGenius.'
+      );
+      return;
+    }
+
     isLoading.current = true;
     setLoading(true);
 
@@ -80,6 +92,7 @@ export default function DashboardScreen() {
       ]);
 
       if (!result.success) {
+        setHealth(null);
         setStatus(
           result.message || 'Unable to retrieve health data.'
         );
@@ -105,6 +118,17 @@ export default function DashboardScreen() {
   async function loadHealth() {
     if (isLoading.current) return;
 
+    if (!isHealthAvailable()) {
+      setAvailable(false);
+      setHealth(null);
+      setWeeklyActivity([]);
+      setStatus(
+        'No compatible health service was found. You can still use FitGenius.'
+      );
+      return;
+    }
+
+    setAvailable(true);
     isLoading.current = true;
     setLoading(true);
 
@@ -118,10 +142,6 @@ export default function DashboardScreen() {
       }
 
       hasConnected.current = true;
-
-      await new Promise(resolve =>
-        setTimeout(resolve, 1000)
-      );
 
       const [result, weeklyResult] = await Promise.all([
         getTodayHealthData(),
@@ -144,7 +164,7 @@ export default function DashboardScreen() {
       setStatus('Your health data is up to date.');
     } catch (error) {
       console.error('Health connection error:', error);
-      setStatus('Health connection failed. Please try again.');
+      setStatus('Health connection failed. You can still use FitGenius.');
     } finally {
       isLoading.current = false;
       setLoading(false);
@@ -193,19 +213,12 @@ export default function DashboardScreen() {
 
         <View style={styles.header}>
           <View>
-            <Text style={styles.logo}>
-              FITGENIUS
-            </Text>
-
-            <Text style={styles.date}>
-              {formattedDate}
-            </Text>
+            <Text style={styles.logo}>FITGENIUS</Text>
+            <Text style={styles.date}>{formattedDate}</Text>
           </View>
 
           <View style={styles.profileIcon}>
-            <Text style={styles.profileLetter}>
-              F
-            </Text>
+            <Text style={styles.profileLetter}>F</Text>
           </View>
         </View>
 
@@ -225,136 +238,138 @@ export default function DashboardScreen() {
           </Text>
         </View>
 
-        {loading && !health ? (
-          <View style={styles.loading}>
-            <ActivityIndicator
-              size="large"
-              color={theme.colors.steps}
-            />
+        {/* DAILY STEPS */}
 
-            <Text style={styles.loadingText}>
-              Connecting to health services...
+        <View style={styles.stepsCard}>
+          <Text style={styles.cardHeading}>
+            DAILY STEPS
+          </Text>
+
+          <View style={styles.ringWrap}>
+            <StepsRing
+              steps={steps}
+              goal={STEP_GOAL}
+            />
+          </View>
+
+          <View style={styles.progressHeader}>
+            <Text style={styles.progressLabel}>
+              Daily goal progress
+            </Text>
+
+            <Text style={styles.progressValue}>
+              {Math.round(progress)}%
             </Text>
           </View>
+
+          <View style={styles.progressBackground}>
+            <View
+              style={[
+                styles.progressFill,
+                { width: `${progress}%` },
+              ]}
+            />
+          </View>
+
+          <Text style={styles.remaining}>
+            {health
+              ? remainingSteps > 0
+                ? `${remainingSteps.toLocaleString()} steps left to reach your goal`
+                : 'Congratulations! You reached your daily goal.'
+              : 'Connect a health service to see your step progress.'}
+          </Text>
+        </View>
+
+        {/* TODAY'S ACTIVITY */}
+
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>
+            Your Activity
+          </Text>
+
+          <Text style={styles.sectionCaption}>
+            TODAY
+          </Text>
+        </View>
+
+        <View style={styles.grid}>
+          <MetricCard
+            icon="🔥"
+            label="Calories"
+            value={display(health?.calories)}
+            unit="kcal"
+            color={theme.colors.calories}
+          />
+
+          <MetricCard
+            icon="📍"
+            label="Distance"
+            value={display(health?.distanceKm, 1)}
+            unit="km"
+            color={theme.colors.steps}
+          />
+
+          <MetricCard
+            icon="❤️"
+            label="Heart Rate"
+            value={display(health?.heartRate)}
+            unit="bpm"
+            color={theme.colors.heart}
+          />
+
+          <MetricCard
+            icon="🌙"
+            label="Sleep"
+            value={display(health?.sleepHours, 1)}
+            unit="hrs"
+            color={theme.colors.sleep}
+          />
+
+          <MetricCard
+            icon="⚡"
+            label="Exercise"
+            value={display(health?.exerciseMinutes)}
+            unit="min"
+            color={theme.colors.accent}
+          />
+        </View>
+
+        {/* WEEKLY PROGRESS */}
+
+        <View style={[styles.sectionHeader, styles.weeklyHeader]}>
+          <Text style={styles.sectionTitle}>
+            Weekly Progress
+          </Text>
+
+          <Text style={styles.sectionCaption}>
+            LAST 7 DAYS
+          </Text>
+        </View>
+
+        {available ? (
+          <WeeklyActivityChart days={weeklyActivity} />
         ) : (
-          <>
+          <View style={styles.emptyChart}>
+            <Text style={styles.emptyChartTitle}>
+              Weekly activity will appear here
+            </Text>
 
-            {/* STEPS SECTION */}
-
-            <View style={styles.stepsCard}>
-              <Text style={styles.cardHeading}>
-                DAILY STEPS
-              </Text>
-
-              <View style={styles.ringWrap}>
-                <StepsRing
-                  steps={steps}
-                  goal={STEP_GOAL}
-                />
-              </View>
-
-              <View style={styles.progressHeader}>
-                <Text style={styles.progressLabel}>
-                  Daily goal progress
-                </Text>
-
-                <Text style={styles.progressValue}>
-                  {Math.round(progress)}%
-                </Text>
-              </View>
-
-              <View style={styles.progressBackground}>
-                <View
-                  style={[
-                    styles.progressFill,
-                    { width: `${progress}%` },
-                  ]}
-                />
-              </View>
-
-              <Text style={styles.remaining}>
-                {remainingSteps > 0
-                  ? `${remainingSteps.toLocaleString()} steps left to reach your goal`
-                  : 'Congratulations! You reached your daily goal.'}
-              </Text>
-            </View>
-
-            {/* TODAY'S ACTIVITY */}
-
-            <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>
-                Your Activity
-              </Text>
-
-              <Text style={styles.sectionCaption}>
-                TODAY
-              </Text>
-            </View>
-
-            <View style={styles.grid}>
-              <MetricCard
-                icon="🔥"
-                label="Calories"
-                value={display(health?.calories)}
-                unit="kcal"
-                color={theme.colors.calories}
-              />
-
-              <MetricCard
-                icon="📍"
-                label="Distance"
-                value={display(health?.distanceKm, 1)}
-                unit="km"
-                color={theme.colors.steps}
-              />
-
-              <MetricCard
-                icon="❤️"
-                label="Heart Rate"
-                value={display(health?.heartRate)}
-                unit="bpm"
-                color={theme.colors.heart}
-              />
-
-              <MetricCard
-                icon="🌙"
-                label="Sleep"
-                value={display(health?.sleepHours, 1)}
-                unit="hrs"
-                color={theme.colors.sleep}
-              />
-
-              <MetricCard
-                icon="⚡"
-                label="Exercise"
-                value={display(health?.exerciseMinutes)}
-                unit="min"
-                color={theme.colors.accent}
-              />
-            </View>
-
-            {/* WEEKLY PROGRESS */}
-
-            <View style={[styles.sectionHeader, styles.weeklyHeader]}>
-              <Text style={styles.sectionTitle}>
-                Weekly Progress
-              </Text>
-
-              <Text style={styles.sectionCaption}>
-                LAST 7 DAYS
-              </Text>
-            </View>
-
-            <WeeklyActivityChart days={weeklyActivity} />
-
-          </>
+            <Text style={styles.emptyChartText}>
+              Connect a compatible health service to view your activity history.
+            </Text>
+          </View>
         )}
 
         {/* HEALTH CONNECTION */}
 
         <View style={styles.notice}>
           <View style={styles.statusHeader}>
-            <View style={styles.statusDot} />
+            <View
+              style={[
+                styles.statusDot,
+                !available && styles.statusDotInactive,
+              ]}
+            />
 
             <Text style={styles.noticeTitle}>
               Health Connection
@@ -377,7 +392,7 @@ export default function DashboardScreen() {
               <ActivityIndicator color="#080d1c" />
             ) : (
               <Text style={styles.buttonText}>
-                ↻  Refresh Health Data
+                ↻  {available ? 'Refresh Health Data' : 'Try Connecting Again'}
               </Text>
             )}
           </Pressable>
@@ -469,16 +484,6 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
 
-  loading: {
-    alignItems: 'center',
-    marginVertical: 55,
-  },
-
-  loadingText: {
-    color: theme.colors.textMuted,
-    marginTop: 15,
-  },
-
   stepsCard: {
     backgroundColor: theme.colors.card,
     borderWidth: 1,
@@ -566,6 +571,28 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
+  emptyChart: {
+    backgroundColor: theme.colors.card,
+    borderColor: theme.colors.border,
+    borderWidth: 1,
+    borderRadius: theme.radius,
+    padding: 20,
+    marginBottom: 10,
+  },
+
+  emptyChartTitle: {
+    color: theme.colors.text,
+    fontWeight: '800',
+    fontSize: 14,
+  },
+
+  emptyChartText: {
+    color: theme.colors.textMuted,
+    lineHeight: 22,
+    fontSize: 12,
+    marginTop: 8,
+  },
+
   notice: {
     backgroundColor: theme.colors.card,
     borderColor: theme.colors.border,
@@ -586,6 +613,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: theme.colors.accent,
     marginRight: 9,
+  },
+
+  statusDotInactive: {
+    backgroundColor: theme.colors.calories,
   },
 
   noticeTitle: {
