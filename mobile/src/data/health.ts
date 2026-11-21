@@ -150,3 +150,87 @@ export async function getTodayHealthData() {
     };
   }
 }
+
+/* WEEKLY ACTIVITY DATA */
+
+export async function getWeeklyActivityData() {
+  try {
+    const endDate = new Date();
+
+    const startDate = startOfDay();
+    startDate.setDate(startDate.getDate() - 6);
+
+    const [steps, calories, distance] = await Promise.all([
+      HealthKit.queryStatisticsCollection({
+        type: HealthKit.QuantityType.stepCount,
+        unit: HealthKit.Unit.count,
+        from: startDate,
+        to: endDate,
+        interval: { day: 1 },
+        options: HealthKit.StatisticsOption.cumulativeSum,
+      }),
+
+      HealthKit.queryStatisticsCollection({
+        type: HealthKit.QuantityType.activeEnergyBurned,
+        unit: HealthKit.Unit.kilocalorie,
+        from: startDate,
+        to: endDate,
+        interval: { day: 1 },
+        options: HealthKit.StatisticsOption.cumulativeSum,
+      }),
+
+      HealthKit.queryStatisticsCollection({
+        type: HealthKit.QuantityType.distanceWalkingRunning,
+        unit: HealthKit.Unit.meter,
+        from: startDate,
+        to: endDate,
+        interval: { day: 1 },
+        options: HealthKit.StatisticsOption.cumulativeSum,
+      }),
+    ]);
+
+    const weeklyData = Array.from({ length: 7 }, (_, index) => {
+      const date = new Date(startDate);
+      date.setDate(date.getDate() + index);
+
+      const findDay = (records: any[]) => {
+        return records.find(record => {
+          const recordDate = new Date(record.startDate);
+
+          return (
+            recordDate.getFullYear() === date.getFullYear() &&
+            recordDate.getMonth() === date.getMonth() &&
+            recordDate.getDate() === date.getDate()
+          );
+        });
+      };
+
+      const stepRecord = findDay(steps);
+      const calorieRecord = findDay(calories);
+      const distanceRecord = findDay(distance);
+
+      return {
+        date: date.toISOString(),
+        day: date.toLocaleDateString('en-US', {
+          weekday: 'short',
+        }),
+        steps: stepRecord?.sum ?? 0,
+        calories: calorieRecord?.sum ?? 0,
+        distanceKm: (distanceRecord?.sum ?? 0) / 1000,
+      };
+    });
+
+    return {
+      success: true,
+      days: weeklyData,
+    };
+  } catch (error) {
+    console.error('Weekly health data error:', error);
+
+    return {
+      success: false,
+      message: 'Unable to retrieve weekly health data.',
+      days: [],
+    };
+  }
+}
