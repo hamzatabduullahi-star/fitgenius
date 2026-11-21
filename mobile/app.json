@@ -20,6 +20,16 @@
         "backgroundColor": "#080d1c"
       }
     },
+    "plugins": [
+      [
+        "@appeeky/expo-healthkit",
+        {
+          "healthSharePermission": "Allow FitGenius to read your health data",
+          "healthUpdatePermission": "Allow FitGenius to write your health data",
+          "isBackgroundDeliveryEnabled": true
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "caddfb8d-e644-401a-922f-1e1eea4158c0"
